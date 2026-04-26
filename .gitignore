@@ -1,0 +1,23 @@
+# Claude AI IDE settings
+.claude/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor backups
+*.bak
+*.swp
+*~
+
+# Node (if ever added)
+node_modules/
+npm-debug.log*
+
+# Build output
+dist/
+build/

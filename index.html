@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIND Maritime Enterprises S.A. — Strategic Shield</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · Integrated IS</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="active">Αρχική</a></li>
+                <li><a href="pages/fleet-status.html">Fleet Status</a></li>
+                <li><a href="pages/voyage-dashboard.html">Voyages</a></li>
+                <li><a href="pages/noon-report.html">Noon Report</a></li>
+                <li><a href="pages/approve-procurement.html">Approvals</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Your Real-Time Digital Shield in Dry Cargo Brokerage</h1>
+        <p class="motto">"One automated source of truth, a world of trust."</p>
+        <p class="subtitle">
+            Ενοποιημένο Πληροφοριακό Σύστημα για τη διαχείριση στόλου, ταξιδιών,
+            πιστοποιητικών και οικονομικών ροών — με Real-Time δεδομένα,
+            ψηφιακές εγκρίσεις και πλήρη Audit Trail.
+        </p>
+    </div>
+</section>
+
+<section class="login-section">
+    <div class="login-grid">
+
+        <!-- LOGIN CARD -->
+        <div class="card">
+            <h2>Σύνδεση Χρήστη</h2>
+            <form action="pages/fleet-status.html" method="get" novalidate>
+                <div class="form-group" style="margin-bottom:14px;">
+                    <label for="username">Όνομα Χρήστη <span class="req">*</span></label>
+                    <input type="text" id="username" name="username" placeholder="π.χ. d.balafouti" required>
+                </div>
+                <div class="form-group" style="margin-bottom:14px;">
+                    <label for="password">Κωδικός <span class="req">*</span></label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+                <div class="form-group" style="margin-bottom:14px;">
+                    <label for="role">Ρόλος</label>
+                    <select id="role" name="role">
+                        <option value="ops">Operations Officer</option>
+                        <option value="dpa">DPA / HSEQ Manager</option>
+                        <option value="tech">Technical / Purchasing</option>
+                        <option value="acc">Accounting</option>
+                        <option value="mgmt">Management / CEO</option>
+                        <option value="master">Πλοίαρχος (Master)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Είσοδος στο Σύστημα</button>
+                <p class="muted center mt-1">
+                    <a href="#" style="color:var(--accent); text-decoration:none;">Ξέχασα τον κωδικό μου</a>
+                </p>
+            </form>
+        </div>
+
+        <!-- MODULES NAVIGATION -->
+        <div>
+            <div class="card">
+                <h2>Λειτουργικές Μονάδες Συστήματος</h2>
+                <p class="muted mb-1">Επιλέξτε τη λειτουργία που θέλετε να μεταβείτε:</p>
+                <div class="module-grid">
+
+                    <a href="pages/fleet-status.html" class="module-card">
+                        <div class="module-icon">FS</div>
+                        <h3>Fleet Status &amp; Compliance</h3>
+                        <p>Άμεση πρόσβαση στα πιστοποιητικά του στόλου, alerts λήξης και Vetting Folder export.</p>
+                    </a>
+
+                    <a href="pages/voyage-dashboard.html" class="module-card">
+                        <div class="module-icon">VD</div>
+                        <h3>Voyage Dashboard</h3>
+                        <p>Real-time παρακολούθηση ενεργών ταξιδιών — θέση, κατανάλωση, ETA, κερδοφορία.</p>
+                    </a>
+
+                    <a href="pages/noon-report.html" class="module-card">
+                        <div class="module-icon">NR</div>
+                        <h3>Noon Report (Πλοίαρχος)</h3>
+                        <p>Τυποποιημένη ψηφιακή φόρμα ημερήσιας αναφοράς από το πλοίο προς το γραφείο.</p>
+                    </a>
+
+                    <a href="pages/approve-procurement.html" class="module-card">
+                        <div class="module-icon">AP</div>
+                        <h3>Approval Workflow</h3>
+                        <p>Ψηφιακή έγκριση/απόρριψη αιτημάτων προμήθειας από τη Διοίκηση με χρονοσήμανση.</p>
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="alert-box info">
+                <strong>Ομάδα 69 — Πληροφοριακά Συστήματα 2026</strong>
+                Μέρος 3ο: Σχεδιασμός Ιστοσελίδων. Δοκιμαστικό demo περιβάλλοντος για παρουσίαση
+                των βασικών λειτουργιών του προτεινόμενου ΠΣ της HIND Maritime.
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69 ·
+    <a href="https://github.com/dimitrabalafouti/information-systems">GitHub Repository</a>
+</footer>
+
+</body>
+</html>

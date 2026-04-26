@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noon Report — HIND Maritime IS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="../index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · Vessel Interface</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../index.html">Αρχική</a></li>
+                <li><a href="fleet-status.html">Fleet Status</a></li>
+                <li><a href="voyage-dashboard.html">Voyages</a></li>
+                <li><a href="noon-report.html" class="active">Noon Report</a></li>
+                <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><span class="user-chip">Master · Capt. G. Petrou</span></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Υποβολή Ημερήσιας Αναφοράς (Noon Report)</h1>
+    <p class="page-subtitle">
+        Πλοίο: <strong>M/V New Island</strong> · IMO 9456789 · Voyage V-2026-041 ·
+        Ημερομηνία: <strong>27/04/2026 12:00 LT</strong>
+    </p>
+
+    <div class="alert-box info">
+        <strong>ℹ Τυποποιημένη Ψηφιακή Φόρμα</strong>
+        Τα δεδομένα θα αναλυθούν αυτόματα (Data Parsing) και θα ενημερώσουν το Voyage Dashboard
+        του Operations εντός 5 λεπτών. Σε περίπτωση απώλειας σύνδεσης, η αναφορά αποθηκεύεται τοπικά
+        και αποστέλλεται αυτόματα μόλις αποκατασταθεί η επικοινωνία.
+    </div>
+
+    <form action="voyage-dashboard.html" method="get" novalidate>
+
+        <!-- POSITION -->
+        <fieldset>
+            <legend>1. Θέση Πλοίου (Position)</legend>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="lat">Γεωγραφικό Πλάτος <span class="req">*</span></label>
+                    <input type="text" id="lat" name="lat" placeholder="36° 30' N" value="36° 30' N" required>
+                </div>
+                <div class="form-group">
+                    <label for="lon">Γεωγραφικό Μήκος <span class="req">*</span></label>
+                    <input type="text" id="lon" name="lon" placeholder="18° 12' E" value="18° 12' E" required>
+                </div>
+                <div class="form-group">
+                    <label for="course">Πορεία (Course over Ground)</label>
+                    <input type="number" id="course" name="course" placeholder="245" value="245" min="0" max="360">
+                </div>
+                <div class="form-group">
+                    <label for="speed">Ταχύτητα (knots) <span class="req">*</span></label>
+                    <input type="number" id="speed" name="speed" step="0.1" value="12.3" required>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- BUNKERS -->
+        <fieldset>
+            <legend>2. Καύσιμα &amp; Κατανάλωση (Bunkers)</legend>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="hfo">HFO Remaining (MT)</label>
+                    <input type="number" id="hfo" name="hfo" step="0.1" value="412.5">
+                </div>
+                <div class="form-group">
+                    <label for="mgo">MGO Remaining (MT)</label>
+                    <input type="number" id="mgo" name="mgo" step="0.1" value="68.2">
+                </div>
+                <div class="form-group">
+                    <label for="cons24">Κατανάλωση 24h (MT) <span class="req">*</span></label>
+                    <input type="number" id="cons24" name="cons24" step="0.1" value="27.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="distance">Απόσταση 24h (NM)</label>
+                    <input type="number" id="distance" name="distance" step="0.1" value="295.2">
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- WEATHER -->
+        <fieldset>
+            <legend>3. Καιρικές Συνθήκες (Weather)</legend>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="wind-dir">Κατεύθυνση Ανέμου</label>
+                    <select id="wind-dir" name="wind-dir">
+                        <option>N</option><option>NE</option><option>E</option><option>SE</option>
+                        <option selected>S</option><option>SW</option><option>W</option><option>NW</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="wind-force">Beaufort</label>
+                    <select id="wind-force" name="wind-force">
+                        <option>0</option><option>1</option><option>2</option><option>3</option>
+                        <option selected>4</option><option>5</option><option>6</option>
+                        <option>7</option><option>8</option><option>9+</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sea-state">Κατάσταση Θάλασσας</label>
+                    <select id="sea-state" name="sea-state">
+                        <option>Calm</option>
+                        <option>Smooth</option>
+                        <option selected>Slight</option>
+                        <option>Moderate</option>
+                        <option>Rough</option>
+                        <option>Very Rough</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="visibility">Ορατότητα</label>
+                    <select id="visibility" name="visibility">
+                        <option selected>Καλή (>5 NM)</option>
+                        <option>Μέτρια (2-5 NM)</option>
+                        <option>Περιορισμένη (&lt;2 NM)</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- CARGO -->
+        <fieldset>
+            <legend>4. Φορτίο &amp; ETA</legend>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="cargo">Τύπος Φορτίου</label>
+                    <input type="text" id="cargo" name="cargo" value="Iron Ore" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="cargo-mt">Ποσότητα Φορτίου (MT)</label>
+                    <input type="number" id="cargo-mt" name="cargo-mt" value="52000" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="next-port">Επόμενο Λιμάνι</label>
+                    <input type="text" id="next-port" name="next-port" value="Algiers (DZALG)" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="eta">ETA <span class="req">*</span></label>
+                    <input type="datetime-local" id="eta" name="eta" value="2026-04-30T16:00" required>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- REMARKS -->
+        <fieldset>
+            <legend>5. Παρατηρήσεις (Remarks)</legend>
+            <div class="form-group full">
+                <label for="remarks">Σχόλια Πλοιάρχου</label>
+                <textarea id="remarks" name="remarks" rows="4"
+                  placeholder="Π.χ. Κανένα συμβάν εν πλω. Όλα τα συστήματα λειτουργούν κανονικά.">Κανένα συμβάν. Καιρικές συνθήκες ευνοϊκές. Κατανάλωση εντός πλάνου.</textarea>
+                <span class="form-hint">Προαιρετικό · Μέγιστο 500 χαρακτήρες</span>
+            </div>
+        </fieldset>
+
+        <!-- SUBMIT -->
+        <div class="card" style="background: var(--bg);">
+            <p class="muted mb-1">
+                <strong>Ψηφιακή υπογραφή:</strong> Capt. G. Petrou · Master M/V New Island ·
+                Auto-stamp: 27/04/2026 12:00 UTC
+            </p>
+            <div class="btn-row">
+                <button type="submit" class="btn btn-primary">Υποβολή Noon Report</button>
+                <button type="button" class="btn btn-secondary">Αποθήκευση Πρόχειρου</button>
+                <a href="../index.html" class="btn btn-secondary">Ακύρωση</a>
+            </div>
+        </div>
+    </form>
+
+    <!-- HISTORY -->
+    <div class="card">
+        <h2>Ιστορικό Πρόσφατων Υποβολών</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Ημ/νία &amp; Ώρα</th>
+                    <th>Voyage</th>
+                    <th>Θέση</th>
+                    <th>Ταχύτητα</th>
+                    <th>Κατανάλωση 24h</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>26/04/2026 12:00</td>
+                    <td>V-2026-041</td>
+                    <td>37° 12' N · 19° 45' E</td>
+                    <td>12.5 kn</td>
+                    <td>27.4 MT</td>
+                    <td><span class="badge valid">Καταχωρήθηκε</span></td>
+                </tr>
+                <tr>
+                    <td>25/04/2026 12:00</td>
+                    <td>V-2026-041</td>
+                    <td>37° 58' N · 21° 18' E</td>
+                    <td>12.1 kn</td>
+                    <td>26.8 MT</td>
+                    <td><span class="badge valid">Καταχωρήθηκε</span></td>
+                </tr>
+                <tr>
+                    <td>24/04/2026 12:00</td>
+                    <td>V-2026-041</td>
+                    <td>38° 35' N · 22° 50' E</td>
+                    <td>11.8 kn</td>
+                    <td>26.2 MT</td>
+                    <td><span class="badge valid">Καταχωρήθηκε</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+</footer>
+
+</body>
+</html>

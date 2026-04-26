@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Status &amp; Compliance — HIND Maritime IS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="../index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · Integrated IS</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../index.html">Αρχική</a></li>
+                <li><a href="fleet-status.html" class="active">Fleet Status</a></li>
+                <li><a href="voyage-dashboard.html">Voyages</a></li>
+                <li><a href="noon-report.html">Noon Report</a></li>
+                <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><span class="user-chip">DPA · M. Papadopoulos</span></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Fleet Status &amp; Compliance Dashboard</h1>
+    <p class="page-subtitle">
+        Άμεση Πρόσβαση στα Πιστοποιητικά &amp; Παρακολούθηση Συμμόρφωσης Στόλου ·
+        Ενημέρωση: <strong>27/04/2026 13:42</strong>
+    </p>
+
+    <!-- ALERT BANNER -->
+    <div class="alert-box warning">
+        <strong>⚠ 3 Πιστοποιητικά λήγουν εντός 30 ημερών</strong>
+        Το σύστημα έχει αποστείλει αυτόματες ειδοποιήσεις στους Certification Executives.
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi ok">
+            <div class="kpi-label">Συνολικά Πλοία</div>
+            <div class="kpi-value">8</div>
+            <div class="kpi-trend">Bulk Carriers</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Πλήρως Compliant</div>
+            <div class="kpi-value">5</div>
+            <div class="kpi-trend up">62.5% του στόλου</div>
+        </div>
+        <div class="kpi warning">
+            <div class="kpi-label">Λήγουν &lt; 30 ημέρες</div>
+            <div class="kpi-value">3</div>
+            <div class="kpi-trend">Απαιτείται ενέργεια</div>
+        </div>
+        <div class="kpi alert">
+            <div class="kpi-label">Expired Certificates</div>
+            <div class="kpi-value">1</div>
+            <div class="kpi-trend down">Off-hire risk</div>
+        </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters">
+        <div class="form-group">
+            <label for="f-vessel">Πλοίο</label>
+            <select id="f-vessel">
+                <option>Όλα τα πλοία</option>
+                <option>New Island</option>
+                <option>Med Island</option>
+                <option>Atlantic Island</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="f-cert">Τύπος Πιστοποιητικού</label>
+            <select id="f-cert">
+                <option>Όλοι οι τύποι</option>
+                <option>SMC (ISM)</option>
+                <option>ISSC (ISPS)</option>
+                <option>IOPP</option>
+                <option>Class Certificate</option>
+                <option>Load Line</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="f-status">Κατάσταση</label>
+            <select id="f-status">
+                <option>Όλες</option>
+                <option>Valid</option>
+                <option>Expiring</option>
+                <option>Expired</option>
+                <option>Missing Data</option>
+            </select>
+        </div>
+        <div>
+            <button class="btn btn-secondary">Εφαρμογή Φίλτρων</button>
+        </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="card">
+        <h2>Κατάσταση Στόλου — Πιστοποιητικά</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Πλοίο</th>
+                    <th>Τύπος</th>
+                    <th>Ηλικία</th>
+                    <th>Επόμενη Λήξη</th>
+                    <th>Κατάσταση</th>
+                    <th>Ενέργειες</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>New Island</strong><br><span class="muted">IMO 9456789</span></td>
+                    <td>Bulk Carrier</td>
+                    <td>8 έτη</td>
+                    <td>15/09/2026 <span class="muted">(SMC)</span></td>
+                    <td><span class="badge valid">Valid</span></td>
+                    <td>
+                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
+                        <a href="#" class="btn btn-primary">Export Vetting</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Med Island</strong><br><span class="muted">IMO 9234567</span></td>
+                    <td>Bulk Carrier</td>
+                    <td>14 έτη</td>
+                    <td>10/06/2026 <span class="muted">(IOPP)</span></td>
+                    <td><span class="badge valid">Valid</span></td>
+                    <td>
+                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
+                        <a href="#" class="btn btn-primary">Export Vetting</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Atlantic Island</strong><br><span class="muted">IMO 8956123</span></td>
+                    <td>Bulk Carrier</td>
+                    <td>21 έτος</td>
+                    <td>18/05/2026 <span class="muted">(Class)</span></td>
+                    <td><span class="badge warning">Λήγει σε 21 ημέρες</span></td>
+                    <td>
+                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
+                        <a href="#" class="btn btn-primary">Export Vetting</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Aegean Island</strong><br><span class="muted">IMO 9123456</span></td>
+                    <td>Bulk Carrier</td>
+                    <td>17 έτη</td>
+                    <td>22/05/2026 <span class="muted">(SMC)</span></td>
+                    <td><span class="badge warning">Λήγει σε 25 ημέρες</span></td>
+                    <td>
+                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
+                        <a href="#" class="btn btn-primary">Export Vetting</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Pacific Island</strong><br><span class="muted">IMO 8745632</span></td>
+                    <td>Bulk Carrier</td>
+                    <td>23 έτη</td>
+                    <td>25/05/2026 <span class="muted">(ISSC)</span></td>
+                    <td><span class="badge warning">Λήγει σε 28 ημέρες</span></td>
+                    <td>
+                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
+                        <a href="#" class="btn btn-primary">Export Vetting</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Ionian Island</strong><br><span class="muted">IMO 9356741</span></td>
+                    <td>Bulk Carrier</td>
+                    <td>11 έτη</td>
+                    <td>10/04/2026 <span class="muted">(Load Line)</span></td>
+                    <td><span class="badge expired">Expired</span></td>
+                    <td>
+                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
+                        <a href="#" class="btn btn-danger">Επείγον</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Cretan Island</strong><br><span class="muted">IMO 9087654</span></td>
+                    <td>Bulk Carrier</td>
+                    <td>18 έτη</td>
+                    <td>30/11/2026 <span class="muted">(SMC)</span></td>
+                    <td><span class="badge valid">Valid</span></td>
+                    <td>
+                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
+                        <a href="#" class="btn btn-primary">Export Vetting</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Adriatic Island</strong><br><span class="muted">IMO 9412385</span></td>
+                    <td>Bulk Carrier</td>
+                    <td>9 έτη</td>
+                    <td>—</td>
+                    <td><span class="badge missing">Missing Data</span></td>
+                    <td>
+                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
+                        <a href="#" class="btn btn-secondary">Καταχώρηση</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ALERTS HISTORY -->
+    <div class="card">
+        <h2>Πρόσφατες Αυτόματες Ειδοποιήσεις (Audit Trail)</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Ημ/νία</th>
+                    <th>Πλοίο</th>
+                    <th>Πιστοποιητικό</th>
+                    <th>Επίπεδο</th>
+                    <th>Παραλήπτης</th>
+                    <th>Κατάσταση Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>27/04/2026 09:00</td>
+                    <td>Atlantic Island</td>
+                    <td>Class Certificate</td>
+                    <td><span class="badge warning">30 ημέρες</span></td>
+                    <td>certifications@hind.gr</td>
+                    <td><span class="status-dot green"></span>Sent</td>
+                </tr>
+                <tr>
+                    <td>15/04/2026 09:00</td>
+                    <td>Atlantic Island</td>
+                    <td>Class Certificate</td>
+                    <td><span class="badge info">60 ημέρες</span></td>
+                    <td>certifications@hind.gr</td>
+                    <td><span class="status-dot green"></span>Sent</td>
+                </tr>
+                <tr>
+                    <td>10/04/2026 09:00</td>
+                    <td>Ionian Island</td>
+                    <td>Load Line</td>
+                    <td><span class="badge urgent">EXPIRED</span></td>
+                    <td>dpa@hind.gr · ceo@hind.gr</td>
+                    <td><span class="status-dot green"></span>Sent</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+</footer>
+
+</body>
+</html>

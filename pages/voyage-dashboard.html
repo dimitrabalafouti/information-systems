@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyage Dashboard — HIND Maritime IS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="../index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · Integrated IS</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../index.html">Αρχική</a></li>
+                <li><a href="fleet-status.html">Fleet Status</a></li>
+                <li><a href="voyage-dashboard.html" class="active">Voyages</a></li>
+                <li><a href="noon-report.html">Noon Report</a></li>
+                <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><span class="user-chip">Operations · K. Antoniou</span></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Voyage Dashboard — Real-Time Monitoring</h1>
+    <p class="page-subtitle">
+        Live παρακολούθηση ενεργών ταξιδιών · Auto-refresh κάθε 5 λεπτά ·
+        Τελευταία ενημέρωση: <strong>27/04/2026 13:38</strong>
+    </p>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi ok">
+            <div class="kpi-label">Ενεργά Ταξίδια</div>
+            <div class="kpi-value">6</div>
+            <div class="kpi-trend">σε εξέλιξη</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Estimated P&amp;L</div>
+            <div class="kpi-value">$842K</div>
+            <div class="kpi-trend up">+12% vs estimate</div>
+        </div>
+        <div class="kpi warning">
+            <div class="kpi-label">Bunker Consumption</div>
+            <div class="kpi-value">28.4 t/d</div>
+            <div class="kpi-trend down">+3% vs plan</div>
+        </div>
+        <div class="kpi alert">
+            <div class="kpi-label">Καθυστερήσεις ETA</div>
+            <div class="kpi-value">1</div>
+            <div class="kpi-trend">Atlantic Island</div>
+        </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters">
+        <div class="form-group">
+            <label for="f-vessel">Πλοίο</label>
+            <select id="f-vessel">
+                <option>Όλα τα πλοία</option>
+                <option>New Island</option>
+                <option>Med Island</option>
+                <option>Atlantic Island</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="f-route">Δρομολόγιο</label>
+            <select id="f-route">
+                <option>Όλα τα δρομολόγια</option>
+                <option>Μεσόγειος</option>
+                <option>Αίγυπτος ↔ Αλγερία</option>
+                <option>Βουλγαρία ↔ Ευρώπη</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="f-period">Περίοδος</label>
+            <select id="f-period">
+                <option>Τρέχουσα εβδομάδα</option>
+                <option>Τρέχων μήνας</option>
+                <option>Τελευταίο τρίμηνο</option>
+            </select>
+        </div>
+        <div>
+            <button class="btn btn-secondary">Εφαρμογή</button>
+            <button class="btn btn-primary">Export Excel</button>
+        </div>
+    </div>
+
+    <!-- ACTIVE VOYAGES TABLE -->
+    <div class="card">
+        <h2>Ενεργά Ταξίδια — Real-Time Status</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Πλοίο</th>
+                    <th>Voyage ID</th>
+                    <th>Route</th>
+                    <th>Θέση / Ταχύτητα</th>
+                    <th>Καύσιμα</th>
+                    <th>ETA</th>
+                    <th>P&amp;L (Est.)</th>
+                    <th>Last Noon</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>New Island</strong></td>
+                    <td>V-2026-041</td>
+                    <td>Piraeus → Algiers</td>
+                    <td>36.5°N 18.2°E<br><span class="muted">12.3 kn</span></td>
+                    <td>27.1 t/d</td>
+                    <td>30/04 16:00</td>
+                    <td><span style="color:var(--green); font-weight:600;">+$148K</span></td>
+                    <td><span class="status-dot green"></span>2 min</td>
+                </tr>
+                <tr>
+                    <td><strong>Med Island</strong></td>
+                    <td>V-2026-038</td>
+                    <td>Alexandria → Varna</td>
+                    <td>34.8°N 28.1°E<br><span class="muted">11.8 kn</span></td>
+                    <td>28.9 t/d</td>
+                    <td>02/05 09:00</td>
+                    <td><span style="color:var(--green); font-weight:600;">+$112K</span></td>
+                    <td><span class="status-dot green"></span>5 min</td>
+                </tr>
+                <tr>
+                    <td><strong>Atlantic Island</strong></td>
+                    <td>V-2026-035</td>
+                    <td>Rotterdam → Casablanca</td>
+                    <td>43.1°N -8.5°W<br><span class="muted">10.2 kn</span></td>
+                    <td>30.5 t/d</td>
+                    <td><span style="color:var(--red);">04/05 22:00 (+18h)</span></td>
+                    <td><span style="color:var(--orange); font-weight:600;">+$76K</span></td>
+                    <td><span class="status-dot orange"></span>3h ago</td>
+                </tr>
+                <tr>
+                    <td><strong>Aegean Island</strong></td>
+                    <td>V-2026-042</td>
+                    <td>Constanza → Barcelona</td>
+                    <td>40.2°N 14.7°E<br><span class="muted">12.8 kn</span></td>
+                    <td>26.4 t/d</td>
+                    <td>01/05 06:00</td>
+                    <td><span style="color:var(--green); font-weight:600;">+$201K</span></td>
+                    <td><span class="status-dot green"></span>1 min</td>
+                </tr>
+                <tr>
+                    <td><strong>Pacific Island</strong></td>
+                    <td>V-2026-040</td>
+                    <td>Suez → Port Said</td>
+                    <td>30.5°N 32.3°E<br><span class="muted">9.5 kn</span></td>
+                    <td>25.8 t/d</td>
+                    <td>28/04 18:00</td>
+                    <td><span style="color:var(--green); font-weight:600;">+$94K</span></td>
+                    <td><span class="status-dot green"></span>12 min</td>
+                </tr>
+                <tr>
+                    <td><strong>Cretan Island</strong></td>
+                    <td>V-2026-043</td>
+                    <td>Heraklion → Genoa</td>
+                    <td>38.8°N 19.4°E<br><span class="muted">13.1 kn</span></td>
+                    <td>27.6 t/d</td>
+                    <td>29/04 22:00</td>
+                    <td><span style="color:var(--green); font-weight:600;">+$211K</span></td>
+                    <td><span class="status-dot gray"></span>Offline (45 min)</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="btn-row">
+            <a href="#" class="btn btn-primary">Έκδοση Voyage Instructions</a>
+            <a href="#" class="btn btn-secondary">Export PDF</a>
+            <a href="#" class="btn btn-secondary">Σύγκριση Ταξιδιών</a>
+        </div>
+    </div>
+
+    <!-- DEVIATION ALERTS -->
+    <div class="card">
+        <h2>Ειδοποιήσεις Αποκλίσεων</h2>
+        <div class="alert-box warning">
+            <strong>Atlantic Island — Καθυστέρηση ETA</strong>
+            Εκτιμώμενη καθυστέρηση 18 ωρών λόγω καιρικών συνθηκών στον Βισκαϊκό κόλπο.
+            Έχει ειδοποιηθεί αυτόματα η Διοίκηση και ο Charterer.
+        </div>
+        <div class="alert-box info">
+            <strong>Cretan Island — Αναμονή Noon Report</strong>
+            Δεν έχει ληφθεί Noon Report τα τελευταία 45 λεπτά. Τελευταία γνωστή θέση: 38.8°N 19.4°E.
+        </div>
+    </div>
+</main>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+</footer>
+
+</body>
+</html>
