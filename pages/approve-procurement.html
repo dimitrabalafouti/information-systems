@@ -24,6 +24,12 @@
                 <li><a href="voyage-dashboard.html">Voyages</a></li>
                 <li><a href="noon-report.html">Noon Report</a></li>
                 <li><a href="approve-procurement.html" class="active">Approvals</a></li>
+                <li><a href="profitability-report.html">Profitability</a></li>
+                <li><a href="invoicing.html">Invoicing</a></li>
+                <li><a href="voyage-instructions.html">Instructions</a></li>
+                <li><a href="maintenance-queue.html">Maintenance</a></li>
+                <li><a href="request-new.html">New Request</a></li>
+                <li><a href="compliance-export.html">Compliance</a></li>
                 <li><span class="user-chip">CEO · A. Konstantinou</span></li>
             </ul>
         </nav>
@@ -35,6 +41,26 @@
     <p class="page-subtitle">
         Ψηφιακή Ροή Εγκρίσεων · Πλήρης Audit Trail · Αντικαθιστά τη χειρόγραφη υπογραφή σε φυσικά έγγραφα
     </p>
+
+    <!-- NOTIFICATION BANNER -->
+    <div class="notif-banner" id="pr-notif">
+        <div class="notif-dot"></div>
+        <div>
+            <strong>In-App Notification:</strong>
+            7 εκκρεμή αιτήματα προμήθειας αναμένουν έγκριση — 2 URGENT · Επιλέξτε αίτημα από την λίστα για επεξεργασία
+        </div>
+        <button class="notif-dismiss" onclick="this.parentElement.style.display='none'">&#10005;</button>
+    </div>
+
+    <!-- USE CASE FLOW -->
+    <div class="workflow-steps">
+        <div class="workflow-step done"><span class="step-num">&#10003;</span>Notification</div>
+        <div class="workflow-step active"><span class="step-num">2</span>Άνοιγμα Αιτήματος</div>
+        <div class="workflow-step" id="pr-step3"><span class="step-num">3</span>Απόφαση</div>
+        <div class="workflow-step" id="pr-step4"><span class="step-num">4</span>Auto-Record</div>
+        <div class="workflow-step" id="pr-step5"><span class="step-num">5</span>Auto-Notify</div>
+        <div class="workflow-step" id="pr-step6"><span class="step-num">6</span>Status Update</div>
+    </div>
 
     <!-- KPIs -->
     <div class="kpi-grid">
@@ -180,9 +206,9 @@
                       placeholder="Π.χ. Έγκριση με προσφορά Black Sea Provisions λόγω χρονικής καταλληλότητας."></textarea>
                 </div>
                 <div class="btn-row">
-                    <button type="button" class="btn btn-success">✓ Έγκριση</button>
-                    <button type="button" class="btn btn-danger">✕ Απόρριψη</button>
-                    <button type="button" class="btn btn-secondary">Παραπομπή σε Ανώτερο</button>
+                    <button type="button" class="btn btn-success" onclick="decisionPR('approve')">&#10003; Έγκριση</button>
+                    <button type="button" class="btn btn-danger" onclick="decisionPR('reject')">&#10005; Απόρριψη</button>
+                    <button type="button" class="btn btn-secondary" onclick="alert('Παραπομπή σε Ανώτερο...')"> Παραπομπή σε Ανώτερο</button>
                     <a href="../index.html" class="btn btn-secondary">Επιστροφή</a>
                 </div>
                 <p class="muted mt-1" style="font-size:12px;">
@@ -216,5 +242,31 @@
     © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
 </footer>
 
+<script>
+function decisionPR(action) {
+    var comment = document.getElementById('comment').value.trim();
+    var now = new Date();
+    var time = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+    var tbody = document.querySelector('#audit-tbody') || document.querySelectorAll('.data-table tbody')[1];
+    if (action === 'approve') {
+        // update badge
+        document.querySelector('.badge.warning') && (document.querySelector('.badge.warning').textContent = 'Εγκρίθηκε');
+        document.querySelector('.badge.warning') && document.querySelector('.badge.warning').classList.replace('warning','valid');
+        if (tbody) {
+            var r1 = tbody.insertRow(); r1.innerHTML = '<td>'+time+'</td><td><strong>Έγκριση</strong> από CEO A. Konstantinou'+(comment?' — '+comment:'')+'</td><td>CEO · A. Konstantinou</td>';
+            var r2 = tbody.insertRow(); r2.innerHTML = '<td>'+time+'</td><td>Ειδοποίηση απεστάλη στο Τμήμα Προμηθειών (εντός 1 λεπτού)</td><td>Σύστημα</td>';
+        }
+        ['pr-step3','pr-step4','pr-step5','pr-step6'].forEach(function(id){ var el=document.getElementById(id); if(el) el.className='workflow-step done'; });
+        alert('✓ Αίτημα #PR-2026-0421 Εγκρίθηκε.\nΕιδοποίηση απεστάλη αυτόματα στο Τμήμα Προμηθειών.');
+    } else {
+        if (tbody) {
+            var r = tbody.insertRow(); r.innerHTML = '<td>'+time+'</td><td><strong>Απόρριψη</strong> από CEO A. Konstantinou'+(comment?' — '+comment:'')+'</td><td>CEO · A. Konstantinou</td>';
+            var r2 = tbody.insertRow(); r2.innerHTML = '<td>'+time+'</td><td>Ειδοποίηση απόρριψης απεστάλη</td><td>Σύστημα</td>';
+        }
+        ['pr-step3','pr-step4','pr-step5','pr-step6'].forEach(function(id){ var el=document.getElementById(id); if(el) el.className='workflow-step done'; });
+        alert('✕ Αίτημα #PR-2026-0421 Απορρίφθηκε.\nΕιδοποίηση απορρίψης απεστάλη αυτόματα.');
+    }
+}
+</script>
 </body>
 </html>

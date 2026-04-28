@@ -3,8 +3,8 @@
 **Μέρος 3ο — Σχεδιασμός Ιστοσελίδων**
 Πληροφοριακά Συστήματα · Ομάδα 69 · Αθήνα, Απρίλιος 2026
 
-> *"One automated source of truth, a world of trust:
-> Your real-time digital shield in dry cargo brokerage."*
+> "One automated source of truth, a world of trust:
+> Your real-time digital shield in dry cargo brokerage."
 
 ## Μέλη Ομάδας
 

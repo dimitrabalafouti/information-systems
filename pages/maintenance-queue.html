@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Queue — HIND Maritime IS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="../index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · Technical Department</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../index.html">Αρχική</a></li>
+                <li><a href="fleet-status.html">Fleet Status</a></li>
+                <li><a href="voyage-dashboard.html">Voyages</a></li>
+                <li><a href="noon-report.html">Noon Report</a></li>
+                <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><a href="profitability-report.html">Profitability</a></li>
+                <li><a href="invoicing.html">Invoicing</a></li>
+                <li><a href="voyage-instructions.html">Instructions</a></li>
+                <li><a href="maintenance-queue.html" class="active">Maintenance</a></li>
+                <li><a href="request-new.html">New Request</a></li>
+                <li><a href="compliance-export.html">Compliance</a></li>
+                <li><span class="user-chip">Technical · S. Nikolaou</span></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Ουρά Συντήρησης &amp; Βλαβών</h1>
+    <p class="page-subtitle">
+        Αυτόματη ανάθεση αιτημάτων συντήρησης · In-app ειδοποιήσεις ·
+        Ενημέρωση: <strong>28/04/2026 09:30</strong>
+    </p>
+
+    <!-- NOTIFICATION BANNER -->
+    <div class="notif-banner" id="maint-notif">
+        <div class="notif-dot"></div>
+        <div>
+            <strong>Νέο Αίτημα #MQ-2026-0055</strong>
+            M/V Atlantic Island · Βλάβη Κυρίου Μηχανήματος · Επείγον — ανατέθηκε αυτόματα σε Ανδρέα Γεωργίου
+        </div>
+        <button class="notif-dismiss" onclick="this.parentElement.style.display='none'">&#10005;</button>
+    </div>
+
+    <!-- USE CASE FLOW -->
+    <div class="workflow-steps">
+        <div class="workflow-step done"><span class="step-num">1</span>Λήψη Αιτήματος</div>
+        <div class="workflow-step done"><span class="step-num">2</span>Αυτόματη Ανάθεση</div>
+        <div class="workflow-step active"><span class="step-num">3</span>In-App Notification</div>
+        <div class="workflow-step"><span class="step-num">4</span>Σε Εξέλιξη</div>
+        <div class="workflow-step"><span class="step-num">5</span>Ολοκλήρωση</div>
+        <div class="workflow-step"><span class="step-num">6</span>Auto-Notify</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi alert">
+            <div class="kpi-label">Νέα / Εκκρεμή</div>
+            <div class="kpi-value">4</div>
+            <div class="kpi-trend">Προς ανάθεση</div>
+        </div>
+        <div class="kpi warning">
+            <div class="kpi-label">Σε Εξέλιξη</div>
+            <div class="kpi-value">7</div>
+            <div class="kpi-trend">Ανατεθειμένα</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Ολοκληρωμένα (μήνας)</div>
+            <div class="kpi-value">23</div>
+            <div class="kpi-trend up">Απρ 2026</div>
+        </div>
+        <div class="kpi alert">
+            <div class="kpi-label">URGENT</div>
+            <div class="kpi-value">2</div>
+            <div class="kpi-trend down">Απαιτείται άμεση ενέργεια</div>
+        </div>
+    </div>
+
+    <!-- SPLIT VIEW -->
+    <div class="split-view">
+
+        <!-- LIST -->
+        <div class="list-panel">
+            <div style="padding:12px 16px;background:var(--navy);color:#fff;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">
+                Αιτήματα Συντήρησης
+            </div>
+
+            <div class="list-item selected">
+                <div class="ticket">#MQ-2026-0055 · 28/04 09:15 · <span class="badge urgent" style="font-size:11px;">URGENT</span></div>
+                <div class="title">Βλάβη Κυρίου Μηχανήματος</div>
+                <div class="meta">M/V Atlantic Island · <span class="status-dot orange"></span>Ειδοποίηση Απεστάλη</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">#MQ-2026-0054 · 28/04 07:42 · <span class="badge urgent" style="font-size:11px;">URGENT</span></div>
+                <div class="title">Δυσλειτουργία Συστήματος Πλοήγησης</div>
+                <div class="meta">M/V Ionian Island · <span class="status-dot red"></span>Εκκρεμεί Ανάθεση</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">#MQ-2026-0053 · 27/04 16:10</div>
+                <div class="title">Συντήρηση Αντλίας Αποχέτευσης</div>
+                <div class="meta">M/V New Island · <span class="status-dot orange"></span>Σε Εξέλιξη</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">#MQ-2026-0052 · 27/04 14:30</div>
+                <div class="title">Έλεγχος Γεννήτριας Έκτακτης Ανάγκης</div>
+                <div class="meta">M/V Med Island · <span class="status-dot orange"></span>Σε Εξέλιξη</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">#MQ-2026-0051 · 27/04 11:00</div>
+                <div class="title">Προγραμματισμένη Συντήρηση PMS — 500h</div>
+                <div class="meta">M/V Aegean Island · <span class="status-dot orange"></span>Σε Εξέλιξη</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">#MQ-2026-0050 · 26/04 18:00</div>
+                <div class="title">Βαφή Εξωτερικής Επιφάνειας (Scheduled)</div>
+                <div class="meta">M/V Pacific Island · <span class="status-dot orange"></span>Σε Εξέλιξη</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">#MQ-2026-0048 · 25/04 09:00</div>
+                <div class="title">Αντικατάσταση Φίλτρων Μηχανής</div>
+                <div class="meta">M/V Cretan Island · <span class="status-dot green"></span>Ολοκληρώθηκε</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">#MQ-2026-0047 · 24/04 14:20</div>
+                <div class="title">Επισκευή Αντλίας Πυρόσβεσης</div>
+                <div class="meta">M/V New Island · <span class="status-dot green"></span>Ολοκληρώθηκε</div>
+            </div>
+        </div>
+
+        <!-- DETAIL PANEL -->
+        <div id="detail-view">
+            <div class="detail-panel" style="margin-bottom:16px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--accent);">
+                    <div>
+                        <h2 style="color:var(--navy);font-size:18px;margin:0;">#MQ-2026-0055</h2>
+                        <p class="muted" style="margin-top:4px;">Βλάβη Κυρίου Μηχανήματος · M/V Atlantic Island</p>
+                    </div>
+                    <span class="badge urgent">URGENT</span>
+                </div>
+
+                <!-- USE CASE FLOW FOR THIS TICKET -->
+                <div class="workflow-steps" style="margin-bottom:16px;">
+                    <div class="workflow-step done"><span class="step-num">&#10003;</span>Λήψη<br><small>09:15</small></div>
+                    <div class="workflow-step done"><span class="step-num">&#10003;</span>Ανάλυση<br><small>09:15</small></div>
+                    <div class="workflow-step active"><span class="step-num">3</span>Ειδοποίηση<br><small>09:16</small></div>
+                    <div class="workflow-step"><span class="step-num">4</span>Σε Εξέλιξη</div>
+                    <div class="workflow-step"><span class="step-num">5</span>Ολοκλήρωση</div>
+                    <div class="workflow-step"><span class="step-num">6</span>Auto-Notify</div>
+                </div>
+
+                <div class="detail-row"><span class="label">Πλοίο</span><span>M/V Atlantic Island (IMO 8956123)</span></div>
+                <div class="detail-row"><span class="label">Τύπος</span><span>Βλάβη — Κύριο Μηχάνημα (Main Engine)</span></div>
+                <div class="detail-row"><span class="label">Υπεβλήθη από</span><span>Capt. P. Alexiou (Master) · 28/04/2026 09:15</span></div>
+                <div class="detail-row"><span class="label">Πηγή</span><span>Χειροκίνητη αναφορά Πλοιάρχου</span></div>
+                <div class="detail-row"><span class="label">Περιγραφή</span><span>Ανώμαλη δόνηση και ανύψωση θερμοκρασίας κυρίου μηχανήματος. Πιθανή βλάβη τριβέα εξάτμισης (exhaust bearing). Χαμηλώσαμε RPM σε 60%.</span></div>
+                <div class="detail-row"><span class="label">Ανατέθηκε σε</span><span><strong>Α. Γεωργίου</strong> (Chief Engineer — αυτόματη ανάθεση) · 28/04/2026 09:15</span></div>
+                <div class="detail-row"><span class="label">Τρέχουσα Κατάσταση</span><span><span class="badge warning">Ειδοποίηση Απεστάλη — Αναμονή Τεχνικού</span></span></div>
+                <div class="detail-row"><span class="label">Εκτιμ. Αποκατάσταση</span><span>4–8 ώρες (ανάλογα αξιολόγησης επί τόπου)</span></div>
+
+                <div class="alert-box warning" style="margin:14px 0;">
+                    <strong>⚠ Αυτόματη Ανάθεση — Κανόνας Συστήματος</strong>
+                    Τύπος «Βλάβη Κυρίου Μηχανήματος» → αυτόματη ανάθεση σε Chief Engineer + ειδοποίηση
+                    Technical Superintendent εντός 1 λεπτού. Ειδοποίηση εστάλη στις 09:16.
+                </div>
+
+                <!-- ACTIONS -->
+                <div style="margin-bottom:18px;">
+                    <h2 style="font-size:15px;margin-bottom:10px;">Ενέργεια Τεχνικού</h2>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label for="tech-action">Κατάσταση</label>
+                        <select id="tech-action">
+                            <option>Ειδοποίηση Απεστάλη</option>
+                            <option>Σε Εξέλιξη — Αξιολόγηση</option>
+                            <option>Σε Εξέλιξη — Επισκευή</option>
+                            <option>Αναμονή Ανταλλακτικών</option>
+                            <option>Ολοκληρώθηκε</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label for="tech-notes">Καταχώρηση Ενεργειών</label>
+                        <textarea id="tech-notes" rows="3" placeholder="Περιγράψτε τι έγινε, εργαλεία/ανταλλακτικά που χρησιμοποιήθηκαν..."></textarea>
+                    </div>
+                    <div class="btn-row">
+                        <button class="btn btn-primary" onclick="updateStatus()">Ενημέρωση Κατάστασης</button>
+                        <button class="btn btn-success" onclick="closeTicket()">&#10003; Κλείσιμο Αιτήματος</button>
+                    </div>
+                </div>
+
+                <!-- AUDIT TRAIL -->
+                <div>
+                    <h2 style="font-size:15px;margin-bottom:10px;">Audit Trail</h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Ώρα</th><th>Ενέργεια</th><th>Χρήστης</th></tr>
+                        </thead>
+                        <tbody id="audit-tbody">
+                            <tr><td>09:15</td><td>Υποβολή αιτήματος βλάβης</td><td>Capt. P. Alexiou</td></tr>
+                            <tr><td>09:15</td><td>Αυτόματη ανάλυση τύπου βλάβης</td><td>Σύστημα</td></tr>
+                            <tr><td>09:15</td><td>Αυτόματη ανάθεση → Α. Γεωργίου (Chief Engineer)</td><td>Σύστημα</td></tr>
+                            <tr><td>09:16</td><td>In-app notification εστάλη</td><td>Σύστημα</td></tr>
+                            <tr><td>09:16</td><td>Ειδοποίηση Technical Superintendent (N. Papadakis)</td><td>Σύστημα</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+</footer>
+
+<script>
+function updateStatus() {
+    var sel = document.getElementById('tech-action').value;
+    var notes = document.getElementById('tech-notes').value;
+    if (!notes.trim()) { alert('Καταχωρήστε σημείωση ενέργειας.'); return; }
+    var now = new Date();
+    var time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+    var tbody = document.getElementById('audit-tbody');
+    var row = tbody.insertRow();
+    row.innerHTML = '<td>' + time + '</td><td>Κατάσταση → "' + sel + '" — ' + notes + '</td><td>S. Nikolaou (Technical)</td>';
+    document.getElementById('tech-notes').value = '';
+    alert('Κατάσταση ενημερώθηκε: "' + sel + '"');
+}
+
+function closeTicket() {
+    var notes = document.getElementById('tech-notes').value || '—';
+    var now = new Date();
+    var time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+    var tbody = document.getElementById('audit-tbody');
+    var row = tbody.insertRow();
+    row.innerHTML = '<td>' + time + '</td><td><strong>Αίτημα Ολοκληρώθηκε</strong> — ' + notes + '</td><td>S. Nikolaou (Technical)</td>';
+    var row2 = tbody.insertRow();
+    row2.innerHTML = '<td>' + time + '</td><td>Auto-notify Πλοίαρχος &amp; Διοίκηση: Αποκατάσταση βλάβης ολοκληρώθηκε</td><td>Σύστημα</td>';
+    alert('Αίτημα #MQ-2026-0055 κλείστηκε. Αυτόματη ειδοποίηση απεστάλη στον Πλοίαρχο και τη Διοίκηση.');
+}
+</script>
+
+</body>
+</html>

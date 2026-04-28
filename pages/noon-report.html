@@ -24,6 +24,12 @@
                 <li><a href="voyage-dashboard.html">Voyages</a></li>
                 <li><a href="noon-report.html" class="active">Noon Report</a></li>
                 <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><a href="profitability-report.html">Profitability</a></li>
+                <li><a href="invoicing.html">Invoicing</a></li>
+                <li><a href="voyage-instructions.html">Instructions</a></li>
+                <li><a href="maintenance-queue.html">Maintenance</a></li>
+                <li><a href="request-new.html">New Request</a></li>
+                <li><a href="compliance-export.html">Compliance</a></li>
                 <li><span class="user-chip">Master · Capt. G. Petrou</span></li>
             </ul>
         </nav>
@@ -37,6 +43,16 @@
         Ημερομηνία: <strong>27/04/2026 12:00 LT</strong>
     </p>
 
+    <!-- USE CASE FLOW -->
+    <div class="workflow-steps">
+        <div class="workflow-step done"><span class="step-num">&#10003;</span>Σύνδεση</div>
+        <div class="workflow-step active"><span class="step-num">2</span>Φόρμα</div>
+        <div class="workflow-step" id="nr-step3"><span class="step-num">3</span>Επιβεβαίωση</div>
+        <div class="workflow-step" id="nr-step4"><span class="step-num">4</span>Data Parsing</div>
+        <div class="workflow-step" id="nr-step5"><span class="step-num">5</span>Dashboard Update</div>
+        <div class="workflow-step" id="nr-step6"><span class="step-num">6</span>Auto-Confirm</div>
+    </div>
+
     <div class="alert-box info">
         <strong>ℹ Τυποποιημένη Ψηφιακή Φόρμα</strong>
         Τα δεδομένα θα αναλυθούν αυτόματα (Data Parsing) και θα ενημερώσουν το Voyage Dashboard
@@ -44,7 +60,29 @@
         και αποστέλλεται αυτόματα μόλις αποκατασταθεί η επικοινωνία.
     </div>
 
-    <form action="voyage-dashboard.html" method="get" novalidate>
+    <!-- CONFIRMATION PANEL (hidden until submit) -->
+    <div id="nr-confirm" style="display:none;">
+        <div class="alert-box success">
+            <strong>&#10003; Noon Report Υποβλήθηκε Επιτυχώς</strong>
+        </div>
+        <div class="card">
+            <h2>Επιβεβαίωση Συστήματος</h2>
+            <div class="detail-row"><span class="label">Αρ. Αναφοράς</span><span id="nr-id" style="font-weight:800;color:var(--navy);"></span></div>
+            <div class="detail-row"><span class="label">Χρονοσήμανση</span><span id="nr-ts"></span></div>
+            <div class="detail-row"><span class="label">Κατάσταση</span><span id="nr-status"></span></div>
+            <div class="alert-box info" style="margin:10px 0;">
+                <strong>Data Parsing σε εξέλιξη</strong>
+                Τα δεδομένα αναλύονται αυτόματα. Το Voyage Dashboard θα ενημερωθεί εντός 5 λεπτών.
+                Αυτόματη επιβεβαίωση απεστάλη στον Πλοίαρχο.
+            </div>
+            <div class="btn-row">
+                <a href="voyage-dashboard.html" class="btn btn-primary">Voyages Dashboard</a>
+                <button class="btn btn-secondary" onclick="document.getElementById('nr-confirm').style.display='none';document.getElementById('nr-form').style.display='';">&#43; Νέα Αναφορά</button>
+            </div>
+        </div>
+    </div>
+
+    <form id="nr-form" onsubmit="submitNoon(event)" novalidate>
 
         <!-- POSITION -->
         <fieldset>
@@ -174,7 +212,7 @@
                 Auto-stamp: 27/04/2026 12:00 UTC
             </p>
             <div class="btn-row">
-                <button type="submit" class="btn btn-primary">Υποβολή Noon Report</button>
+                <button type="submit" class="btn btn-primary">&#9654; Υποβολή Noon Report</button>
                 <button type="button" class="btn btn-secondary">Αποθήκευση Πρόχειρου</button>
                 <a href="../index.html" class="btn btn-secondary">Ακύρωση</a>
             </div>
@@ -229,5 +267,24 @@
     © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
 </footer>
 
+<script>
+function submitNoon(e) {
+    e.preventDefault();
+    var speed = document.getElementById('speed').value;
+    var cons = document.getElementById('cons24').value;
+    if (!speed || !cons) { alert('Συμπληρώστε όλα τα υποχρεωτικά πεδία (*).'); return; }
+    var now = new Date();
+    var ts = now.toLocaleString('el-GR') + ' UTC';
+    var id = 'NR-' + now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0') + '-' + String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0');
+    document.getElementById('nr-id').textContent = id;
+    document.getElementById('nr-ts').textContent = ts + ' · Capt. G. Petrou (Ψηφιακή Υπογραφή)';
+    document.getElementById('nr-status').textContent = 'Αποθηκεύτηκε στην κεντρική βάση — Data Parsing σε εξέλιξη';
+    // advance workflow steps
+    ['nr-step3','nr-step4','nr-step5','nr-step6'].forEach(function(id){ document.getElementById(id).className='workflow-step done'; });
+    document.getElementById('nr-form').style.display = 'none';
+    document.getElementById('nr-confirm').style.display = '';
+    window.scrollTo(0,0);
+}
+</script>
 </body>
 </html>

@@ -24,6 +24,12 @@
                 <li><a href="voyage-dashboard.html">Voyages</a></li>
                 <li><a href="noon-report.html">Noon Report</a></li>
                 <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><a href="profitability-report.html">Profitability</a></li>
+                <li><a href="invoicing.html">Invoicing</a></li>
+                <li><a href="voyage-instructions.html">Instructions</a></li>
+                <li><a href="maintenance-queue.html">Maintenance</a></li>
+                <li><a href="request-new.html">New Request</a></li>
+                <li><a href="compliance-export.html">Compliance</a></li>
                 <li><span class="user-chip">DPA · M. Papadopoulos</span></li>
             </ul>
         </nav>
@@ -124,10 +130,10 @@
                     <td>Bulk Carrier</td>
                     <td>8 έτη</td>
                     <td>15/09/2026 <span class="muted">(SMC)</span></td>
-                    <td><span class="badge valid">Valid</span></td>
+                    <td><span class="badge valid cert-badge" style="cursor:pointer;" onclick="openCertModal('new-island')" title="Κλικ για λεπτομέρειες">&#9679; Valid</span></td>
                     <td>
-                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
-                        <a href="#" class="btn btn-primary">Export Vetting</a>
+                        <button class="btn btn-secondary" onclick="openCertModal('new-island')">Λεπτομέρειες</button>
+                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder...')">Export Vetting</button>
                     </td>
                 </tr>
                 <tr>
@@ -135,10 +141,10 @@
                     <td>Bulk Carrier</td>
                     <td>14 έτη</td>
                     <td>10/06/2026 <span class="muted">(IOPP)</span></td>
-                    <td><span class="badge valid">Valid</span></td>
+                    <td><span class="badge valid cert-badge" style="cursor:pointer;" onclick="openCertModal('med-island')" title="Κλικ για λεπτομέρειες">&#9679; Valid</span></td>
                     <td>
-                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
-                        <a href="#" class="btn btn-primary">Export Vetting</a>
+                        <button class="btn btn-secondary" onclick="openCertModal('med-island')">Λεπτομέρειες</button>
+                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder...')">Export Vetting</button>
                     </td>
                 </tr>
                 <tr>
@@ -146,10 +152,10 @@
                     <td>Bulk Carrier</td>
                     <td>21 έτος</td>
                     <td>18/05/2026 <span class="muted">(Class)</span></td>
-                    <td><span class="badge warning">Λήγει σε 21 ημέρες</span></td>
+                    <td><span class="badge warning cert-badge" style="cursor:pointer;" onclick="openCertModal('atlantic-island')" title="Κλικ για λεπτομέρειες">&#9679; Λήγει σε 21 ημέρες</span></td>
                     <td>
-                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
-                        <a href="#" class="btn btn-primary">Export Vetting</a>
+                        <button class="btn btn-secondary" onclick="openCertModal('atlantic-island')">Λεπτομέρειες</button>
+                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder...')">Export Vetting</button>
                     </td>
                 </tr>
                 <tr>
@@ -157,10 +163,10 @@
                     <td>Bulk Carrier</td>
                     <td>17 έτη</td>
                     <td>22/05/2026 <span class="muted">(SMC)</span></td>
-                    <td><span class="badge warning">Λήγει σε 25 ημέρες</span></td>
+                    <td><span class="badge warning cert-badge" style="cursor:pointer;" onclick="openCertModal('aegean-island')" title="Κλικ για λεπτομέρειες">&#9679; Λήγει σε 25 ημέρες</span></td>
                     <td>
-                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
-                        <a href="#" class="btn btn-primary">Export Vetting</a>
+                        <button class="btn btn-secondary" onclick="openCertModal('aegean-island')">Λεπτομέρειες</button>
+                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder...')">Export Vetting</button>
                     </td>
                 </tr>
                 <tr>
@@ -168,10 +174,10 @@
                     <td>Bulk Carrier</td>
                     <td>23 έτη</td>
                     <td>25/05/2026 <span class="muted">(ISSC)</span></td>
-                    <td><span class="badge warning">Λήγει σε 28 ημέρες</span></td>
+                    <td><span class="badge warning cert-badge" style="cursor:pointer;" onclick="openCertModal('pacific-island')" title="Κλικ για λεπτομέρειες">&#9679; Λήγει σε 28 ημέρες</span></td>
                     <td>
-                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
-                        <a href="#" class="btn btn-primary">Export Vetting</a>
+                        <button class="btn btn-secondary" onclick="openCertModal('pacific-island')">Λεπτομέρειες</button>
+                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder...')">Export Vetting</button>
                     </td>
                 </tr>
                 <tr>
@@ -179,10 +185,10 @@
                     <td>Bulk Carrier</td>
                     <td>11 έτη</td>
                     <td>10/04/2026 <span class="muted">(Load Line)</span></td>
-                    <td><span class="badge expired">Expired</span></td>
+                    <td><span class="badge expired cert-badge" style="cursor:pointer;" onclick="openCertModal('ionian-island')" title="Κλικ για λεπτομέρειες">&#9679; Expired</span></td>
                     <td>
-                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
-                        <a href="#" class="btn btn-danger">Επείγον</a>
+                        <button class="btn btn-secondary" onclick="openCertModal('ionian-island')">Λεπτομέρειες</button>
+                        <button class="btn btn-danger" onclick="alert('Ειδοποίηση Επείγουσας Ανανέωσης...')">Επείγον</button>
                     </td>
                 </tr>
                 <tr>
@@ -190,10 +196,10 @@
                     <td>Bulk Carrier</td>
                     <td>18 έτη</td>
                     <td>30/11/2026 <span class="muted">(SMC)</span></td>
-                    <td><span class="badge valid">Valid</span></td>
+                    <td><span class="badge valid cert-badge" style="cursor:pointer;" onclick="openCertModal('cretan-island')" title="Κλικ για λεπτομέρειες">&#9679; Valid</span></td>
                     <td>
-                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
-                        <a href="#" class="btn btn-primary">Export Vetting</a>
+                        <button class="btn btn-secondary" onclick="openCertModal('cretan-island')">Λεπτομέρειες</button>
+                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder...')">Export Vetting</button>
                     </td>
                 </tr>
                 <tr>
@@ -201,10 +207,10 @@
                     <td>Bulk Carrier</td>
                     <td>9 έτη</td>
                     <td>—</td>
-                    <td><span class="badge missing">Missing Data</span></td>
+                    <td><span class="badge missing cert-badge" style="cursor:pointer;" onclick="openCertModal('adriatic-island')" title="Κλικ για λεπτομέρειες">&#9679; Missing Data</span></td>
                     <td>
-                        <a href="#" class="btn btn-secondary">Λεπτομέρειες</a>
-                        <a href="#" class="btn btn-secondary">Καταχώρηση</a>
+                        <button class="btn btn-secondary" onclick="openCertModal('adriatic-island')">Λεπτομέρειες</button>
+                        <button class="btn btn-secondary" onclick="alert('Φόρμα καταχώρησης πιστοποιητικού...')">Καταχώρηση</button>
                     </td>
                 </tr>
             </tbody>
@@ -258,6 +264,116 @@
 <footer class="site-footer">
     © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
 </footer>
+
+<!-- CERTIFICATE DETAIL MODAL -->
+<div id="cert-modal" class="modal-overlay" style="display:none;" onclick="if(event.target===this)closeCertModal()">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeCertModal()" aria-label="Κλείσιμο">&#10005;</button>
+        <h2 id="m-title">Λεπτομέρειες Πιστοποιητικού</h2>
+        <div id="m-status-banner" class="alert-box info" style="margin:10px 0 16px;"></div>
+        <div class="detail-row"><span class="label">Πλοίο</span><span id="m-vessel"></span></div>
+        <div class="detail-row"><span class="label">IMO Number</span><span id="m-imo"></span></div>
+        <div class="detail-row"><span class="label">Τύπος Πιστοποιητικού</span><span id="m-cert-type"></span></div>
+        <div class="detail-row"><span class="label">Αρχή Έκδοσης</span><span id="m-authority"></span></div>
+        <div class="detail-row"><span class="label">Ημ. Έκδοσης</span><span id="m-issued"></span></div>
+        <div class="detail-row"><span class="label">Ημ. Λήξης</span><span id="m-expires"></span></div>
+        <div class="detail-row"><span class="label">Κατάσταση</span><span id="m-status-cell"></span></div>
+        <div class="btn-row" style="margin-top:18px;">
+            <button class="btn btn-primary" onclick="alert('Λήψη ψηφιακού αντιγράφου...')">&#11015; Ψηφιακό Αντίγραφο</button>
+            <button class="btn btn-secondary" onclick="closeCertModal()">Κλείσιμο</button>
+        </div>
+    </div>
+</div>
+
+<script>
+var certData = {
+    'new-island': {
+        vessel: 'New Island', imo: 'IMO 9456789',
+        certType: 'Safety Management Certificate (SMC / ISM Code)',
+        authority: "Lloyd's Register",
+        issued: '15/09/2021', expires: '15/09/2026',
+        status: 'valid', statusLabel: 'Valid — Λήξη σε 140 ημέρες'
+    },
+    'med-island': {
+        vessel: 'Med Island', imo: 'IMO 9234567',
+        certType: 'International Oil Pollution Prevention Certificate (IOPP)',
+        authority: 'Bureau Veritas',
+        issued: '10/06/2021', expires: '10/06/2026',
+        status: 'valid', statusLabel: 'Valid — Λήξη σε 43 ημέρες'
+    },
+    'atlantic-island': {
+        vessel: 'Atlantic Island', imo: 'IMO 8956123',
+        certType: 'Class Certificate (DNV)',
+        authority: 'DNV',
+        issued: '18/05/2021', expires: '18/05/2026',
+        status: 'warning', statusLabel: '⚠ Λήγει σε 21 ημέρες — Απαιτείται ανανέωση'
+    },
+    'aegean-island': {
+        vessel: 'Aegean Island', imo: 'IMO 9123456',
+        certType: 'Safety Management Certificate (SMC / ISM Code)',
+        authority: 'American Bureau of Shipping (ABS)',
+        issued: '22/05/2021', expires: '22/05/2026',
+        status: 'warning', statusLabel: '⚠ Λήγει σε 25 ημέρες — Απαιτείται ανανέωση'
+    },
+    'pacific-island': {
+        vessel: 'Pacific Island', imo: 'IMO 8745632',
+        certType: 'International Ship Security Certificate (ISSC / ISPS Code)',
+        authority: 'ClassNK',
+        issued: '25/05/2021', expires: '25/05/2026',
+        status: 'warning', statusLabel: '⚠ Λήγει σε 28 ημέρες — Απαιτείται ανανέωση'
+    },
+    'ionian-island': {
+        vessel: 'Ionian Island', imo: 'IMO 9356741',
+        certType: 'Load Line Certificate (LL 66)',
+        authority: 'RINA — Registro Italiano Navale',
+        issued: '10/04/2021', expires: '10/04/2026',
+        status: 'expired', statusLabel: 'EXPIRED — Ληγμένο από 18/04/2026 · Off-hire κίνδυνος'
+    },
+    'cretan-island': {
+        vessel: 'Cretan Island', imo: 'IMO 9087654',
+        certType: 'Safety Management Certificate (SMC / ISM Code)',
+        authority: "Lloyd's Register",
+        issued: '30/11/2021', expires: '30/11/2026',
+        status: 'valid', statusLabel: 'Valid — Λήξη σε 216 ημέρες'
+    },
+    'adriatic-island': {
+        vessel: 'Adriatic Island', imo: 'IMO 9412385',
+        certType: '— (Missing Data)',
+        authority: '—',
+        issued: '—', expires: '—',
+        status: 'missing', statusLabel: 'Missing Data — Απαιτείται καταχώρηση στοιχείων'
+    }
+};
+
+var bannerClass = { valid: 'success', warning: 'warning', expired: 'danger', missing: 'info' };
+var badgeClass  = { valid: 'valid',   warning: 'warning', expired: 'expired', missing: 'missing' };
+
+function openCertModal(key) {
+    var d = certData[key];
+    if (!d) return;
+    document.getElementById('m-title').textContent = 'Πιστοποιητικό — ' + d.vessel;
+    document.getElementById('m-vessel').textContent = d.vessel;
+    document.getElementById('m-imo').textContent = d.imo;
+    document.getElementById('m-cert-type').textContent = d.certType;
+    document.getElementById('m-authority').textContent = d.authority;
+    document.getElementById('m-issued').textContent = d.issued;
+    document.getElementById('m-expires').textContent = d.expires;
+    document.getElementById('m-status-cell').innerHTML =
+        '<span class="badge ' + (badgeClass[d.status] || '') + '">' + d.statusLabel + '</span>';
+    var banner = document.getElementById('m-status-banner');
+    banner.className = 'alert-box ' + (bannerClass[d.status] || 'info');
+    banner.textContent = d.statusLabel;
+    document.getElementById('cert-modal').style.display = 'flex';
+}
+
+function closeCertModal() {
+    document.getElementById('cert-modal').style.display = 'none';
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeCertModal();
+});
+</script>
 
 </body>
 </html>

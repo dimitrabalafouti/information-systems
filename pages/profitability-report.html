@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profitability Report — HIND Maritime IS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="../index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · Management Console</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../index.html">Αρχική</a></li>
+                <li><a href="fleet-status.html">Fleet Status</a></li>
+                <li><a href="voyage-dashboard.html">Voyages</a></li>
+                <li><a href="noon-report.html">Noon Report</a></li>
+                <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><a href="profitability-report.html" class="active">Profitability</a></li>
+                <li><a href="invoicing.html">Invoicing</a></li>
+                <li><a href="voyage-instructions.html">Instructions</a></li>
+                <li><a href="maintenance-queue.html">Maintenance</a></li>
+                <li><a href="request-new.html">New Request</a></li>
+                <li><a href="compliance-export.html">Compliance</a></li>
+                <li><span class="user-chip">CEO · A. Konstantinou</span></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Αναφορές Κερδοφορίας</h1>
+    <p class="page-subtitle">
+        Ανάλυση P&amp;L ανά ταξίδι, πλοίο ή χρονική περίοδο ·
+        Δεδομένα από κεντρική βάση χωρίς χειροκίνητη συγκέντρωση ·
+        Τελευταία ενημέρωση: <strong>28/04/2026 08:00</strong>
+    </p>
+
+    <!-- USE CASE FLOW -->
+    <div class="workflow-steps">
+        <div class="workflow-step done"><span class="step-num">&#10003;</span>Σύνδεση</div>
+        <div class="workflow-step active"><span class="step-num">2</span>Παράμετροι</div>
+        <div class="workflow-step" id="pr2-step3"><span class="step-num">3</span>Δημιουργία</div>
+        <div class="workflow-step" id="pr2-step4"><span class="step-num">4</span>Preview KPIs</div>
+        <div class="workflow-step" id="pr2-step5"><span class="step-num">5</span>Export</div>
+        <div class="workflow-step" id="pr2-step6"><span class="step-num">6</span>Αποστολή</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi ok">
+            <div class="kpi-label">Έσοδα (YTD)</div>
+            <div class="kpi-value">$4.24M</div>
+            <div class="kpi-trend up">+8.4% vs πέρυσι</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Κόστη (YTD)</div>
+            <div class="kpi-value">$3.10M</div>
+            <div class="kpi-trend down">+2.1% vs budget</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Καθαρό Κέρδος (YTD)</div>
+            <div class="kpi-value">$1.14M</div>
+            <div class="kpi-trend up">EBITDA Margin 26.9%</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Ταξίδια Αναλυθέντα</div>
+            <div class="kpi-value">34</div>
+            <div class="kpi-trend">Ιαν–Απρ 2026</div>
+        </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters">
+        <div class="form-group">
+            <label for="f-groupby">Ανάλυση κατά</label>
+            <select id="f-groupby">
+                <option>Ταξίδι</option>
+                <option>Πλοίο</option>
+                <option>Χρονική Περίοδο</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="f-vessel">Πλοίο</label>
+            <select id="f-vessel">
+                <option>Όλα τα πλοία</option>
+                <option>New Island</option>
+                <option>Med Island</option>
+                <option>Atlantic Island</option>
+                <option>Aegean Island</option>
+                <option>Pacific Island</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="f-period">Περίοδος</label>
+            <select id="f-period">
+                <option>YTD 2026 (Ιαν–Απρ)</option>
+                <option>Q1 2026 (Ιαν–Μαρ)</option>
+                <option>Q2 2026 (Απρ–Ιουν)</option>
+                <option>Τελ. 12 μήνες</option>
+                <option>Προσαρμοσμένη</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="f-from">Από</label>
+            <input type="date" id="f-from" value="2026-01-01">
+        </div>
+        <div class="form-group">
+            <label for="f-to">Έως</label>
+            <input type="date" id="f-to" value="2026-04-28">
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-end;">
+            <button class="btn btn-primary" onclick="generateReport()">Δημιουργία Αναφοράς</button>
+            <button class="btn btn-danger" onclick="alert('Εξαγωγή PDF...')">&#11015; PDF</button>
+            <button class="btn btn-secondary" onclick="alert('Εξαγωγή Excel (.xlsx)...')">&#11015; Excel</button>
+        </div>
+    </div>
+
+    <!-- REPORT GENERATION BANNER (shown after Δημιουργία Αναφοράς) -->
+    <div id="report-banner" class="alert-box success" style="display:none;margin-bottom:12px;"></div>
+
+    <!-- P&L PER VOYAGE TABLE -->
+    <div class="card">
+        <h2>Κερδοφορία ανά Ταξίδι — YTD 2026</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Κωδ. Ταξιδιού</th>
+                    <th>Πλοίο</th>
+                    <th>Δρομολόγιο</th>
+                    <th>Ημ/νίες</th>
+                    <th class="num">Έσοδα</th>
+                    <th class="num">Κόστη</th>
+                    <th class="num">Καθαρό Κέρδος</th>
+                    <th>Margin</th>
+                    <th>Κατάσταση</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>VY-2026-001</strong></td>
+                    <td>New Island</td>
+                    <td>Αλεξάνδρεια → Αμβέρσα</td>
+                    <td>05/01 – 28/01</td>
+                    <td class="num">$218,400</td>
+                    <td class="num">$154,200</td>
+                    <td class="num profit">$64,200</td>
+                    <td><span class="badge valid">29.4%</span></td>
+                    <td><span class="badge info">Κλειστό</span></td>
+                </tr>
+                <tr>
+                    <td><strong>VY-2026-002</strong></td>
+                    <td>Med Island</td>
+                    <td>Θεσσαλονίκη → Γένοβα</td>
+                    <td>08/01 – 22/01</td>
+                    <td class="num">$184,000</td>
+                    <td class="num">$142,800</td>
+                    <td class="num profit">$41,200</td>
+                    <td><span class="badge valid">22.4%</span></td>
+                    <td><span class="badge info">Κλειστό</span></td>
+                </tr>
+                <tr>
+                    <td><strong>VY-2026-003</strong></td>
+                    <td>Atlantic Island</td>
+                    <td>Odessa → Σεβίλλη</td>
+                    <td>11/01 – 05/02</td>
+                    <td class="num">$310,500</td>
+                    <td class="num">$268,400</td>
+                    <td class="num profit">$42,100</td>
+                    <td><span class="badge warning">13.6%</span></td>
+                    <td><span class="badge info">Κλειστό</span></td>
+                </tr>
+                <tr>
+                    <td><strong>VY-2026-004</strong></td>
+                    <td>Aegean Island</td>
+                    <td>Βαρκελώνη → Θεσσαλονίκη</td>
+                    <td>20/01 – 08/02</td>
+                    <td class="num">$196,000</td>
+                    <td class="num">$148,200</td>
+                    <td class="num profit">$47,800</td>
+                    <td><span class="badge valid">24.4%</span></td>
+                    <td><span class="badge info">Κλειστό</span></td>
+                </tr>
+                <tr>
+                    <td><strong>VY-2026-007</strong></td>
+                    <td>Aegean Island</td>
+                    <td>Κωνσταντινούπολη → Αμβέρσα</td>
+                    <td>15/02 – 08/03</td>
+                    <td class="num">$276,000</td>
+                    <td class="num">$198,700</td>
+                    <td class="num profit">$77,300</td>
+                    <td><span class="badge valid">28.0%</span></td>
+                    <td><span class="badge info">Κλειστό</span></td>
+                </tr>
+                <tr>
+                    <td><strong>VY-2026-012</strong></td>
+                    <td>Pacific Island</td>
+                    <td>Richards Bay → Rotterdam</td>
+                    <td>02/03 – 01/04</td>
+                    <td class="num">$415,200</td>
+                    <td class="num">$361,800</td>
+                    <td class="num profit">$53,400</td>
+                    <td><span class="badge warning">12.9%</span></td>
+                    <td><span class="badge info">Κλειστό</span></td>
+                </tr>
+                <tr>
+                    <td><strong>VY-2026-018</strong></td>
+                    <td>New Island</td>
+                    <td>Βαρκελώνη → Πειραιάς</td>
+                    <td>10/04 – <span class="muted">εκκρ.</span></td>
+                    <td class="num">$198,000 <span class="muted">(est.)</span></td>
+                    <td class="num">$142,000 <span class="muted">(act.)</span></td>
+                    <td class="num profit">$56,000 <span class="muted">(est.)</span></td>
+                    <td><span class="badge valid">28.3%</span></td>
+                    <td><span class="badge warning">Σε εξέλιξη</span></td>
+                </tr>
+                <tr>
+                    <td><strong>VY-2026-019</strong></td>
+                    <td>Med Island</td>
+                    <td>Κωνσταντινούπολη → Λισαβόνα</td>
+                    <td>18/04 – <span class="muted">εκκρ.</span></td>
+                    <td class="num">$224,000 <span class="muted">(est.)</span></td>
+                    <td class="num">$89,400 <span class="muted">(act.)</span></td>
+                    <td class="num muted">— <span class="muted">(εκκρ.)</span></td>
+                    <td><span class="muted">—</span></td>
+                    <td><span class="badge warning">Σε εξέλιξη</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SUMMARY BY VESSEL -->
+    <div class="card">
+        <h2>Σύνοψη ανά Πλοίο — YTD 2026</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Πλοίο</th>
+                    <th class="num">Ταξίδια</th>
+                    <th class="num">Συνολικά Έσοδα</th>
+                    <th class="num">Συνολικά Κόστη</th>
+                    <th class="num">Καθαρό Κέρδος</th>
+                    <th>Μέσο Margin</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>New Island</strong><br><span class="muted">IMO 9456789</span></td>
+                    <td class="num">7</td>
+                    <td class="num">$1,024,800</td>
+                    <td class="num">$742,100</td>
+                    <td class="num profit">$282,700</td>
+                    <td><span class="badge valid">27.6%</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Med Island</strong><br><span class="muted">IMO 9234567</span></td>
+                    <td class="num">6</td>
+                    <td class="num">$892,400</td>
+                    <td class="num">$680,200</td>
+                    <td class="num profit">$212,200</td>
+                    <td><span class="badge valid">23.8%</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Atlantic Island</strong><br><span class="muted">IMO 8956123</span></td>
+                    <td class="num">5</td>
+                    <td class="num">$1,240,000</td>
+                    <td class="num">$1,040,000</td>
+                    <td class="num profit">$200,000</td>
+                    <td><span class="badge warning">16.1%</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Aegean Island</strong><br><span class="muted">IMO 9123456</span></td>
+                    <td class="num">8</td>
+                    <td class="num">$1,580,000</td>
+                    <td class="num">$1,180,000</td>
+                    <td class="num profit">$400,000</td>
+                    <td><span class="badge valid">25.3%</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Pacific Island</strong><br><span class="muted">IMO 8745632</span></td>
+                    <td class="num">5</td>
+                    <td class="num">$915,000</td>
+                    <td class="num">$710,400</td>
+                    <td class="num profit">$204,600</td>
+                    <td><span class="badge valid">22.4%</span></td>
+                </tr>
+                <tr style="font-weight:700; background:#f0f7ff;">
+                    <td><strong>Σύνολο Στόλου</strong></td>
+                    <td class="num"><strong>34</strong></td>
+                    <td class="num"><strong>$4,238,900</strong></td>
+                    <td class="num"><strong>$3,098,500</strong></td>
+                    <td class="num profit"><strong>$1,140,400</strong></td>
+                    <td><span class="badge valid"><strong>26.9%</strong></span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="btn-row">
+        <button class="btn btn-danger" onclick="alert('Εξαγωγή αναφοράς σε PDF...')">&#11015; Εξαγωγή Αναφοράς PDF</button>
+        <button class="btn btn-secondary" onclick="alert('Εξαγωγή σε Excel (.xlsx)...')">&#11015; Εξαγωγή Excel</button>
+    </div>
+</main>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+</footer>
+
+<script>
+function generateReport() {
+    var groupby = document.getElementById('f-groupby').value;
+    var vessel = document.getElementById('f-vessel').value;
+    var period = document.getElementById('f-period').value;
+    ['pr2-step3','pr2-step4'].forEach(function(id){ var el=document.getElementById(id); if(el) el.className='workflow-step done'; });
+    var el5 = document.getElementById('pr2-step5'); if(el5) el5.className='workflow-step active';
+    var banner = document.getElementById('report-banner');
+    if (banner) { banner.style.display=''; banner.innerHTML = '<strong>&#10003; Αναφορά Δημιουργήθηκε</strong> — Ομάδοποίηση κατά: <strong>' + groupby + '</strong> · Πλοίο: <strong>' + vessel + '</strong> · Περίοδος: <strong>' + period + '</strong>. Χρήση ↓ Export για λήψη αρχείου.'; }
+    alert('Δημιουργία Αναφοράς P&L\nΟμάδοποίηση: ' + groupby + '\nΠλοίο: ' + vessel + '\nΠερίοδος: ' + period + '\n\nΗ αναφορά δημιουργήθηκε. व Export PDF/Excel για λήψη αρχείου.');
+}
+</script>
+
+</body>
+</html>
