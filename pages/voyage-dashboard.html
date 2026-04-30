@@ -127,6 +127,7 @@
                     <th>Πλοίο</th>
                     <th>Voyage ID</th>
                     <th>Route</th>
+                    <th>Φορτίο</th>
                     <th>Θέση / Ταχύτητα</th>
                     <th>Καύσιμα</th>
                     <th>ETA</th>
@@ -139,6 +140,7 @@
                     <td><strong>New Island</strong></td>
                     <td>V-2026-041</td>
                     <td>Piraeus → Algiers</td>
+                    <td>Cement — 52,000 MT</td>
                     <td>36.5°N 18.2°E<br><span class="muted">12.3 kn</span></td>
                     <td>27.1 t/d</td>
                     <td>30/04 16:00</td>
@@ -149,6 +151,7 @@
                     <td><strong>Med Island</strong></td>
                     <td>V-2026-038</td>
                     <td>Alexandria → Varna</td>
+                    <td>Wheat — 48,500 MT</td>
                     <td>34.8°N 28.1°E<br><span class="muted">11.8 kn</span></td>
                     <td>28.9 t/d</td>
                     <td>02/05 09:00</td>
@@ -159,6 +162,7 @@
                     <td><strong>Atlantic Island</strong></td>
                     <td>V-2026-035</td>
                     <td>Rotterdam → Casablanca</td>
+                    <td>Fertilizers (Urea) — 45,200 MT</td>
                     <td>43.1°N -8.5°W<br><span class="muted">10.2 kn</span></td>
                     <td>30.5 t/d</td>
                     <td><span style="color:var(--red);">04/05 22:00 (+18h)</span></td>
@@ -169,6 +173,7 @@
                     <td><strong>Aegean Island</strong></td>
                     <td>V-2026-042</td>
                     <td>Constanza → Barcelona</td>
+                    <td>Corn — 50,800 MT</td>
                     <td>40.2°N 14.7°E<br><span class="muted">12.8 kn</span></td>
                     <td>26.4 t/d</td>
                     <td>01/05 06:00</td>
@@ -179,6 +184,7 @@
                     <td><strong>Pacific Island</strong></td>
                     <td>V-2026-040</td>
                     <td>Suez → Port Said</td>
+                    <td>Bauxite — 56,300 MT</td>
                     <td>30.5°N 32.3°E<br><span class="muted">9.5 kn</span></td>
                     <td>25.8 t/d</td>
                     <td>28/04 18:00</td>
@@ -189,6 +195,7 @@
                     <td><strong>Cretan Island</strong></td>
                     <td>V-2026-043</td>
                     <td>Heraklion → Genoa</td>
+                    <td>Coal — 54,100 MT</td>
                     <td>38.8°N 19.4°E<br><span class="muted">13.1 kn</span></td>
                     <td>27.6 t/d</td>
                     <td>29/04 22:00</td>
@@ -227,6 +234,7 @@
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;">
                 <div><span class="label">Θέση</span><span id="vm-pos"></span></div>
                 <div><span class="label">Ταχύτητα</span><span id="vm-speed"></span></div>
+                <div><span class="label">Φορτίο</span><span id="vm-cargo"></span></div>
                 <div><span class="label">Καύσιμα 24h</span><span id="vm-bunker"></span></div>
                 <div><span class="label">ETA</span><span id="vm-eta"></span></div>
                 <div><span class="label">P&amp;L (Est.)</span><span id="vm-pl"></span></div>
@@ -247,12 +255,12 @@
 
 <script>
 var voyData = {
-    'new-island': { title: 'M/V New Island', voyage: 'V-2026-041 · Piraeus → Algiers', pos: '36.5°N 18.2°E', speed: '12.3 kn', bunker: '27.1 t/d', eta: '30/04 16:00', pl: '+$148K', noon: '2 min ago' },
-    'med-island': { title: 'M/V Med Island', voyage: 'V-2026-038 · Alexandria → Varna', pos: '34.8°N 28.1°E', speed: '11.8 kn', bunker: '28.9 t/d', eta: '02/05 09:00', pl: '+$112K', noon: '5 min ago' },
-    'atlantic-island': { title: 'M/V Atlantic Island', voyage: 'V-2026-035 · Rotterdam → Casablanca', pos: '43.1°N -8.5°W', speed: '10.2 kn', bunker: '30.5 t/d', eta: '04/05 22:00 (+18h)', pl: '+$76K', noon: '3h ago' },
-    'aegean-island': { title: 'M/V Aegean Island', voyage: 'V-2026-042 · Constanza → Barcelona', pos: '40.2°N 14.7°E', speed: '12.8 kn', bunker: '26.4 t/d', eta: '01/05 06:00', pl: '+$201K', noon: '1 min ago' },
-    'pacific-island': { title: 'M/V Pacific Island', voyage: 'V-2026-040 · Suez → Port Said', pos: '30.5°N 32.3°E', speed: '9.5 kn', bunker: '25.8 t/d', eta: '28/04 18:00', pl: '+$94K', noon: '12 min ago' },
-    'cretan-island': { title: 'M/V Cretan Island', voyage: 'V-2026-043 · Heraklion → Genoa', pos: '38.8°N 19.4°E', speed: '13.1 kn', bunker: '27.6 t/d', eta: '29/04 22:00', pl: '+$211K', noon: 'Offline 45 min' }
+    'new-island': { title: 'M/V New Island', voyage: 'V-2026-041 · Piraeus → Algiers', cargo: 'Cement — 52,000 MT', pos: '36.5°N 18.2°E', speed: '12.3 kn', bunker: '27.1 t/d', eta: '30/04 16:00', pl: '+$148K', noon: '2 min ago' },
+    'med-island': { title: 'M/V Med Island', voyage: 'V-2026-038 · Alexandria → Varna', cargo: 'Wheat — 48,500 MT', pos: '34.8°N 28.1°E', speed: '11.8 kn', bunker: '28.9 t/d', eta: '02/05 09:00', pl: '+$112K', noon: '5 min ago' },
+    'atlantic-island': { title: 'M/V Atlantic Island', voyage: 'V-2026-035 · Rotterdam → Casablanca', cargo: 'Fertilizers (Urea) — 45,200 MT', pos: '43.1°N -8.5°W', speed: '10.2 kn', bunker: '30.5 t/d', eta: '04/05 22:00 (+18h)', pl: '+$76K', noon: '3h ago' },
+    'aegean-island': { title: 'M/V Aegean Island', voyage: 'V-2026-042 · Constanza → Barcelona', cargo: 'Corn — 50,800 MT', pos: '40.2°N 14.7°E', speed: '12.8 kn', bunker: '26.4 t/d', eta: '01/05 06:00', pl: '+$201K', noon: '1 min ago' },
+    'pacific-island': { title: 'M/V Pacific Island', voyage: 'V-2026-040 · Suez → Port Said', cargo: 'Bauxite — 56,300 MT', pos: '30.5°N 32.3°E', speed: '9.5 kn', bunker: '25.8 t/d', eta: '28/04 18:00', pl: '+$94K', noon: '12 min ago' },
+    'cretan-island': { title: 'M/V Cretan Island', voyage: 'V-2026-043 · Heraklion → Genoa', cargo: 'Coal — 54,100 MT', pos: '38.8°N 19.4°E', speed: '13.1 kn', bunker: '27.6 t/d', eta: '29/04 22:00', pl: '+$211K', noon: 'Offline 45 min' }
 };
 function openVoyModal(key) {
     var d = voyData[key]; if (!d) return;
@@ -260,6 +268,7 @@ function openVoyModal(key) {
     document.getElementById('vm-voyage').textContent = d.voyage;
     document.getElementById('vm-pos').textContent = d.pos;
     document.getElementById('vm-speed').textContent = d.speed;
+    document.getElementById('vm-cargo').textContent = d.cargo;
     document.getElementById('vm-bunker').textContent = d.bunker;
     document.getElementById('vm-eta').textContent = d.eta;
     document.getElementById('vm-pl').textContent = d.pl;
