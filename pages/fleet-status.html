@@ -30,6 +30,10 @@
                 <li><a href="maintenance-queue.html">Maintenance</a></li>
                 <li><a href="request-new.html">New Request</a></li>
                 <li><a href="compliance-export.html">Compliance</a></li>
+                <li><a href="certificate-entry.html">Cert. Entry</a></li>
+                <li><a href="certificate-review.html">Cert. Review</a></li>
+                <li><a href="request-new.html">New Request</a></li>
+                <li><a href="compliance-export.html">Compliance</a></li>
                 <li><span class="user-chip">DPA · M. Papadopoulos</span></li>
             </ul>
         </nav>
@@ -43,10 +47,22 @@
         Ενημέρωση: <strong>27/04/2026 13:42</strong>
     </p>
 
+    <!-- NOTIFICATION BANNER -->
+    <div class="notif-banner">
+        <div class="notif-dot"></div>
+        <div>
+            <strong>4 Υποβολές Πιστοποιητικών αναμένουν επαλήθευση DPA</strong>
+            Ionian Island (Load Line), Atlantic Island (RightShip), Pacific Island (ISSC), Med Island (IOPP) —
+            <a href="certificate-review.html" style="color:var(--accent);">Προβολή Ουράς DPA →</a>
+        </div>
+        <button class="notif-dismiss" onclick="this.parentElement.style.display='none'">&#10005;</button>
+    </div>
+
     <!-- ALERT BANNER -->
     <div class="alert-box warning">
         <strong>⚠ 3 Πιστοποιητικά λήγουν εντός 30 ημερών</strong>
         Το σύστημα έχει αποστείλει αυτόματες ειδοποιήσεις στους Certification Executives.
+        Για ανανέωση: <a href="certificate-entry.html" style="color:inherit; font-weight:700;">Καταχώρηση Νέου Πιστοποιητικού →</a>
     </div>
 
     <!-- KPIs -->
@@ -188,7 +204,7 @@
                     <td><span class="badge expired cert-badge" style="cursor:pointer;" onclick="openCertModal('ionian-island')" title="Κλικ για λεπτομέρειες">&#9679; Expired</span></td>
                     <td>
                         <button class="btn btn-secondary" onclick="openCertModal('ionian-island')">Λεπτομέρειες</button>
-                        <button class="btn btn-danger" onclick="alert('Ειδοποίηση Επείγουσας Ανανέωσης...')">Επείγον</button>
+                        <a href="certificate-entry.html" class="btn btn-danger">Καταχώρηση Ανανέωσης</a>
                     </td>
                 </tr>
                 <tr>
@@ -210,7 +226,7 @@
                     <td><span class="badge missing cert-badge" style="cursor:pointer;" onclick="openCertModal('adriatic-island')" title="Κλικ για λεπτομέρειες">&#9679; Missing Data</span></td>
                     <td>
                         <button class="btn btn-secondary" onclick="openCertModal('adriatic-island')">Λεπτομέρειες</button>
-                        <button class="btn btn-secondary" onclick="alert('Φόρμα καταχώρησης πιστοποιητικού...')">Καταχώρηση</button>
+                        <a href="certificate-entry.html" class="btn btn-primary">Καταχώρηση →</a>
                     </td>
                 </tr>
             </tbody>
