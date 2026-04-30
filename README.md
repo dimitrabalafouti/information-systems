@@ -3,8 +3,8 @@
 **Μέρος 3ο — Σχεδιασμός Ιστοσελίδων**
 Πληροφοριακά Συστήματα · Ομάδα 69 · Αθήνα, Απρίλιος 2026
 
-> *"One automated source of truth, a world of trust:
-> Your real-time digital shield in dry cargo brokerage."*
+> "One automated source of truth, a world of trust:
+> Your real-time digital shield in dry cargo brokerage."
 
 ## Μέλη Ομάδας
 
@@ -15,26 +15,36 @@
 | 8240142 | ΤΖΙΝΑ-ΔΗΜΗΤΡΑ |
 | 8240149 | ΤΣΑΚΩΝΑ-ΣΤΑΥΡΟΥΛΑ |
 
-## Αρχείο Σελίδων
+## Δομή Repository
 
-Όλα τα αρχεία βρίσκονται στο root του repository.
+```
+information-systems/
+├── index.html                   ← Αρχική Σελίδα + Login + Navigation
+├── pages/
+│   ├── fleet-status.html        ← Compliance Dashboard
+│   ├── voyage-dashboard.html    ← Real-Time Voyage Monitoring
+│   ├── noon-report.html         ← Noon Report Form
+│   └── approve-procurement.html ← Approval Workflow
+├── assets/
+│   └── css/
+│       └── style.css            ← Κοινό stylesheet
+├── docs/
+│   └── use-cases.md             ← Τεκμηρίωση Περιπτώσεων Χρήσης
+├── .gitignore
+└── README.md
+```
 
 | # | Αρχείο | Περιγραφή | Actor |
 |---|--------|-----------|-------|
 | 1 | `index.html` | Αρχική Σελίδα + Σύνδεση Χρήστη + Navigation Cards | Όλοι |
-| 2 | `fleet-status.html` | Compliance Dashboard — Πιστοποιητικά στόλου, Alerts λήξης, Vetting Folder Export | DPA / HSEQ, Operations |
-| 3 | `voyage-dashboard.html` | Real-Time Voyage Monitoring — KPIs, ενεργά ταξίδια, αποκλίσεις | Operations |
-| 4 | `noon-report.html` | Τυποποιημένη Φόρμα Υποβολής Noon Report | Πλοίαρχος (Master) |
-| 5 | `approve-procurement.html` | Ψηφιακή Έγκριση Αιτημάτων Προμήθειας με Audit Trail | Διοίκηση / CEO |
-
-Επιπλέον:
-
-- `style.css` — Κοινό stylesheet για όλες τις σελίδες
-- `use-cases.md` — Τεκμηρίωση Περιπτώσεων Χρήσης (όπως ζητάει το template)
+| 2 | `pages/fleet-status.html` | Compliance Dashboard — Πιστοποιητικά στόλου, Alerts λήξης, Vetting Folder Export | DPA / HSEQ, Operations |
+| 3 | `pages/voyage-dashboard.html` | Real-Time Voyage Monitoring — KPIs, ενεργά ταξίδια, αποκλίσεις | Operations |
+| 4 | `pages/noon-report.html` | Τυποποιημένη Φόρμα Υποβολής Noon Report | Πλοίαρχος (Master) |
+| 5 | `pages/approve-procurement.html` | Ψηφιακή Έγκριση Αιτημάτων Προμήθειας με Audit Trail | Διοίκηση / CEO |
 
 ## Πώς να το ανοίξετε
 
-Ανοίξτε το `index.html` σε οποιονδήποτε σύγχρονο browser (Chrome, Firefox, Edge, Safari).
+Ανοίξτε το `index.html` (στο root) σε οποιονδήποτε σύγχρονο browser (Chrome, Firefox, Edge, Safari).
 Δεν απαιτείται server. Δοκιμασμένο σε Chrome 120+ / Firefox 121+ / Edge 120+.
 
 ## Live Preview (GitHub Pages)

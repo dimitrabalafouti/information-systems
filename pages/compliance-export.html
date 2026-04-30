@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Export — HIND Maritime IS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="../index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · DPA / HSEQ Console</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../index.html">Αρχική</a></li>
+                <li><a href="fleet-status.html">Fleet Status</a></li>
+                <li><a href="voyage-dashboard.html">Voyages</a></li>
+                <li><a href="noon-report.html">Noon Report</a></li>
+                <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><a href="profitability-report.html">Profitability</a></li>
+                <li><a href="invoicing.html">Invoicing</a></li>
+                <li><a href="voyage-instructions.html">Instructions</a></li>
+                <li><a href="maintenance-queue.html">Maintenance</a></li>
+                <li><a href="request-new.html">New Request</a></li>
+                <li><a href="compliance-export.html" class="active">Compliance</a></li>
+                <li><span class="user-chip">DPA · M. Papadopoulos</span></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Compliance Reports &amp; Vetting Folder Export</h1>
+    <p class="page-subtitle">
+        Αυτόματη συγκέντρωση Valid πιστοποιητικών · Εξαγωγή ανά πλοίο σε ZIP ή PDF ·
+        Audit Trail εξαγωγών · Ενημέρωση: <strong>28/04/2026 09:00</strong>
+    </p>
+
+    <!-- USE CASE FLOW -->
+    <div class="workflow-steps" id="export-flow">
+        <div class="workflow-step active" id="ef1"><span class="step-num">1</span>Επιλογή Πλοίου</div>
+        <div class="workflow-step" id="ef2"><span class="step-num">2</span>Επιλογή Εγγράφων</div>
+        <div class="workflow-step" id="ef3"><span class="step-num">3</span>Export Vetting</div>
+        <div class="workflow-step" id="ef4"><span class="step-num">4</span>Συγκέντρωση</div>
+        <div class="workflow-step" id="ef5"><span class="step-num">5</span>Λήψη Αρχείου</div>
+        <div class="workflow-step" id="ef6"><span class="step-num">6</span>Audit Trail</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi ok">
+            <div class="kpi-label">Πλήρως Compliant</div>
+            <div class="kpi-value">5</div>
+            <div class="kpi-trend">Vetting Ready</div>
+        </div>
+        <div class="kpi warning">
+            <div class="kpi-label">Λήγουν &lt; 30 ημέρες</div>
+            <div class="kpi-value">3</div>
+            <div class="kpi-trend">Απαιτείται ενέργεια</div>
+        </div>
+        <div class="kpi alert">
+            <div class="kpi-label">Expired</div>
+            <div class="kpi-value">1</div>
+            <div class="kpi-trend down">Ionian Island</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Εξαγωγές (μήνας)</div>
+            <div class="kpi-value">14</div>
+            <div class="kpi-trend">Απρ 2026</div>
+        </div>
+    </div>
+
+    <!-- EXPORT TOOL -->
+    <div class="card" id="export-tool">
+        <h2>Εξαγωγή Vetting Folder</h2>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:18px;">
+            <div class="form-group">
+                <label for="exp-vessel">Πλοίο <span class="req">*</span></label>
+                <select id="exp-vessel" required onchange="loadCerts()">
+                    <option value="">— Επιλογή πλοίου —</option>
+                    <option value="new-island">New Island (IMO 9456789)</option>
+                    <option value="med-island">Med Island (IMO 9234567)</option>
+                    <option value="atlantic-island">Atlantic Island (IMO 8956123)</option>
+                    <option value="aegean-island">Aegean Island (IMO 9123456)</option>
+                    <option value="pacific-island">Pacific Island (IMO 8745632)</option>
+                    <option value="cretan-island">Cretan Island (IMO 9087654)</option>
+                    <option value="ionian-island">Ionian Island (IMO 9356741) ⚠ Expired cert</option>
+                    <option value="adriatic-island">Adriatic Island (IMO 9412385) ⚠ Missing data</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exp-format">Μορφή Εξαγωγής</label>
+                <select id="exp-format">
+                    <option value="zip">ZIP (όλα τα έγγραφα)</option>
+                    <option value="pdf">Ενοποιημένο PDF</option>
+                </select>
+            </div>
+            <div class="form-group" style="justify-content:flex-end;">
+                <label>&nbsp;</label>
+                <button class="btn btn-primary" onclick="startExport()" id="export-btn" disabled>&#11015; Export Vetting Folder</button>
+            </div>
+        </div>
+
+        <!-- CERT LIST (loaded on vessel select) -->
+        <div id="cert-list" style="display:none;">
+            <h2 style="font-size:15px;margin-bottom:10px;">Πιστοποιητικά για Συμπερίληψη — <span id="cert-vessel-name"></span></h2>
+            <div class="alert-box info" style="margin-bottom:12px;">
+                <strong>Αυτόματο Φίλτρο:</strong>
+                Το σύστημα συγκεντρώνει μόνο τα ισχύοντα (Valid) πιστοποιητικά.
+                Expired και Missing Data αποκλείονται αυτόματα.
+            </div>
+            <table class="data-table" id="cert-table">
+                <thead>
+                    <tr>
+                        <th style="width:40px;"><input type="checkbox" id="chk-all" onchange="toggleAll(this)" checked></th>
+                        <th>Πιστοποιητικό</th>
+                        <th>Αρχή Έκδοσης</th>
+                        <th>Λήξη</th>
+                        <th>Κατάσταση</th>
+                    </tr>
+                </thead>
+                <tbody id="cert-tbody"></tbody>
+            </table>
+            <div class="btn-row" style="margin-top:14px;">
+                <button class="btn btn-primary" onclick="startExport()">&#11015; Export Επιλεγμένων</button>
+                <button class="btn btn-secondary" onclick="resetTool()">Επιλογή Άλλου Πλοίου</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXPORT PROGRESS (hidden until export) -->
+    <div id="export-progress" style="display:none;" class="card">
+        <h2>Δημιουργία Αρχείου...</h2>
+        <div class="workflow-steps">
+            <div class="workflow-step done"><span class="step-num">&#10003;</span>Επιλογή</div>
+            <div class="workflow-step done"><span class="step-num">&#10003;</span>Συγκέντρωση</div>
+            <div class="workflow-step active"><span class="step-num">3</span>Δημιουργία</div>
+            <div class="workflow-step" id="prog-step4"><span class="step-num">4</span>Έτοιμο</div>
+        </div>
+        <p class="muted" style="margin:10px 0;">Συγκέντρωση εγγράφων από κεντρική βάση...</p>
+    </div>
+
+    <!-- DOWNLOAD READY (hidden until done) -->
+    <div id="download-ready" style="display:none;" class="card">
+        <div class="alert-box success">
+            <strong>&#10003; Vetting Folder Έτοιμο</strong>
+            Το αρχείο δημιουργήθηκε επιτυχώς. Η εξαγωγή καταγράφηκε στο Audit Trail.
+        </div>
+        <div class="detail-row"><span class="label">Αρχείο</span><span id="dl-filename" style="font-weight:700;color:var(--navy);"></span></div>
+        <div class="detail-row"><span class="label">Πλοίο</span><span id="dl-vessel"></span></div>
+        <div class="detail-row"><span class="label">Εγγύφθηκαν</span><span id="dl-count"></span></div>
+        <div class="detail-row"><span class="label">Δημιουργήθηκε</span><span id="dl-time"></span></div>
+        <div class="btn-row" style="margin-top:14px;">
+            <button class="btn btn-primary" onclick="alert('Λήψη αρχείου...')">&#11015; Λήψη Αρχείου</button>
+            <button class="btn btn-secondary" onclick="emailExport()">&#9993; Αποστολή μέσω συστήματος</button>
+            <button class="btn btn-secondary" onclick="resetTool()">Νέα Εξαγωγή</button>
+        </div>
+    </div>
+
+    <!-- ALL VESSELS OVERVIEW -->
+    <div class="card">
+        <h2>Σύνοψη Compliance — Στόλος</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Πλοίο</th>
+                    <th class="num">Valid</th>
+                    <th class="num">Expiring</th>
+                    <th class="num">Expired</th>
+                    <th>Vetting Status</th>
+                    <th>Τελ. Εξαγωγή</th>
+                    <th>Ενέργεια</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>New Island</strong><br><span class="muted">IMO 9456789</span></td>
+                    <td class="num">8</td><td class="num">0</td><td class="num">0</td>
+                    <td><span class="badge valid">Vetting Ready</span></td>
+                    <td>22/04/2026</td>
+                    <td><button class="btn btn-primary" onclick="quickExport('New Island')">&#11015; Export</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Med Island</strong><br><span class="muted">IMO 9234567</span></td>
+                    <td class="num">7</td><td class="num">1</td><td class="num">0</td>
+                    <td><span class="badge valid">Vetting Ready</span></td>
+                    <td>18/04/2026</td>
+                    <td><button class="btn btn-primary" onclick="quickExport('Med Island')">&#11015; Export</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Atlantic Island</strong><br><span class="muted">IMO 8956123</span></td>
+                    <td class="num">6</td><td class="num">1</td><td class="num">0</td>
+                    <td><span class="badge warning">Expiring — Ανανέωση Απαιτείται</span></td>
+                    <td>15/04/2026</td>
+                    <td><button class="btn btn-primary" onclick="quickExport('Atlantic Island')">&#11015; Export</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Aegean Island</strong><br><span class="muted">IMO 9123456</span></td>
+                    <td class="num">7</td><td class="num">1</td><td class="num">0</td>
+                    <td><span class="badge warning">Expiring — Ανανέωση Απαιτείται</span></td>
+                    <td>20/04/2026</td>
+                    <td><button class="btn btn-primary" onclick="quickExport('Aegean Island')">&#11015; Export</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Pacific Island</strong><br><span class="muted">IMO 8745632</span></td>
+                    <td class="num">6</td><td class="num">1</td><td class="num">0</td>
+                    <td><span class="badge warning">Expiring — Ανανέωση Απαιτείται</span></td>
+                    <td>21/04/2026</td>
+                    <td><button class="btn btn-primary" onclick="quickExport('Pacific Island')">&#11015; Export</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Ionian Island</strong><br><span class="muted">IMO 9356741</span></td>
+                    <td class="num">6</td><td class="num">0</td><td class="num">1</td>
+                    <td><span class="badge expired">NOT Ready — Expired Cert</span></td>
+                    <td>—</td>
+                    <td><button class="btn btn-danger" onclick="alert('Vetting αδύνατο: Load Line Certificate ληγμένο.')">&#9888; Εκκρεμές</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Cretan Island</strong><br><span class="muted">IMO 9087654</span></td>
+                    <td class="num">8</td><td class="num">0</td><td class="num">0</td>
+                    <td><span class="badge valid">Vetting Ready</span></td>
+                    <td>24/04/2026</td>
+                    <td><button class="btn btn-primary" onclick="quickExport('Cretan Island')">&#11015; Export</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Adriatic Island</strong><br><span class="muted">IMO 9412385</span></td>
+                    <td class="num">0</td><td class="num">0</td><td class="num">0</td>
+                    <td><span class="badge missing">Missing Data</span></td>
+                    <td>—</td>
+                    <td><a href="fleet-status.html" class="btn btn-secondary">Καταχώρηση</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- AUDIT TRAIL OF EXPORTS -->
+    <div class="card">
+        <h2>Audit Trail Εξαγωγών</h2>
+        <table class="data-table" id="audit-table">
+            <thead>
+                <tr><th>Ημ/νία</th><th>Χρήστης</th><th>Πλοίο</th><th>Μορφή</th><th>Έγγραφα</th><th>Λόγος</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>24/04/2026 11:30</td><td>M. Papadopoulos (DPA)</td><td>Cretan Island</td><td>ZIP</td><td>8</td><td>Vetting Inspection</td></tr>
+                <tr><td>22/04/2026 09:15</td><td>M. Papadopoulos (DPA)</td><td>New Island</td><td>PDF</td><td>8</td><td>Charterer Request</td></tr>
+                <tr><td>21/04/2026 14:40</td><td>K. Antoniou (Ops)</td><td>Pacific Island</td><td>ZIP</td><td>6</td><td>PSC Inspection</td></tr>
+                <tr><td>20/04/2026 10:05</td><td>M. Papadopoulos (DPA)</td><td>Aegean Island</td><td>PDF</td><td>7</td><td>Port State Control</td></tr>
+                <tr><td>18/04/2026 16:20</td><td>M. Papadopoulos (DPA)</td><td>Med Island</td><td>ZIP</td><td>7</td><td>Vetting Inspection</td></tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+</footer>
+
+<script>
+var certDB = {
+    'new-island': [
+        { cert: 'Safety Management Certificate (SMC)', auth: "Lloyd's Register", exp: '15/09/2026', status: 'valid' },
+        { cert: 'ISPS — Ship Security Certificate', auth: "Lloyd's Register", exp: '15/09/2026', status: 'valid' },
+        { cert: 'IOPP Certificate', auth: "Lloyd's Register", exp: '20/07/2026', status: 'valid' },
+        { cert: 'Class Certificate', auth: "Lloyd's Register", exp: '12/08/2026', status: 'valid' },
+        { cert: 'Load Line Certificate', auth: "Lloyd's Register", exp: '05/10/2026', status: 'valid' },
+        { cert: 'Safe Manning Document', auth: 'HNMS', exp: '30/11/2026', status: 'valid' },
+        { cert: 'Crew List & Certificates', auth: 'HNMS', exp: '—', status: 'valid' },
+        { cert: 'P&I Insurance Certificate', auth: 'UK P&I Club', exp: '20/02/2027', status: 'valid' }
+    ],
+    'ionian-island': [
+        { cert: 'Safety Management Certificate (SMC)', auth: 'RINA', exp: '22/08/2026', status: 'valid' },
+        { cert: 'ISPS — Ship Security Certificate', auth: 'RINA', exp: '22/08/2026', status: 'valid' },
+        { cert: 'IOPP Certificate', auth: 'RINA', exp: '10/09/2026', status: 'valid' },
+        { cert: 'Class Certificate', auth: 'RINA', exp: '15/07/2026', status: 'valid' },
+        { cert: 'Load Line Certificate', auth: 'RINA', exp: '10/04/2026', status: 'expired' },
+        { cert: 'Safe Manning Document', auth: 'HNMS', exp: '30/11/2026', status: 'valid' }
+    ]
+};
+
+function loadCerts() {
+    var vessel = document.getElementById('exp-vessel').value;
+    document.getElementById('export-btn').disabled = !vessel;
+    if (!vessel) { document.getElementById('cert-list').style.display = 'none'; return; }
+
+    var data = certDB[vessel] || certDB['new-island']; // fallback
+    var vesselName = document.getElementById('exp-vessel').options[document.getElementById('exp-vessel').selectedIndex].text;
+    document.getElementById('cert-vessel-name').textContent = vesselName;
+
+    var tbody = document.getElementById('cert-tbody');
+    tbody.innerHTML = '';
+    data.forEach(function(c) {
+        if (c.status === 'expired') {
+            tbody.innerHTML += '<tr style="opacity:0.5;"><td><input type="checkbox" disabled></td><td>' + c.cert + '</td><td>' + c.auth + '</td><td>' + c.exp + '</td><td><span class="badge expired">Expired — Αποκλείεται</span></td></tr>';
+        } else {
+            tbody.innerHTML += '<tr><td><input type="checkbox" checked class="cert-chk"></td><td>' + c.cert + '</td><td>' + c.auth + '</td><td>' + c.exp + '</td><td><span class="badge valid">Valid</span></td></tr>';
+        }
+    });
+    document.getElementById('cert-list').style.display = '';
+    document.getElementById('ef1').className = 'workflow-step done';
+    document.getElementById('ef2').className = 'workflow-step active';
+}
+
+function toggleAll(cb) {
+    document.querySelectorAll('.cert-chk').forEach(function(c) { c.checked = cb.checked; });
+}
+
+function startExport() {
+    var vessel = document.getElementById('exp-vessel').value;
+    if (!vessel) { alert('Επιλέξτε πλοίο.'); return; }
+    var fmt = document.getElementById('exp-format').value;
+    var checked = document.querySelectorAll('.cert-chk:checked').length;
+    if (checked === 0) { alert('Επιλέξτε τουλάχουν ένα πιστοποιητικό.'); return; }
+
+    var vesselName = document.getElementById('exp-vessel').options[document.getElementById('exp-vessel').selectedIndex].text.split('(')[0].trim();
+
+    ['ef1','ef2','ef3','ef4'].forEach(function(id) { document.getElementById(id).className = 'workflow-step done'; });
+    document.getElementById('ef5').className = 'workflow-step active';
+
+    document.getElementById('cert-list').style.display = 'none';
+    document.getElementById('export-progress').style.display = '';
+    window.scrollTo(0,0);
+
+    setTimeout(function() {
+        document.getElementById('ef5').className = 'workflow-step done';
+        document.getElementById('ef6').className = 'workflow-step done';
+        document.getElementById('prog-step4').className = 'workflow-step done';
+        document.getElementById('export-progress').style.display = 'none';
+
+        var now = new Date();
+        var ext = fmt === 'zip' ? '.zip' : '.pdf';
+        document.getElementById('dl-filename').textContent = 'VettingFolder_' + vesselName.replace(' ','') + '_' + now.toISOString().split('T')[0] + ext;
+        document.getElementById('dl-vessel').textContent = vesselName;
+        document.getElementById('dl-count').textContent = checked + ' πιστοποιητικά';
+        document.getElementById('dl-time').textContent = now.toLocaleString('el-GR') + ' · M. Papadopoulos (DPA)';
+
+        // Add to audit trail
+        var tbody = document.getElementById('audit-table').querySelector('tbody');
+        var row = tbody.insertRow(0);
+        row.innerHTML = '<td>' + now.toLocaleString('el-GR') + '</td><td>M. Papadopoulos (DPA)</td><td>' + vesselName + '</td><td>' + fmt.toUpperCase() + '</td><td>' + checked + '</td><td>Manual Export</td>';
+
+        document.getElementById('download-ready').style.display = '';
+    }, 1800);
+}
+
+function quickExport(name) {
+    alert('Γρήγορη εξαγωγή Vetting Folder για ' + name + '...\n\nΤο αρχείο δημιουργήθηκε και η εξαγωγή καταγράφηκε στο Audit Trail.');
+}
+
+function emailExport() {
+    alert('Αρχείο απεστάλη μέσω συστήματος στο vetting@hind.gr.\nΗ αποστολή καταγράφηκε στο Audit Trail.');
+}
+
+function resetTool() {
+    document.getElementById('exp-vessel').value = '';
+    document.getElementById('export-btn').disabled = true;
+    document.getElementById('cert-list').style.display = 'none';
+    document.getElementById('download-ready').style.display = 'none';
+    ['ef1'].forEach(function(id){document.getElementById(id).className='workflow-step active';});
+    ['ef2','ef3','ef4','ef5','ef6'].forEach(function(id){document.getElementById(id).className='workflow-step';});
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Νέο Αίτημα — HIND Maritime IS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="../index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · Vessel Interface</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../index.html">Αρχική</a></li>
+                <li><a href="fleet-status.html">Fleet Status</a></li>
+                <li><a href="voyage-dashboard.html">Voyages</a></li>
+                <li><a href="noon-report.html">Noon Report</a></li>
+                <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><a href="profitability-report.html">Profitability</a></li>
+                <li><a href="invoicing.html">Invoicing</a></li>
+                <li><a href="voyage-instructions.html">Instructions</a></li>
+                <li><a href="maintenance-queue.html">Maintenance</a></li>
+                <li><a href="request-new.html" class="active">New Request</a></li>
+                <li><a href="compliance-export.html">Compliance</a></li>
+                <li><span class="user-chip">Master · Capt. G. Petrou</span></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Νέο Αίτημα Προμήθειας / Βλάβης</h1>
+    <p class="page-subtitle">
+        Πλοίο: <strong>M/V New Island</strong> · IMO 9456789 · Voyage V-2026-041 ·
+        Αυτόματη δρομολόγηση ανά τύπο αιτήματος
+    </p>
+
+    <!-- WORKFLOW STEPS -->
+    <div class="workflow-steps" id="flow-steps">
+        <div class="workflow-step active" id="step1"><span class="step-num">1</span>Συμπλήρωση</div>
+        <div class="workflow-step" id="step2"><span class="step-num">2</span>Υποβολή</div>
+        <div class="workflow-step" id="step3"><span class="step-num">3</span>Ticket ID</div>
+        <div class="workflow-step" id="step4"><span class="step-num">4</span>Επιβεβαίωση</div>
+        <div class="workflow-step" id="step5"><span class="step-num">5</span>Δρομολόγηση</div>
+        <div class="workflow-step" id="step6"><span class="step-num">6</span>Ειδοποίηση</div>
+    </div>
+
+    <!-- FORM PANEL -->
+    <div id="form-panel">
+        <div class="alert-box info" style="margin-bottom:16px;">
+            <strong>Αυτόματη Δρομολόγηση</strong>
+            Αίτημα βλάβης → Τεχνικό Τμήμα · Αίτημα προμήθειας → Τμήμα Προμηθειών.
+            Το αρμόδιο τμήμα λαμβάνει in-app notification εντός 1 λεπτού.
+        </div>
+
+        <div class="card">
+            <h2>Στοιχεία Αιτήματος</h2>
+            <form id="req-form" novalidate>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="req-type">Τύπος Αιτήματος <span class="req">*</span></label>
+                        <select id="req-type" required onchange="updateTypeHint()">
+                            <option value="">— Επιλογή —</option>
+                            <option value="procurement">Προμήθεια (Spare Parts / Provisions / Supplies)</option>
+                            <option value="fault">Βλάβη / Επισκευή</option>
+                            <option value="pms">Προγραμματισμένη Συντήρηση (PMS)</option>
+                        </select>
+                        <span id="type-hint" class="form-hint"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="req-priority">Προτεραιότητα <span class="req">*</span></label>
+                        <select id="req-priority" required>
+                            <option value="">— Επιλογή —</option>
+                            <option value="urgent">URGENT — Επείγον (απαιτείται άμεση ενέργεια)</option>
+                            <option value="high">Υψηλή (εντός 24 ωρών)</option>
+                            <option value="medium">Μεσαία (εντός 3 ημερών)</option>
+                            <option value="low">Χαμηλή (επόμενη προγραμματισμένη)</option>
+                        </select>
+                    </div>
+                    <div class="form-group full">
+                        <label for="req-title">Τίτλος Αιτήματος <span class="req">*</span></label>
+                        <input type="text" id="req-title" placeholder="Σύντομη περιγραφή (π.χ. Βλάβη Αντλίας Αποχέτευσης)" required>
+                    </div>
+                    <div class="form-group full">
+                        <label for="req-desc">Αναλυτική Περιγραφή <span class="req">*</span></label>
+                        <textarea id="req-desc" rows="4" required
+                            placeholder="Περιγράψτε λεπτομερώς: τι συνέβη, πού εντοπίστηκε, ποιες ενέργειες έγιναν μέχρι στιγμής..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="req-location">Τοποθεσία στο Πλοίο</label>
+                        <input type="text" id="req-location" placeholder="π.χ. Μηχανοστάσιο, Κύτος 2, Γέφυρα">
+                    </div>
+                    <div class="form-group">
+                        <label for="req-port">Επόμενο Λιμάνι Παράδοσης</label>
+                        <input type="text" id="req-port" value="Algiers (DZALG)" readonly>
+                        <span class="form-hint">Από τρέχον ταξίδι V-2026-041</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="req-eta">ETA Λιμανιού</label>
+                        <input type="datetime-local" id="req-eta" value="2026-04-30T16:00" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="req-cost">Εκτιμώμενο Κόστος (€)</label>
+                        <input type="number" id="req-cost" placeholder="π.χ. 3500" min="0">
+                    </div>
+                    <div class="form-group full">
+                        <label for="req-attach">Συνημμένα</label>
+                        <input type="file" id="req-attach" multiple accept="image/*,.pdf">
+                        <span class="form-hint">Φωτογραφίες βλάβης, τεχνικά σχέδια, κ.λπ. (PDF/JPG · max 10MB)</span>
+                    </div>
+                </div>
+
+                <div class="btn-row" style="margin-top:18px;">
+                    <button type="submit" class="btn btn-primary" onclick="submitRequest(event)">&#9654; Υποβολή Αιτήματος</button>
+                    <button type="reset" class="btn btn-secondary">Καθαρισμός</button>
+                    <a href="../index.html" class="btn btn-secondary">Ακύρωση</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CONFIRMATION PANEL (hidden until submit) -->
+    <div id="confirm-panel" style="display:none;">
+        <div class="alert-box success">
+            <strong>&#10003; Αίτημα Υποβλήθηκε Επιτυχώς</strong>
+            Το αίτημά σας καταχωρήθηκε και δρομολογήθηκε αυτόματα. Δείτε τις λεπτομέρειες παρακάτω.
+        </div>
+
+        <div class="card">
+            <h2>Επιβεβαίωση Αιτήματος</h2>
+            <div class="detail-row"><span class="label">Ticket ID</span><span id="conf-ticket" style="font-size:18px;font-weight:800;color:var(--navy);"></span></div>
+            <div class="detail-row"><span class="label">Τύπος</span><span id="conf-type"></span></div>
+            <div class="detail-row"><span class="label">Πλοίο</span><span>M/V New Island (IMO 9456789)</span></div>
+            <div class="detail-row"><span class="label">Υποβλήθηκε</span><span id="conf-time"></span></div>
+            <div class="detail-row"><span class="label">Δρομολογήθηκε σε</span><span id="conf-dept"></span></div>
+            <div class="detail-row"><span class="label">Αναμενόμενη Ενέργεια</span><span id="conf-action"></span></div>
+
+            <div class="alert-box info" style="margin:14px 0;">
+                <strong>In-App Notification</strong>
+                Το αρμόδιο τμήμα έχει ειδοποιηθεί αυτόματα μέσω συστήματος.
+                Θα λάβετε επιβεβαίωση παραλαβής εντός 1 λεπτού και ειδοποίηση
+                με τον ticket ID: <strong id="conf-ticket2"></strong>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-primary" onclick="resetForm()">&#43; Νέο Αίτημα</button>
+                <a href="voyage-dashboard.html" class="btn btn-secondary">Voyages Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- RECENT REQUESTS -->
+    <div class="card" id="recent-panel">
+        <h2>Πρόσφατα Αιτήματά Μου — M/V New Island</h2>
+        <table class="data-table">
+            <thead>
+                <tr><th>Ticket ID</th><th>Τύπος</th><th>Τίτλος</th><th>Υποβλήθηκε</th><th>Κατάσταση</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>MQ-2026-0053</strong></td>
+                    <td>Βλάβη</td>
+                    <td>Συντήρηση Αντλίας Αποχέτευσης</td>
+                    <td>27/04 16:10</td>
+                    <td><span class="badge warning">Σε Εξέλιξη</span></td>
+                </tr>
+                <tr>
+                    <td><strong>PR-2026-0415</strong></td>
+                    <td>Προμήθεια</td>
+                    <td>Spare Parts Engine Room</td>
+                    <td>25/04 09:30</td>
+                    <td><span class="badge valid">Εγκρίθηκε</span></td>
+                </tr>
+                <tr>
+                    <td><strong>MQ-2026-0047</strong></td>
+                    <td>Επισκευή</td>
+                    <td>Επισκευή Αντλίας Πυρόσβεσης</td>
+                    <td>24/04 14:20</td>
+                    <td><span class="badge valid">Ολοκληρώθηκε</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+</footer>
+
+<script>
+function updateTypeHint() {
+    var type = document.getElementById('req-type').value;
+    var hint = document.getElementById('type-hint');
+    if (type === 'procurement') hint.textContent = '→ Δρομολόγηση: Τμήμα Προμηθειών';
+    else if (type === 'fault') hint.textContent = '→ Δρομολόγηση: Τεχνικό Τμήμα';
+    else if (type === 'pms') hint.textContent = '→ Δρομολόγηση: Τεχνικό Τμήμα';
+    else hint.textContent = '';
+}
+
+function submitRequest(e) {
+    e.preventDefault();
+    var type = document.getElementById('req-type').value;
+    var title = document.getElementById('req-title').value.trim();
+    var desc = document.getElementById('req-desc').value.trim();
+    if (!type || !title || !desc) {
+        alert('Συμπληρώστε όλα τα υποχρεωτικά πεδία (*).');
+        return;
+    }
+
+    var prefix = type === 'procurement' ? 'PR' : 'MQ';
+    var num = Math.floor(Math.random() * 10) + 56;
+    var ticketId = prefix + '-2026-00' + num;
+    var now = new Date();
+    var timeStr = now.toLocaleString('el-GR');
+    var dept = type === 'procurement' ? 'Τμήμα Προμηθειών (N. Vasileiou)' : 'Τεχνικό Τμήμα (S. Nikolaou)';
+    var action = type === 'procurement' ? 'Συγκέντρωση προσφορών και υποβολή για έγκριση Διοίκησης' : 'Αξιολόγηση βλάβης — ανάθεση τεχνικού εντός 1 λεπτού';
+
+    // Advance workflow
+    ['step1','step2','step3','step4','step5','step6'].forEach(function(id) {
+        document.getElementById(id).className = 'workflow-step done';
+    });
+
+    document.getElementById('conf-ticket').textContent = ticketId;
+    document.getElementById('conf-ticket2').textContent = ticketId;
+    document.getElementById('conf-type').textContent = document.getElementById('req-type').options[document.getElementById('req-type').selectedIndex].text;
+    document.getElementById('conf-time').textContent = timeStr + ' · Capt. G. Petrou';
+    document.getElementById('conf-dept').textContent = dept;
+    document.getElementById('conf-action').textContent = action;
+
+    document.getElementById('form-panel').style.display = 'none';
+    document.getElementById('confirm-panel').style.display = '';
+    document.getElementById('recent-panel').style.display = 'none';
+    window.scrollTo(0, 0);
+}
+
+function resetForm() {
+    document.getElementById('req-form').reset();
+    document.getElementById('form-panel').style.display = '';
+    document.getElementById('confirm-panel').style.display = 'none';
+    document.getElementById('recent-panel').style.display = '';
+    ['step1'].forEach(function(id) { document.getElementById(id).className = 'workflow-step active'; });
+    ['step2','step3','step4','step5','step6'].forEach(function(id) { document.getElementById(id).className = 'workflow-step'; });
+}
+</script>
+
+</body>
+</html>

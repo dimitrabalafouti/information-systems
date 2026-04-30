@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HIND Maritime Enterprises S.A. — Strategic Shield</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -20,10 +20,16 @@
         <nav class="main-nav">
             <ul>
                 <li><a href="index.html" class="active">Αρχική</a></li>
-                <li><a href="fleet-status.html">Fleet Status</a></li>
-                <li><a href="voyage-dashboard.html">Voyages</a></li>
-                <li><a href="noon-report.html">Noon Report</a></li>
-                <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><a href="pages/fleet-status.html">Fleet Status</a></li>
+                <li><a href="pages/voyage-dashboard.html">Voyages</a></li>
+                <li><a href="pages/noon-report.html">Noon Report</a></li>
+                <li><a href="pages/approve-procurement.html">Approvals</a></li>
+                <li><a href="pages/profitability-report.html">Profitability</a></li>
+                <li><a href="pages/invoicing.html">Invoicing</a></li>
+                <li><a href="pages/voyage-instructions.html">Instructions</a></li>
+                <li><a href="pages/maintenance-queue.html">Maintenance</a></li>
+                <li><a href="pages/request-new.html">New Request</a></li>
+                <li><a href="pages/compliance-export.html">Compliance</a></li>
             </ul>
         </nav>
     </div>
@@ -47,7 +53,7 @@
         <!-- LOGIN CARD -->
         <div class="card">
             <h2>Σύνδεση Χρήστη</h2>
-            <form action="fleet-status.html" method="get" novalidate>
+            <form action="pages/fleet-status.html" method="get" novalidate>
                 <div class="form-group" style="margin-bottom:14px;">
                     <label for="username">Όνομα Χρήστη <span class="req">*</span></label>
                     <input type="text" id="username" name="username" placeholder="π.χ. d.balafouti" required>
@@ -81,25 +87,25 @@
                 <p class="muted mb-1">Επιλέξτε τη λειτουργία που θέλετε να μεταβείτε:</p>
                 <div class="module-grid">
 
-                    <a href="fleet-status.html" class="module-card">
+                    <a href="pages/fleet-status.html" class="module-card">
                         <div class="module-icon">FS</div>
                         <h3>Fleet Status &amp; Compliance</h3>
                         <p>Άμεση πρόσβαση στα πιστοποιητικά του στόλου, alerts λήξης και Vetting Folder export.</p>
                     </a>
 
-                    <a href="voyage-dashboard.html" class="module-card">
+                    <a href="pages/voyage-dashboard.html" class="module-card">
                         <div class="module-icon">VD</div>
                         <h3>Voyage Dashboard</h3>
                         <p>Real-time παρακολούθηση ενεργών ταξιδιών — θέση, κατανάλωση, ETA, κερδοφορία.</p>
                     </a>
 
-                    <a href="noon-report.html" class="module-card">
+                    <a href="pages/noon-report.html" class="module-card">
                         <div class="module-icon">NR</div>
                         <h3>Noon Report (Πλοίαρχος)</h3>
                         <p>Τυποποιημένη ψηφιακή φόρμα ημερήσιας αναφοράς από το πλοίο προς το γραφείο.</p>
                     </a>
 
-                    <a href="approve-procurement.html" class="module-card">
+                    <a href="pages/approve-procurement.html" class="module-card">
                         <div class="module-icon">AP</div>
                         <h3>Approval Workflow</h3>
                         <p>Ψηφιακή έγκριση/απόρριψη αιτημάτων προμήθειας από τη Διοίκηση με χρονοσήμανση.</p>

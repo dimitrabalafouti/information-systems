@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyage Instructions — HIND Maritime IS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="../index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · Operations Console</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../index.html">Αρχική</a></li>
+                <li><a href="fleet-status.html">Fleet Status</a></li>
+                <li><a href="voyage-dashboard.html">Voyages</a></li>
+                <li><a href="noon-report.html">Noon Report</a></li>
+                <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><a href="profitability-report.html">Profitability</a></li>
+                <li><a href="invoicing.html">Invoicing</a></li>
+                <li><a href="voyage-instructions.html" class="active">Instructions</a></li>
+                <li><a href="maintenance-queue.html">Maintenance</a></li>
+                <li><a href="request-new.html">New Request</a></li>
+                <li><a href="compliance-export.html">Compliance</a></li>
+                <li><span class="user-chip">Operations · K. Antoniou</span></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Voyage Instructions</h1>
+    <p class="page-subtitle">
+        Έκδοση οδηγιών ταξιδιού απευθείας από το σύστημα ·
+        Άμεση ορατότητα στον Πλοίαρχο χωρίς αποστολή email ·
+        Τελευταία ενημέρωση: <strong>28/04/2026 09:15</strong>
+    </p>
+
+    <!-- USE CASE FLOW -->
+    <div class="workflow-steps">
+        <div class="workflow-step done"><span class="step-num">&#10003;</span>Επιλογή Ταξιδιού</div>
+        <div class="workflow-step active"><span class="step-num">2</span>Φόρμα</div>
+        <div class="workflow-step" id="vi-step3"><span class="step-num">3</span>Δημοσίευση+Κλείδωμα</div>
+        <div class="workflow-step" id="vi-step4"><span class="step-num">4</span>Auto-Notify Master</div>
+        <div class="workflow-step" id="vi-step5"><span class="step-num">5</span>Acknowledgment</div>
+        <div class="workflow-step" id="vi-step6"><span class="step-num">6</span>Audit Trail</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi ok">
+            <div class="kpi-label">Ενεργές Οδηγίες</div>
+            <div class="kpi-value">6</div>
+            <div class="kpi-trend">σε 6 ταξίδια</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Αναγνώσθηκαν</div>
+            <div class="kpi-value">5</div>
+            <div class="kpi-trend up">Επιβεβαιώθηκαν από Master</div>
+        </div>
+        <div class="kpi warning">
+            <div class="kpi-label">Εκκρεμούν Ανάγνωση</div>
+            <div class="kpi-value">1</div>
+            <div class="kpi-trend">Med Island</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Εκδόθηκαν (μήνας)</div>
+            <div class="kpi-value">14</div>
+            <div class="kpi-trend">Απρ 2026</div>
+        </div>
+    </div>
+
+    <!-- SPLIT VIEW -->
+    <div class="split-view">
+
+        <!-- LIST OF ISSUED INSTRUCTIONS -->
+        <div class="list-panel">
+            <div style="padding:12px 16px;background:var(--navy);color:#fff;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">
+                Εκδοθείσες Οδηγίες
+            </div>
+
+            <div class="list-item selected">
+                <div class="ticket">VI-2026-018 · 10/04/2026 08:30</div>
+                <div class="title">New Island — Βαρκελώνη → Πειραιάς</div>
+                <div class="meta"><span class="status-dot green"></span>Αναγνώσθηκε 10/04 09:12</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">VI-2026-019 · 18/04/2026 11:00</div>
+                <div class="title">Med Island — Κωνσταντινούπολη → Λισαβόνα</div>
+                <div class="meta"><span class="status-dot orange"></span>Εκκρεμεί Ανάγνωση</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">VI-2026-020 · 20/04/2026 14:20</div>
+                <div class="title">Aegean Island — Αμβέρσα → Πειραιάς</div>
+                <div class="meta"><span class="status-dot green"></span>Αναγνώσθηκε 20/04 15:05</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">VI-2026-021 · 22/04/2026 09:00</div>
+                <div class="title">Pacific Island — Rotterdam → Αλεξάνδρεια</div>
+                <div class="meta"><span class="status-dot green"></span>Αναγνώσθηκε 22/04 10:30</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">VI-2026-022 · 25/04/2026 16:45</div>
+                <div class="title">Cretan Island — Ηράκλειο → Βαρκελώνη</div>
+                <div class="meta"><span class="status-dot green"></span>Αναγνώσθηκε 25/04 17:20</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">VI-2026-023 · 27/04/2026 10:10</div>
+                <div class="title">Atlantic Island — Γένοβα → Αλγέρι</div>
+                <div class="meta"><span class="status-dot green"></span>Αναγνώσθηκε 27/04 11:48</div>
+            </div>
+        </div>
+
+        <!-- RIGHT: DETAIL + NEW INSTRUCTION FORM -->
+        <div>
+            <!-- Existing Instruction Detail -->
+            <div class="detail-panel" style="margin-bottom:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--accent);">
+                    <div>
+                        <h2 style="border:none;padding:0;margin:0;color:var(--navy);">VI-2026-018</h2>
+                        <p class="muted" style="margin-top:4px;">New Island — Βαρκελώνη → Πειραιάς</p>
+                    </div>
+                    <span class="badge valid"><span class="status-dot green"></span>Αναγνώσθηκε</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Πλοίο</span>
+                    <span>M/V New Island (IMO 9456789)</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Λιμένας Φόρτωσης</span>
+                    <span>Βαρκελώνη (ESBCN) — ETA 11/04/2026</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Λιμένας Εκφόρτωσης</span>
+                    <span>Πειραιάς (GRPIR) — ETA 16/04/2026</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Φορτίο</span>
+                    <span>Grain — 42,000 MT</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Charterer</span>
+                    <span>Mediterranean Bulk Corp.</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Ταχύτητα</span>
+                    <span>12.5 knots (Eco Speed)</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Bunker Limit</span>
+                    <span>Max 28 MT/day</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Ειδικές Οδηγίες</span>
+                    <span>Αποφυγή Στενών Μεσσήνης. Ανεφοδιασμός VLSFO στη Βαρκελώνη πριν αναχώρηση.</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Εκδόθηκε</span>
+                    <span>10/04/2026 08:30 · Operations · K. Antoniou</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Αναγνώσθηκε</span>
+                    <span>10/04/2026 09:12 · Master · G. Papadimitriou ✓</span>
+                </div>
+                <div class="btn-row">
+                    <button class="btn btn-danger" onclick="alert('Εξαγωγή PDF...')">&#11015; Export PDF</button>
+                    <button class="btn btn-secondary" onclick="alert('Αποστολή τροποποιητικής...')">Τροποποίηση</button>                    <button class="btn btn-primary" id="ack-btn" onclick="masterAck()">&#10003; Master Acknowledgment</button>                </div>
+            </div>
+
+            <!-- NEW INSTRUCTION FORM -->
+            <div class="card">
+                <h2>&#43; Νέες Voyage Instructions</h2>
+                <form onsubmit="submitVI(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="vi-vessel">Πλοίο <span class="req">*</span></label>
+                            <select id="vi-vessel" required>
+                                <option value="">— Επιλογή —</option>
+                                <option>New Island</option>
+                                <option>Med Island</option>
+                                <option>Atlantic Island</option>
+                                <option>Aegean Island</option>
+                                <option>Pacific Island</option>
+                                <option>Cretan Island</option>
+                                <option>Ionian Island</option>
+                                <option>Adriatic Island</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="vi-voyage">Κωδ. Ταξιδιού <span class="req">*</span></label>
+                            <input type="text" id="vi-voyage" placeholder="π.χ. VY-2026-025" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vi-load-port">Λιμένας Φόρτωσης <span class="req">*</span></label>
+                            <input type="text" id="vi-load-port" placeholder="π.χ. Πειραιάς (GRPIR)" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vi-load-eta">ETA Φόρτωσης <span class="req">*</span></label>
+                            <input type="date" id="vi-load-eta" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vi-disch-port">Λιμένας Εκφόρτωσης <span class="req">*</span></label>
+                            <input type="text" id="vi-disch-port" placeholder="π.χ. Αμβέρσα (BEANR)" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vi-disch-eta">ETA Εκφόρτωσης <span class="req">*</span></label>
+                            <input type="date" id="vi-disch-eta" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vi-cargo">Φορτίο &amp; Ποσότητα <span class="req">*</span></label>
+                            <input type="text" id="vi-cargo" placeholder="π.χ. Coal — 55,000 MT" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="vi-charterer">Charterer</label>
+                            <input type="text" id="vi-charterer" placeholder="Εταιρεία ναυλωτή">
+                        </div>
+                        <div class="form-group">
+                            <label for="vi-speed">Ταχύτητα (Knots)</label>
+                            <input type="text" id="vi-speed" placeholder="π.χ. 12.5 knots (Eco Speed)">
+                        </div>
+                        <div class="form-group">
+                            <label for="vi-bunker">Bunker Limit (MT/day)</label>
+                            <input type="text" id="vi-bunker" placeholder="π.χ. Max 28 MT/day">
+                        </div>
+                        <div class="form-group full">
+                            <label for="vi-special">Ειδικές Οδηγίες</label>
+                            <textarea id="vi-special" rows="3" placeholder="Ειδικές οδηγίες, αποφυγές, ανεφοδιασμός κ.λπ."></textarea>
+                        </div>
+                    </div>
+                    <div class="alert-box info" style="margin:14px 0;">
+                        <strong>Άμεση Αποστολή στον Πλοίαρχο</strong>
+                        Οι οδηγίες γίνονται ορατές στη διεπαφή του πλοίου αμέσως μετά την έκδοση.
+                        Δεν αποστέλλεται email — το σύστημα ενημερώνει αυτόματα τον Master.
+                    </div>
+                    <div class="btn-row">
+                        <button type="submit" class="btn btn-primary">&#9654; Έκδοση Voyage Instructions</button>
+                        <button type="reset" class="btn btn-secondary">Καθαρισμός</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+</footer>
+
+<script>
+function submitVI(e) {
+    e.preventDefault();
+    var vessel = document.getElementById('vi-vessel').value;
+    var voyage = document.getElementById('vi-voyage').value;
+    if (!vessel || !voyage) { alert('Συμπληρώστε όλα τα υποχρεωτικά πεδία.'); return; }
+    ['vi-step3','vi-step4'].forEach(function(id){ var el=document.getElementById(id); if(el) el.className='workflow-step done'; });
+    var s5=document.getElementById('vi-step5'); if(s5) s5.className='workflow-step active';
+    alert('Οδηγίες για ' + vessel + ' (' + voyage + ') εκδόθηκαν και κλειδώθηκαν.\nΟ Πλοίαρχος ενημερώθηκε αυτόματα μέσω συστήματος.');
+    e.target.reset();
+}
+function masterAck() {
+    var btn = document.getElementById('ack-btn');
+    if (!btn || btn.disabled) return;
+    ['vi-step5','vi-step6'].forEach(function(id){ var el=document.getElementById(id); if(el) el.className='workflow-step done'; });
+    btn.disabled = true;
+    btn.textContent = '✓ Acknowledged';
+    var now = new Date();
+    var ts = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+    alert('Αναγνώριση Master καταγράφηκε: ' + ts + '\nAudit Trail ενημερώθηκε αυτόματα.');
+}
+</script>
+
+</body>
+</html>

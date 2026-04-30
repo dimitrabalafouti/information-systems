@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voyage Dashboard — HIND Maritime IS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="../index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · Integrated IS</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../index.html">Αρχική</a></li>
+                <li><a href="fleet-status.html">Fleet Status</a></li>
+                <li><a href="voyage-dashboard.html" class="active">Voyages</a></li>
+                <li><a href="noon-report.html">Noon Report</a></li>
+                <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><a href="profitability-report.html">Profitability</a></li>
+                <li><a href="invoicing.html">Invoicing</a></li>
+                <li><a href="voyage-instructions.html">Instructions</a></li>
+                <li><a href="maintenance-queue.html">Maintenance</a></li>
+                <li><a href="request-new.html">New Request</a></li>
+                <li><a href="compliance-export.html">Compliance</a></li>
+                <li><span class="user-chip">Operations · K. Antoniou</span></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Voyage Dashboard — Real-Time Monitoring</h1>
+    <p class="page-subtitle">
+        Live παρακολούθηση ενεργών ταξιδιών · Auto-refresh κάθε 5 λεπτά ·
+        Τελευταία ενημέρωση: <strong>27/04/2026 13:38</strong>
+    </p>
+
+    <!-- REFRESH BAR -->
+    <div class="refresh-bar">
+        <span>Συνεχής ενημέρωση (Auto-refresh κάθε 5 λεπτά)</span>
+        <div class="progress-track"><div class="progress-fill"></div></div>
+        <span id="refresh-cd">4:58</span>
+    </div>
+
+    <!-- USE CASE FLOW -->
+    <div class="workflow-steps">
+        <div class="workflow-step done"><span class="step-num">&#10003;</span>Σύνδεση</div>
+        <div class="workflow-step active"><span class="step-num">2</span>Real-Time Display</div>
+        <div class="workflow-step"><span class="step-num">3</span>Auto-Refresh</div>
+        <div class="workflow-step"><span class="step-num">4</span>Drill-Down</div>
+        <div class="workflow-step"><span class="step-num">5</span>Φίλτρα</div>
+        <div class="workflow-step"><span class="step-num">6</span>Export</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi ok">
+            <div class="kpi-label">Ενεργά Ταξίδια</div>
+            <div class="kpi-value">6</div>
+            <div class="kpi-trend">σε εξέλιξη</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Estimated P&amp;L</div>
+            <div class="kpi-value">$842K</div>
+            <div class="kpi-trend up">+12% vs estimate</div>
+        </div>
+        <div class="kpi warning">
+            <div class="kpi-label">Bunker Consumption</div>
+            <div class="kpi-value">28.4 t/d</div>
+            <div class="kpi-trend down">+3% vs plan</div>
+        </div>
+        <div class="kpi alert">
+            <div class="kpi-label">Καθυστερήσεις ETA</div>
+            <div class="kpi-value">1</div>
+            <div class="kpi-trend">Atlantic Island</div>
+        </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters">
+        <div class="form-group">
+            <label for="f-vessel">Πλοίο</label>
+            <select id="f-vessel">
+                <option>Όλα τα πλοία</option>
+                <option>New Island</option>
+                <option>Med Island</option>
+                <option>Atlantic Island</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="f-route">Δρομολόγιο</label>
+            <select id="f-route">
+                <option>Όλα τα δρομολόγια</option>
+                <option>Μεσόγειος</option>
+                <option>Αίγυπτος ↔ Αλγερία</option>
+                <option>Βουλγαρία ↔ Ευρώπη</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="f-period">Περίοδος</label>
+            <select id="f-period">
+                <option>Τρέχουσα εβδομάδα</option>
+                <option>Τρέχων μήνας</option>
+                <option>Τελευταίο τρίμηνο</option>
+            </select>
+        </div>
+        <div>
+            <button class="btn btn-secondary">Εφαρμογή</button>
+            <button class="btn btn-primary">Export Excel</button>
+        </div>
+    </div>
+
+    <!-- ACTIVE VOYAGES TABLE -->
+    <div class="card">
+        <h2>Ενεργά Ταξίδια — Real-Time Status</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Πλοίο</th>
+                    <th>Voyage ID</th>
+                    <th>Route</th>
+                    <th>Θέση / Ταχύτητα</th>
+                    <th>Καύσιμα</th>
+                    <th>ETA</th>
+                    <th>P&amp;L (Est.)</th>
+                    <th>Last Noon</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>New Island</strong></td>
+                    <td>V-2026-041</td>
+                    <td>Piraeus → Algiers</td>
+                    <td>36.5°N 18.2°E<br><span class="muted">12.3 kn</span></td>
+                    <td>27.1 t/d</td>
+                    <td>30/04 16:00</td>
+                    <td><span style="color:var(--green); font-weight:600;">+$148K</span></td>
+                    <td><span class="status-dot green"></span>2 min</td>
+                </tr>
+                <tr>
+                    <td><strong>Med Island</strong></td>
+                    <td>V-2026-038</td>
+                    <td>Alexandria → Varna</td>
+                    <td>34.8°N 28.1°E<br><span class="muted">11.8 kn</span></td>
+                    <td>28.9 t/d</td>
+                    <td>02/05 09:00</td>
+                    <td><span style="color:var(--green); font-weight:600;">+$112K</span></td>
+                    <td><span class="status-dot green"></span>5 min</td>
+                </tr>
+                <tr>
+                    <td><strong>Atlantic Island</strong></td>
+                    <td>V-2026-035</td>
+                    <td>Rotterdam → Casablanca</td>
+                    <td>43.1°N -8.5°W<br><span class="muted">10.2 kn</span></td>
+                    <td>30.5 t/d</td>
+                    <td><span style="color:var(--red);">04/05 22:00 (+18h)</span></td>
+                    <td><span style="color:var(--orange); font-weight:600;">+$76K</span></td>
+                    <td><span class="status-dot orange"></span>3h ago</td>
+                </tr>
+                <tr>
+                    <td><strong>Aegean Island</strong></td>
+                    <td>V-2026-042</td>
+                    <td>Constanza → Barcelona</td>
+                    <td>40.2°N 14.7°E<br><span class="muted">12.8 kn</span></td>
+                    <td>26.4 t/d</td>
+                    <td>01/05 06:00</td>
+                    <td><span style="color:var(--green); font-weight:600;">+$201K</span></td>
+                    <td><span class="status-dot green"></span>1 min</td>
+                </tr>
+                <tr>
+                    <td><strong>Pacific Island</strong></td>
+                    <td>V-2026-040</td>
+                    <td>Suez → Port Said</td>
+                    <td>30.5°N 32.3°E<br><span class="muted">9.5 kn</span></td>
+                    <td>25.8 t/d</td>
+                    <td>28/04 18:00</td>
+                    <td><span style="color:var(--green); font-weight:600;">+$94K</span></td>
+                    <td><span class="status-dot green"></span>12 min</td>
+                </tr>
+                <tr>
+                    <td><strong>Cretan Island</strong></td>
+                    <td>V-2026-043</td>
+                    <td>Heraklion → Genoa</td>
+                    <td>38.8°N 19.4°E<br><span class="muted">13.1 kn</span></td>
+                    <td>27.6 t/d</td>
+                    <td>29/04 22:00</td>
+                    <td><span style="color:var(--green); font-weight:600;">+$211K</span></td>
+                    <td><span class="status-dot gray"></span>Offline (45 min)</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="btn-row">
+            <a href="voyage-instructions.html" class="btn btn-primary">Έκδοση Voyage Instructions</a>
+            <a href="profitability-report.html" class="btn btn-secondary">&#11015; Export / P&amp;L Report</a>
+            <button class="btn btn-secondary" onclick="alert('Σύγκριση ταξιδιών...')"> Σύγκριση Ταξιδιών</button>
+        </div>
+    </div>
+
+    <!-- DEVIATION ALERTS -->
+    <div class="card">
+        <h2>Ειδοποιήσεις Αποκλίσεων</h2>
+        <div class="alert-box warning">
+            <strong>Atlantic Island — Καθυστέρηση ETA</strong>
+            Εκτιμώμενη καθυστέρηση 18 ωρών λόγω καιρικών συνθηκών στον Βισκαϊκό κόλπο.
+            Έχει ειδοποιηθεί αυτόματα η Διοίκηση και ο Charterer.
+        </div>
+        <div class="alert-box info">
+            <strong>Cretan Island — Αναμονή Noon Report</strong>
+            Δεν έχει ληφθεί Noon Report τα τελευταία 45 λεπτά. Τελευταία γνωστή θέση: 38.8°N 19.4°E.
+        </div>
+    </div>
+    <!-- VOYAGE DRILL-DOWN MODAL -->
+    <div class="modal-overlay" id="voy-modal" style="display:none;" onclick="if(event.target===this)closeVoyModal()">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeVoyModal()">&#10005;</button>
+            <h2 id="vm-title" style="color:var(--navy);margin-bottom:4px;"></h2>
+            <p class="muted" id="vm-voyage"></p>
+            <hr style="margin:12px 0;border-color:var(--accent);">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;">
+                <div><span class="label">Θέση</span><span id="vm-pos"></span></div>
+                <div><span class="label">Ταχύτητα</span><span id="vm-speed"></span></div>
+                <div><span class="label">Καύσιμα 24h</span><span id="vm-bunker"></span></div>
+                <div><span class="label">ETA</span><span id="vm-eta"></span></div>
+                <div><span class="label">P&amp;L (Est.)</span><span id="vm-pl"></span></div>
+                <div><span class="label">Last Noon</span><span id="vm-noon"></span></div>
+            </div>
+            <div class="btn-row" style="margin-top:16px;">
+                <a href="noon-report.html" class="btn btn-primary">Υποβολή Noon Report</a>
+                <a href="voyage-instructions.html" class="btn btn-secondary">Οδηγίες</a>
+                <button class="btn btn-secondary" onclick="closeVoyModal()">Κλείσιμο</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+</footer>
+
+<script>
+var voyData = {
+    'new-island': { title: 'M/V New Island', voyage: 'V-2026-041 · Piraeus → Algiers', pos: '36.5°N 18.2°E', speed: '12.3 kn', bunker: '27.1 t/d', eta: '30/04 16:00', pl: '+$148K', noon: '2 min ago' },
+    'med-island': { title: 'M/V Med Island', voyage: 'V-2026-038 · Alexandria → Varna', pos: '34.8°N 28.1°E', speed: '11.8 kn', bunker: '28.9 t/d', eta: '02/05 09:00', pl: '+$112K', noon: '5 min ago' },
+    'atlantic-island': { title: 'M/V Atlantic Island', voyage: 'V-2026-035 · Rotterdam → Casablanca', pos: '43.1°N -8.5°W', speed: '10.2 kn', bunker: '30.5 t/d', eta: '04/05 22:00 (+18h)', pl: '+$76K', noon: '3h ago' },
+    'aegean-island': { title: 'M/V Aegean Island', voyage: 'V-2026-042 · Constanza → Barcelona', pos: '40.2°N 14.7°E', speed: '12.8 kn', bunker: '26.4 t/d', eta: '01/05 06:00', pl: '+$201K', noon: '1 min ago' },
+    'pacific-island': { title: 'M/V Pacific Island', voyage: 'V-2026-040 · Suez → Port Said', pos: '30.5°N 32.3°E', speed: '9.5 kn', bunker: '25.8 t/d', eta: '28/04 18:00', pl: '+$94K', noon: '12 min ago' },
+    'cretan-island': { title: 'M/V Cretan Island', voyage: 'V-2026-043 · Heraklion → Genoa', pos: '38.8°N 19.4°E', speed: '13.1 kn', bunker: '27.6 t/d', eta: '29/04 22:00', pl: '+$211K', noon: 'Offline 45 min' }
+};
+function openVoyModal(key) {
+    var d = voyData[key]; if (!d) return;
+    document.getElementById('vm-title').textContent = d.title;
+    document.getElementById('vm-voyage').textContent = d.voyage;
+    document.getElementById('vm-pos').textContent = d.pos;
+    document.getElementById('vm-speed').textContent = d.speed;
+    document.getElementById('vm-bunker').textContent = d.bunker;
+    document.getElementById('vm-eta').textContent = d.eta;
+    document.getElementById('vm-pl').textContent = d.pl;
+    document.getElementById('vm-noon').textContent = d.noon;
+    document.getElementById('voy-modal').style.display = 'flex';
+    // advance workflow
+    document.querySelectorAll('.workflow-step')[3].className = 'workflow-step active';
+}
+function closeVoyModal() { document.getElementById('voy-modal').style.display = 'none'; }
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeVoyModal(); });
+// make table rows clickable
+window.addEventListener('load', function(){
+    var keys = ['new-island','med-island','atlantic-island','aegean-island','pacific-island','cretan-island'];
+    var rows = document.querySelectorAll('.data-table tbody tr');
+    rows.forEach(function(row, i){
+        if (keys[i]) {
+            row.style.cursor = 'pointer';
+            row.title = 'Κλικ για λεπτομέρειες';
+            row.addEventListener('click', function(){ openVoyModal(keys[i]); });
+        }
+    });
+});
+// countdown timer simulation
+var secs = 298;
+setInterval(function(){
+    secs--; if(secs<0) secs=300;
+    var m=Math.floor(secs/60), s=secs%60;
+    var el=document.getElementById('refresh-cd');
+    if(el) el.textContent = m+':'+(s<10?'0':'')+s;
+},1000);
+</script>
+
+</body>
+</html>

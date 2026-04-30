@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve Procurement — HIND Maritime IS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="../index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · Management Console</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../index.html">Αρχική</a></li>
+                <li><a href="fleet-status.html">Fleet Status</a></li>
+                <li><a href="voyage-dashboard.html">Voyages</a></li>
+                <li><a href="noon-report.html">Noon Report</a></li>
+                <li><a href="approve-procurement.html" class="active">Approvals</a></li>
+                <li><a href="profitability-report.html">Profitability</a></li>
+                <li><a href="invoicing.html">Invoicing</a></li>
+                <li><a href="voyage-instructions.html">Instructions</a></li>
+                <li><a href="maintenance-queue.html">Maintenance</a></li>
+                <li><a href="request-new.html">New Request</a></li>
+                <li><a href="compliance-export.html">Compliance</a></li>
+                <li><span class="user-chip">CEO · A. Konstantinou</span></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Έγκριση Αιτημάτων Προμήθειας</h1>
+    <p class="page-subtitle">
+        Ψηφιακή Ροή Εγκρίσεων · Πλήρης Audit Trail · Αντικαθιστά τη χειρόγραφη υπογραφή σε φυσικά έγγραφα
+    </p>
+
+    <!-- NOTIFICATION BANNER -->
+    <div class="notif-banner" id="pr-notif">
+        <div class="notif-dot"></div>
+        <div>
+            <strong>In-App Notification:</strong>
+            7 εκκρεμή αιτήματα προμήθειας αναμένουν έγκριση — 2 URGENT · Επιλέξτε αίτημα από την λίστα για επεξεργασία
+        </div>
+        <button class="notif-dismiss" onclick="this.parentElement.style.display='none'">&#10005;</button>
+    </div>
+
+    <!-- USE CASE FLOW -->
+    <div class="workflow-steps">
+        <div class="workflow-step done"><span class="step-num">&#10003;</span>Notification</div>
+        <div class="workflow-step active"><span class="step-num">2</span>Άνοιγμα Αιτήματος</div>
+        <div class="workflow-step" id="pr-step3"><span class="step-num">3</span>Απόφαση</div>
+        <div class="workflow-step" id="pr-step4"><span class="step-num">4</span>Auto-Record</div>
+        <div class="workflow-step" id="pr-step5"><span class="step-num">5</span>Auto-Notify</div>
+        <div class="workflow-step" id="pr-step6"><span class="step-num">6</span>Status Update</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi warning">
+            <div class="kpi-label">Εκκρεμή Αιτήματα</div>
+            <div class="kpi-value">7</div>
+            <div class="kpi-trend">προς έγκριση</div>
+        </div>
+        <div class="kpi alert">
+            <div class="kpi-label">URGENT</div>
+            <div class="kpi-value">2</div>
+            <div class="kpi-trend down">υψηλή προτεραιότητα</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Εγκριθέντα (μήνας)</div>
+            <div class="kpi-value">42</div>
+            <div class="kpi-trend up">μέσος χρόνος: 18 min</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Συνολικό Ποσό (μήνας)</div>
+            <div class="kpi-value">€186K</div>
+            <div class="kpi-trend">εγκεκριμένες προμήθειες</div>
+        </div>
+    </div>
+
+    <!-- SPLIT VIEW: list + detail -->
+    <div class="split-view">
+
+        <!-- LIST -->
+        <div class="list-panel">
+            <div class="list-item">
+                <div class="ticket">#PR-2026-0418 · 27/04 09:15</div>
+                <div class="title">Spare Parts — Main Engine</div>
+                <div class="meta">M/V New Island · €4,250 · <span class="badge urgent">URGENT</span></div>
+            </div>
+            <div class="list-item selected">
+                <div class="ticket">#PR-2026-0421 · 27/04 11:32</div>
+                <div class="title">Provisions Resupply</div>
+                <div class="meta">M/V Med Island · €8,940 · <span class="badge warning">High</span></div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">#PR-2026-0422 · 27/04 12:08</div>
+                <div class="title">Lubricants &amp; Chemicals</div>
+                <div class="meta">M/V Atlantic Island · €6,120</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">#PR-2026-0423 · 27/04 12:45</div>
+                <div class="title">Safety Equipment Renewal</div>
+                <div class="meta">M/V Aegean Island · €3,800 · <span class="badge urgent">URGENT</span></div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">#PR-2026-0424 · 27/04 13:00</div>
+                <div class="title">Navigation Charts (Q2)</div>
+                <div class="meta">M/V Pacific Island · €1,250</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">#PR-2026-0425 · 27/04 13:18</div>
+                <div class="title">Hull Cleaning Services</div>
+                <div class="meta">M/V Cretan Island · €12,500</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">#PR-2026-0426 · 27/04 13:30</div>
+                <div class="title">Crew Medical Supplies</div>
+                <div class="meta">M/V Ionian Island · €2,180</div>
+            </div>
+        </div>
+
+        <!-- DETAIL -->
+        <div class="detail-panel">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h2 style="margin:0; color:var(--navy);">Αίτημα #PR-2026-0421</h2>
+                <span class="badge warning">Εκκρεμεί Έγκριση</span>
+            </div>
+
+            <div class="detail-row">
+                <div class="label">Πλοίο</div>
+                <div><strong>M/V Med Island</strong> · IMO 9234567 · Voyage V-2026-038</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Τύπος</div>
+                <div>Provisions (Τρόφιμα &amp; Πόσιμο Νερό)</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Υπεβλήθη από</div>
+                <div>Capt. M. Ioannou (Master) · 27/04/2026 11:32</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Επόμενο Λιμάνι</div>
+                <div>Varna (BGVAR) · ETA 02/05/2026 09:00</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Περιγραφή</div>
+                <div>
+                    Επανεφοδιασμός provisions για 3 εβδομάδες (22 ναυτικοί). Στοκ τροφίμων στο πλοίο
+                    επαρκεί για 7 ημέρες. Παράδοση επιθυμητή στο λιμάνι Varna κατά την άφιξη.
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Προσφορές</div>
+                <div>
+                    <table class="data-table" style="margin-top:6px;">
+                        <thead>
+                            <tr><th>Προμηθευτής</th><th>Ποσό</th><th>Παράδοση</th><th>Σχόλια</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Black Sea Provisions Ltd</strong></td>
+                                <td>€8,940</td>
+                                <td>02/05 08:00</td>
+                                <td><span class="badge valid">Recommended</span></td>
+                            </tr>
+                            <tr>
+                                <td>Varna Marine Supplies</td>
+                                <td>€9,420</td>
+                                <td>02/05 10:00</td>
+                                <td>Καθυστέρηση 2h</td>
+                            </tr>
+                            <tr>
+                                <td>BG Ship Services</td>
+                                <td>€10,150</td>
+                                <td>02/05 09:00</td>
+                                <td>—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Εκτιμώμενο Κόστος</div>
+                <div><strong>€8,940</strong> (Black Sea Provisions Ltd)</div>
+            </div>
+            <div class="detail-row">
+                <div class="label">Budget Status</div>
+                <div><span class="badge valid">Εντός Προϋπολογισμού</span> · 14% του μηνιαίου budget Provisions</div>
+            </div>
+
+            <!-- DECISION -->
+            <fieldset style="margin-top:20px;">
+                <legend>Απόφαση Διοίκησης</legend>
+                <div class="form-group full" style="margin-bottom:14px;">
+                    <label for="comment">Σχόλιο (προαιρετικό)</label>
+                    <textarea id="comment" name="comment" rows="3"
+                      placeholder="Π.χ. Έγκριση με προσφορά Black Sea Provisions λόγω χρονικής καταλληλότητας."></textarea>
+                </div>
+                <div class="btn-row">
+                    <button type="button" class="btn btn-success" onclick="decisionPR('approve')">&#10003; Έγκριση</button>
+                    <button type="button" class="btn btn-danger" onclick="decisionPR('reject')">&#10005; Απόρριψη</button>
+                    <button type="button" class="btn btn-secondary" onclick="alert('Παραπομπή σε Ανώτερο...')"> Παραπομπή σε Ανώτερο</button>
+                    <a href="../index.html" class="btn btn-secondary">Επιστροφή</a>
+                </div>
+                <p class="muted mt-1" style="font-size:12px;">
+                    Η απόφαση καταγράφεται αυτόματα με χρονοσήμανση και όνομα στελέχους στο Audit Trail.
+                    Αυτόματη ειδοποίηση στο Τμήμα Προμηθειών εντός 1 λεπτού.
+                </p>
+            </fieldset>
+
+            <!-- AUDIT TRAIL -->
+            <div style="margin-top:20px;">
+                <h2 style="color:var(--navy); font-size:15px; margin-bottom:10px;">Audit Trail Αιτήματος</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Ώρα</th><th>Ενέργεια</th><th>Χρήστης</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>27/04 11:32</td><td>Υποβολή αιτήματος</td><td>Capt. M. Ioannou</td></tr>
+                        <tr><td>27/04 11:33</td><td>Auto-routing → Τμήμα Προμηθειών</td><td>Σύστημα</td></tr>
+                        <tr><td>27/04 12:15</td><td>Συγκέντρωση 3 προσφορών</td><td>N. Vasileiou (Purchasing)</td></tr>
+                        <tr><td>27/04 12:48</td><td>Παραπομπή για έγκριση Διοίκησης</td><td>N. Vasileiou (Purchasing)</td></tr>
+                        <tr><td>—</td><td>Αναμονή απόφασης Διοίκησης</td><td>—</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+</footer>
+
+<script>
+function decisionPR(action) {
+    var comment = document.getElementById('comment').value.trim();
+    var now = new Date();
+    var time = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+    var tbody = document.querySelector('#audit-tbody') || document.querySelectorAll('.data-table tbody')[1];
+    if (action === 'approve') {
+        // update badge
+        document.querySelector('.badge.warning') && (document.querySelector('.badge.warning').textContent = 'Εγκρίθηκε');
+        document.querySelector('.badge.warning') && document.querySelector('.badge.warning').classList.replace('warning','valid');
+        if (tbody) {
+            var r1 = tbody.insertRow(); r1.innerHTML = '<td>'+time+'</td><td><strong>Έγκριση</strong> από CEO A. Konstantinou'+(comment?' — '+comment:'')+'</td><td>CEO · A. Konstantinou</td>';
+            var r2 = tbody.insertRow(); r2.innerHTML = '<td>'+time+'</td><td>Ειδοποίηση απεστάλη στο Τμήμα Προμηθειών (εντός 1 λεπτού)</td><td>Σύστημα</td>';
+        }
+        ['pr-step3','pr-step4','pr-step5','pr-step6'].forEach(function(id){ var el=document.getElementById(id); if(el) el.className='workflow-step done'; });
+        alert('✓ Αίτημα #PR-2026-0421 Εγκρίθηκε.\nΕιδοποίηση απεστάλη αυτόματα στο Τμήμα Προμηθειών.');
+    } else {
+        if (tbody) {
+            var r = tbody.insertRow(); r.innerHTML = '<td>'+time+'</td><td><strong>Απόρριψη</strong> από CEO A. Konstantinou'+(comment?' — '+comment:'')+'</td><td>CEO · A. Konstantinou</td>';
+            var r2 = tbody.insertRow(); r2.innerHTML = '<td>'+time+'</td><td>Ειδοποίηση απόρριψης απεστάλη</td><td>Σύστημα</td>';
+        }
+        ['pr-step3','pr-step4','pr-step5','pr-step6'].forEach(function(id){ var el=document.getElementById(id); if(el) el.className='workflow-step done'; });
+        alert('✕ Αίτημα #PR-2026-0421 Απορρίφθηκε.\nΕιδοποίηση απορρίψης απεστάλη αυτόματα.');
+    }
+}
+</script>
+</body>
+</html>

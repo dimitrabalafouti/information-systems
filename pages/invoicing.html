@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoicing — HIND Maritime IS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="../index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · Accounting Console</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../index.html">Αρχική</a></li>
+                <li><a href="fleet-status.html">Fleet Status</a></li>
+                <li><a href="voyage-dashboard.html">Voyages</a></li>
+                <li><a href="noon-report.html">Noon Report</a></li>
+                <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><a href="profitability-report.html">Profitability</a></li>
+                <li><a href="invoicing.html" class="active">Invoicing</a></li>
+                <li><a href="voyage-instructions.html">Instructions</a></li>
+                <li><a href="maintenance-queue.html">Maintenance</a></li>
+                <li><a href="request-new.html">New Request</a></li>
+                <li><a href="compliance-export.html">Compliance</a></li>
+                <li><span class="user-chip">Λογιστήριο · P. Alexiou</span></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Έκδοση Τιμολογίων — Αυτόματα Προσχέδια</h1>
+    <p class="page-subtitle">
+        Αυτόματη συγκέντρωση κόστους μετά την ολοκλήρωση κάθε ταξιδιού ·
+        Δημιουργία πλήρους προσχεδίου για επαλήθευση πριν την οριστική έκδοση
+    </p>
+
+    <!-- NOTIFICATION BANNER -->
+    <div class="notif-banner" id="inv-notif">
+        <div class="notif-dot"></div>
+        <div>
+            <strong>Αυτόματος Εντοπισμός:</strong>
+            Pacific Island ολοκλήρωσε ταξίδι VY-2026-012 (Richards Bay → Rotterdam) —
+            Δημιουργήθηκε αυτόματα προσχέδιο τιμολογίου για επαλήθευση · Αήθεια Συγκέντρωσης Στοιχείων
+        </div>
+        <button class="notif-dismiss" onclick="this.parentElement.style.display='none'">&#10005;</button>
+    </div>
+
+    <!-- USE CASE FLOW -->
+    <div class="workflow-steps">
+        <div class="workflow-step done"><span class="step-num">&#10003;</span>Auto-Detect</div>
+        <div class="workflow-step done"><span class="step-num">&#10003;</span>Συγκέντρωση Κόστους</div>
+        <div class="workflow-step active"><span class="step-num">3</span>Draft + Notify</div>
+        <div class="workflow-step" id="inv-step4"><span class="step-num">4</span>Επαλήθευση</div>
+        <div class="workflow-step" id="inv-step5"><span class="step-num">5</span>Έγκριση</div>
+        <div class="workflow-step" id="inv-step6"><span class="step-num">6</span>Αποστολή Charterer</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi warning">
+            <div class="kpi-label">Εκκρεμή Προσχέδια</div>
+            <div class="kpi-value">5</div>
+            <div class="kpi-trend">προς επαλήθευση</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Εκδοθέντα (μήνας)</div>
+            <div class="kpi-value">12</div>
+            <div class="kpi-trend up">Απρ 2026</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Συνολική Αξία (μήνας)</div>
+            <div class="kpi-value">$1.84M</div>
+            <div class="kpi-trend up">+6.2% vs Μαρ</div>
+        </div>
+        <div class="kpi alert">
+            <div class="kpi-label">Εκπρόθεσμα</div>
+            <div class="kpi-value">1</div>
+            <div class="kpi-trend down">VY-2026-014</div>
+        </div>
+    </div>
+
+    <!-- SPLIT VIEW -->
+    <div class="split-view">
+
+        <!-- LIST -->
+        <div class="list-panel">
+            <div style="padding:12px 16px;background:var(--navy);color:#fff;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">
+                Προσχέδια Τιμολογίων
+            </div>
+
+            <div class="list-item selected">
+                <div class="ticket">VY-2026-012 · Ολοκληρώθηκε 01/04</div>
+                <div class="title">Pacific Island — Richards Bay → Rotterdam</div>
+                <div class="meta">$415,200 · <span class="badge warning">Εκκρεμεί Επαλήθευση</span></div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">VY-2026-010 · Ολοκληρώθηκε 25/03</div>
+                <div class="title">Aegean Island — Πειραιάς → Μασσαλία</div>
+                <div class="meta">$264,800 · <span class="badge warning">Εκκρεμεί Επαλήθευση</span></div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">VY-2026-009 · Ολοκληρώθηκε 20/03</div>
+                <div class="title">New Island — Σεβίλλη → Θεσσαλονίκη</div>
+                <div class="meta">$198,400 · <span class="badge warning">Εκκρεμεί Επαλήθευση</span></div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">VY-2026-014 · Ολοκληρώθηκε 10/04</div>
+                <div class="title">Cretan Island — Κωνσταντινούπολη → Βαλένθια</div>
+                <div class="meta">$342,000 · <span class="badge expired">Εκπρόθεσμο</span></div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">VY-2026-007 · Ολοκληρώθηκε 08/03</div>
+                <div class="title">Aegean Island — Κωνσταντινούπολη → Αμβέρσα</div>
+                <div class="meta">$276,000 · <span class="badge warning">Εκκρεμεί Επαλήθευση</span></div>
+            </div>
+            <div style="border-top:2px solid var(--accent);margin-top:4px;">
+                <div style="padding:10px 16px;font-size:12px;color:var(--text-light);text-transform:uppercase;letter-spacing:0.5px;font-weight:600;">Εκδοθέντα</div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">VY-2026-001 · Εκδόθηκε 05/02</div>
+                <div class="title">New Island — Αλεξάνδρεια → Αμβέρσα</div>
+                <div class="meta">$218,400 · <span class="badge valid">Εκδοθέν</span></div>
+            </div>
+            <div class="list-item">
+                <div class="ticket">VY-2026-002 · Εκδόθηκε 26/01</div>
+                <div class="title">Med Island — Θεσσαλονίκη → Γένοβα</div>
+                <div class="meta">$184,000 · <span class="badge valid">Εκδοθέν</span></div>
+            </div>
+        </div>
+
+        <!-- DETAIL: AUTO-GENERATED INVOICE DRAFT -->
+        <div class="detail-panel">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                <div>
+                    <h2 style="border:none;padding:0;margin:0;">Προσχέδιο Τιμολογίου</h2>
+                    <p class="muted" style="margin-top:4px;">Αυτόματη συγκέντρωση κόστους — VY-2026-012</p>
+                </div>
+                <span class="badge warning">Εκκρεμεί Επαλήθευση</span>
+            </div>
+
+            <!-- Invoice Header -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;">
+                <div class="card" style="margin:0;padding:14px;">
+                    <div style="font-size:12px;color:var(--text-light);font-weight:600;text-transform:uppercase;margin-bottom:8px;">Εκδότης</div>
+                    <div style="font-weight:700;color:var(--navy);">HIND Maritime Enterprises S.A.</div>
+                    <div class="muted">Πειραιάς, Ελλάδα · ΑΦΜ: EL800123456</div>
+                    <div class="muted">accounting@hind.gr</div>
+                </div>
+                <div class="card" style="margin:0;padding:14px;">
+                    <div style="font-size:12px;color:var(--text-light);font-weight:600;text-transform:uppercase;margin-bottom:8px;">Τιμολόγιο</div>
+                    <div><strong>Αρ. Προσχ.:</strong> <span class="muted">DRAFT-2026-012</span></div>
+                    <div><strong>Ημ. Δημιουργίας:</strong> <span class="muted">28/04/2026</span></div>
+                    <div><strong>Ταξίδι:</strong> <span class="muted">VY-2026-012</span></div>
+                    <div><strong>Πλοίο:</strong> <span class="muted">Pacific Island (IMO 8745632)</span></div>
+                </div>
+            </div>
+
+            <!-- Voyage Details -->
+            <div class="card" style="margin-bottom:14px;">
+                <h2>Στοιχεία Ταξιδιού</h2>
+                <div class="detail-row">
+                    <span class="label">Δρομολόγιο</span>
+                    <span>Richards Bay (ZAF) → Rotterdam (NLD)</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Αναχώρηση</span>
+                    <span>02/03/2026 06:00 UTC</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Άφιξη</span>
+                    <span>01/04/2026 14:30 UTC</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Φορτίο</span>
+                    <span>Coal — 68,400 MT</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Charterer</span>
+                    <span>Global Coal Trading Ltd.</span>
+                </div>
+            </div>
+
+            <!-- Cost Breakdown -->
+            <div class="card" style="margin-bottom:14px;">
+                <h2>Ανάλυση Κόστους — Αυτόματη Συγκέντρωση</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Κατηγορία</th>
+                            <th>Περιγραφή</th>
+                            <th class="num">Ποσό (USD)</th>
+                            <th>Πηγή</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Bunkers</strong></td>
+                            <td>HFO 820 MT @ $478/MT + VLSFO 140 MT @ $612/MT</td>
+                            <td class="num">$477,640</td>
+                            <td><span class="badge info">Auto</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Port Dues — Load</strong></td>
+                            <td>Richards Bay Port Authority · Berth + Pilotage</td>
+                            <td class="num">$28,400</td>
+                            <td><span class="badge info">Auto</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Port Dues — Discharge</strong></td>
+                            <td>Port of Rotterdam · Berth + Pilotage + Mooring</td>
+                            <td class="num">$41,200</td>
+                            <td><span class="badge info">Auto</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Canal Dues</strong></td>
+                            <td>Suez Canal Transit</td>
+                            <td class="num">$68,900</td>
+                            <td><span class="badge info">Auto</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Crew Costs</strong></td>
+                            <td>Daily running cost (30 ημέρες @ $9,800/day)</td>
+                            <td class="num">$294,000</td>
+                            <td><span class="badge info">Auto</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Misc / Disbursements</strong></td>
+                            <td>Ναυτιλιακοί πράκτορες, ανεφοδιασμός, λοιπά</td>
+                            <td class="num">$18,660</td>
+                            <td><span class="badge warning">Χειροκίνητο</span></td>
+                        </tr>
+                        <tr style="background:#f0f7ff;font-weight:700;">
+                            <td colspan="2"><strong>Σύνολο Κόστους</strong></td>
+                            <td class="num"><strong>$928,800</strong></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Freight & Total -->
+            <div class="card" style="margin-bottom:18px;">
+                <h2>Ναύλος &amp; Κερδοφορία</h2>
+                <div class="detail-row">
+                    <span class="label">Ναύλος (Freight)</span>
+                    <span class="profit" style="font-size:16px;font-weight:700;">$415,200</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Συνολικό Κόστος</span>
+                    <span style="color:var(--red);font-weight:600;">$928,800</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">Voyage Result (P&amp;L)</span>
+                    <span class="profit" style="font-size:15px;">+$53,400 (Margin 12.9%)</span>
+                </div>
+            </div>
+
+            <div class="alert-box info" style="margin-bottom:16px;">
+                <strong>Αυτόματη Συγκέντρωση Δεδομένων</strong>
+                Τα δεδομένα bunkers, λιμενικών τελών και ναύλου αντλήθηκαν αυτόματα από τη
+                κεντρική βάση. Τα "Misc/Disbursements" εισήχθησαν χειροκίνητα από τον πλοίαρχο.
+                Επαληθεύστε πριν την οριστική έκδοση.
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-success" id="inv-approve-btn" onclick="approveInvoice()">&#10003; Έκδοση Οριστικού Τιμολογίου</button>
+                <button class="btn btn-primary" id="inv-send-btn" style="display:none;" onclick="sendToCharterer()">&#9993; Αποστολή στον Charterer</button>
+                <button class="btn btn-danger" onclick="alert('Εξαγωγή PDF...')">&#11015; Export PDF</button>
+                <button class="btn btn-secondary" onclick="alert('Αποστολή για επανέλεγχο...')"> Επιστροφή για Έλεγχο</button>
+            </div>
+            <div id="cashflow-indicator" style="display:none;" class="alert-box success">
+                <strong>&#10003; Καταγράφηκε στις Εισπράξεις</strong>
+                Το τιμολόγιο INV-2026-012 (ποσό $415,200) εκδόθηκε και εστάλη στον Charterer Global Coal Trading Ltd. · Ενημέρωση Cashflow Dashboard.
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+</footer>
+
+<script>
+function approveInvoice() {
+    ['inv-step4','inv-step5'].forEach(function(id){ var el=document.getElementById(id); if(el) el.className='workflow-step done'; });
+    var s6=document.getElementById('inv-step6'); if(s6) s6.className='workflow-step active';
+    document.getElementById('inv-approve-btn').style.display='none';
+    document.getElementById('inv-send-btn').style.display='';
+    alert('Τιμολόγιο INV-2026-012 εκδόθηκε οριστικά.\nΧρησιμοποιήστε ‘Αποστολή στον Charterer’ για αποστολή.');
+}
+function sendToCharterer() {
+    var s6=document.getElementById('inv-step6'); if(s6) s6.className='workflow-step done';
+    document.getElementById('inv-send-btn').disabled=true;
+    document.getElementById('inv-send-btn').textContent='&#10003; Απεστάλη';
+    document.getElementById('cashflow-indicator').style.display='';
+    alert('Τιμολόγιο INV-2026-012 απεστάλη στον Charterer (Global Coal Trading Ltd.)\nΕνημέρωση Cashflow Dashboard ολοκληρώθηκε.');
+}
+</script>
+
+</body>
+</html>
