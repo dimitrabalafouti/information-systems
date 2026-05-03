@@ -6,9 +6,16 @@
     <title>Compliance Export — HIND Maritime IS</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <style>
-        /* cert table: checkbox col narrower than default */
-        .col-check { width: 38px; text-align: center; }
-        #cert-list .data-table td:first-child { text-align: center; }
+        .cert-pending-row td { opacity: 0.75; background: #fffbeb; }
+        .cert-excluded-row td { opacity: 0.55; background: #fafafa; }
+        .badge.dpa-ok { background:#d4eddf; color:#1a7f5a; border:1px solid #1a7f5a; font-size:11px; }
+        .badge.dpa-pending { background:#fff3cd; color:#7d5a00; border:1px solid #e0a800; font-size:11px; }
+        .provenance-mini { font-size:11px; color:#5a6a7a; display:block; margin-top:3px; }
+        .excl-note { font-size:11px; color:#c0392b; display:block; margin-top:3px; }
+        .summary-meta { font-size:13px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px 16px; margin-top:12px; }
+        .summary-meta .sm-row { display:flex; gap:8px; margin-bottom:6px; align-items:flex-start; }
+        .summary-meta .sm-label { color:#64748b; min-width:160px; font-size:12px; }
+        .summary-meta .sm-val { font-weight:600; color:#1e293b; }
     </style>
 </head>
 <body>
@@ -75,16 +82,20 @@
             <div class="kpi-value">1</div>
             <div class="kpi-trend down">Ionian Island</div>
         </div>
-        <div class="kpi ok">
-            <div class="kpi-label">Εξαγωγές (μήνας)</div>
-            <div class="kpi-value">14</div>
-            <div class="kpi-trend">Απρ 2026</div>
+        <div class="kpi warning">
+            <div class="kpi-label">Pending DPA</div>
+            <div class="kpi-value">4</div>
+            <div class="kpi-trend">Εκτός εξαγωγής</div>
         </div>
     </div>
 
     <!-- export tool -->
     <div class="card" id="export-tool">
         <h2>Εξαγωγή Vetting Folder</h2>
+        <p class="muted" style="font-size:13px;margin-bottom:14px;">
+            Συμπεριλαμβάνονται <strong>μόνο DPA-επαληθευμένα, ισχύοντα</strong> πιστοποιητικά.
+            Expired και Pending DPA αποκλείονται αυτόματα.
+        </p>
 
         <div class="grid-3col">
             <div class="form-group">
@@ -119,8 +130,8 @@
             <h2 class="h2-section">Πιστοποιητικά για Συμπερίληψη — <span id="cert-vessel-name"></span></h2>
             <div class="alert-box mb-sm">
                 <strong>Αυτόματο Φίλτρο:</strong>
-                Το σύστημα συγκεντρώνει μόνο τα ισχύοντα (Valid) πιστοποιητικά.
-                Expired και Missing Data αποκλείονται αυτόματα.
+                Μόνο <span class="badge dpa-ok">DPA Verified</span> &amp; ισχύοντα συμπεριλαμβάνονται.
+                Expired και <span class="badge dpa-pending">Pending DPA</span> αποκλείονται αυτόματα.
             </div>
             <table class="data-table" id="cert-table">
                 <thead>
@@ -129,6 +140,7 @@
                         <th>Πιστοποιητικό</th>
                         <th>Αρχή Έκδοσης</th>
                         <th>Λήξη</th>
+                        <th>DPA Status</th>
                         <th>Κατάσταση</th>
                     </tr>
                 </thead>
@@ -146,23 +158,32 @@
         <h2>Δημιουργία Αρχείου...</h2>
         <div class="workflow-steps">
             <div class="workflow-step done"><span class="step-num">&#10003;</span>Επιλογή</div>
-            <div class="workflow-step done"><span class="step-num">&#10003;</span>Συγκέντρωση</div>
-            <div class="workflow-step active"><span class="step-num">3</span>Δημιουργία</div>
+            <div class="workflow-step done"><span class="step-num">&#10003;</span>Φίλτρο DPA</div>
+            <div class="workflow-step active"><span class="step-num">3</span>Συγκέντρωση</div>
             <div class="workflow-step" id="prog-step4"><span class="step-num">4</span>Έτοιμο</div>
         </div>
-        <p class="muted" style="margin:10px 0;">Συγκέντρωση εγγράφων από κεντρική βάση...</p>
+        <p class="muted" style="margin:10px 0;">Συγκέντρωση DPA-επαληθευμένων εγγράφων από κεντρική βάση...</p>
     </div>
 
     <!-- download ready card - shown after export -->
     <div id="download-ready" style="display:none;" class="card">
         <div class="alert-box success">
             <strong>&#10003; Vetting Folder Έτοιμο</strong>
-            Το αρχείο δημιουργήθηκε επιτυχώς. Η εξαγωγή καταγράφηκε στο Audit Trail.
+            Συμπεριλήφθηκαν μόνο DPA-επαληθευμένα έγγραφα. Η εξαγωγή καταγράφηκε στο Audit Trail.
         </div>
         <div class="detail-row"><span class="label">Αρχείο</span><span id="dl-filename" class="value-bold"></span></div>
         <div class="detail-row"><span class="label">Πλοίο</span><span id="dl-vessel"></span></div>
-        <div class="detail-row"><span class="label">Εγγύφθηκαν</span><span id="dl-count"></span></div>
+        <div class="detail-row"><span class="label">Συμπεριλήφθηκαν</span><span id="dl-count"></span></div>
+        <div class="detail-row"><span class="label">Εξαιρέθηκαν</span><span id="dl-excl"></span></div>
         <div class="detail-row"><span class="label">Δημιουργήθηκε</span><span id="dl-time"></span></div>
+        <!-- DPA Provenance summary -->
+        <div class="summary-meta">
+            <div style="font-size:11px;font-weight:700;color:#1a7f5a;letter-spacing:0.05em;margin-bottom:8px;">🔐 DATA PROVENANCE — DPA ΕΠΑΛΗΘΕΥΣΗ ΕΞΑΓΩΓΗΣ</div>
+            <div class="sm-row"><span class="sm-label">Εξαγωγή από</span><span class="sm-val">M. Papadopoulos (DPA)</span></div>
+            <div class="sm-row"><span class="sm-label">Ρόλος</span><span class="sm-val">DPA / HSEQ Manager — HIND Maritime Enterprises S.A.</span></div>
+            <div class="sm-row"><span class="sm-label">Φίλτρο</span><span class="sm-val">DPA Verified ✓ &amp; Status ≠ Expired ✓ &amp; Status ≠ Pending ✓</span></div>
+            <div class="sm-row"><span class="sm-label">Εξαιρέθηκαν</span><span class="sm-val" id="dl-excl-detail">—</span></div>
+        </div>
         <div class="btn-row" style="margin-top:14px;">
             <button class="btn btn-primary" onclick="alert('Λήψη αρχείου...')">&#11015; Λήψη Αρχείου</button>
             <button class="btn btn-secondary" onclick="emailExport()">&#9993; Αποστολή μέσω συστήματος</button>
@@ -177,9 +198,10 @@
             <thead>
                 <tr>
                     <th>Πλοίο</th>
-                    <th class="num">Valid</th>
-                    <th class="num">Expiring</th>
+                    <th class="num">DPA Verified</th>
+                    <th class="num">Pending DPA</th>
                     <th class="num">Expired</th>
+                    <th>RightShip</th>
                     <th>Vetting Status</th>
                     <th>Τελ. Εξαγωγή</th>
                     <th>Ενέργεια</th>
@@ -187,60 +209,68 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>New Island</strong><br><span class="muted">IMO 9456789</span></td>
+                    <td><strong>New Island</strong><br><span class="muted">IMO 9456789 · 8 έτη</span></td>
                     <td class="num">8</td><td class="num">0</td><td class="num">0</td>
+                    <td><span class="muted" style="font-size:11px;">Δεν απαιτείται (&lt;12 έτη)</span></td>
                     <td><span class="badge valid">Vetting Ready</span></td>
                     <td>22/04/2026</td>
                     <td><button class="btn btn-primary" onclick="quickExport('New Island')">&#11015; Export</button></td>
                 </tr>
                 <tr>
-                    <td><strong>Med Island</strong><br><span class="muted">IMO 9234567</span></td>
+                    <td><strong>Med Island</strong><br><span class="muted">IMO 9234567 · 14 έτη</span></td>
                     <td class="num">7</td><td class="num">1</td><td class="num">0</td>
-                    <td><span class="badge valid">Vetting Ready</span></td>
+                    <td><span class="badge valid" style="font-size:11px;">Score 4/5 · GHG B</span></td>
+                    <td><span class="badge warning">Expiring · Pending DPA (IOPP)</span></td>
                     <td>18/04/2026</td>
                     <td><button class="btn btn-primary" onclick="quickExport('Med Island')">&#11015; Export</button></td>
                 </tr>
                 <tr>
-                    <td><strong>Atlantic Island</strong><br><span class="muted">IMO 8956123</span></td>
+                    <td><strong>Atlantic Island</strong><br><span class="muted">IMO 8956123 · 21 έτη</span></td>
                     <td class="num">6</td><td class="num">1</td><td class="num">0</td>
-                    <td><span class="badge warning">Expiring — Ανανέωση Απαιτείται</span></td>
+                    <td><span class="badge pending" style="font-size:11px;">⏳ Pending DPA Review</span></td>
+                    <td><span class="badge warning">Expiring + RS Pending</span></td>
                     <td>15/04/2026</td>
                     <td><button class="btn btn-primary" onclick="quickExport('Atlantic Island')">&#11015; Export</button></td>
                 </tr>
                 <tr>
-                    <td><strong>Aegean Island</strong><br><span class="muted">IMO 9123456</span></td>
-                    <td class="num">7</td><td class="num">1</td><td class="num">0</td>
+                    <td><strong>Aegean Island</strong><br><span class="muted">IMO 9123456 · 17 έτη</span></td>
+                    <td class="num">7</td><td class="num">0</td><td class="num">0</td>
+                    <td><span class="badge valid" style="font-size:11px;">Score 4/5 · GHG B</span></td>
                     <td><span class="badge warning">Expiring — Ανανέωση Απαιτείται</span></td>
                     <td>20/04/2026</td>
                     <td><button class="btn btn-primary" onclick="quickExport('Aegean Island')">&#11015; Export</button></td>
                 </tr>
                 <tr>
-                    <td><strong>Pacific Island</strong><br><span class="muted">IMO 8745632</span></td>
+                    <td><strong>Pacific Island</strong><br><span class="muted">IMO 8745632 · 23 έτη</span></td>
                     <td class="num">6</td><td class="num">1</td><td class="num">0</td>
-                    <td><span class="badge warning">Expiring — Ανανέωση Απαιτείται</span></td>
+                    <td><span class="badge valid" style="font-size:11px;">Score 3/5 · GHG C</span></td>
+                    <td><span class="badge warning">Expiring + Pending DPA (ISSC)</span></td>
                     <td>21/04/2026</td>
                     <td><button class="btn btn-primary" onclick="quickExport('Pacific Island')">&#11015; Export</button></td>
                 </tr>
                 <tr>
-                    <td><strong>Ionian Island</strong><br><span class="muted">IMO 9356741</span></td>
-                    <td class="num">6</td><td class="num">0</td><td class="num">1</td>
-                    <td><span class="badge expired">NOT Ready — Expired Cert</span></td>
+                    <td><strong>Ionian Island</strong><br><span class="muted">IMO 9356741 · 11 έτη</span></td>
+                    <td class="num">5</td><td class="num">1</td><td class="num">1</td>
+                    <td><span class="muted" style="font-size:11px;">Δεν απαιτείται (&lt;12 έτη)</span></td>
+                    <td><span class="badge expired">NOT Ready — Expired LL Cert</span></td>
                     <td>—</td>
                     <td><button class="btn btn-danger" onclick="alert('Vetting αδύνατο: Load Line Certificate ληγμένο.')">&#9888; Εκκρεμές</button></td>
                 </tr>
                 <tr>
-                    <td><strong>Cretan Island</strong><br><span class="muted">IMO 9087654</span></td>
+                    <td><strong>Cretan Island</strong><br><span class="muted">IMO 9087654 · 18 έτη</span></td>
                     <td class="num">8</td><td class="num">0</td><td class="num">0</td>
+                    <td><span class="badge valid" style="font-size:11px;">Score 4/5 · GHG B</span></td>
                     <td><span class="badge valid">Vetting Ready</span></td>
                     <td>24/04/2026</td>
                     <td><button class="btn btn-primary" onclick="quickExport('Cretan Island')">&#11015; Export</button></td>
                 </tr>
                 <tr>
-                    <td><strong>Adriatic Island</strong><br><span class="muted">IMO 9412385</span></td>
+                    <td><strong>Adriatic Island</strong><br><span class="muted">IMO 9412385 · 9 έτη</span></td>
                     <td class="num">0</td><td class="num">0</td><td class="num">0</td>
+                    <td><span class="muted" style="font-size:11px;">Δεν απαιτείται (&lt;12 έτη)</span></td>
                     <td><span class="badge missing">Missing Data</span></td>
                     <td>—</td>
-                    <td><a href="fleet-status.html" class="btn btn-secondary">Καταχώρηση</a></td>
+                    <td><a href="certificate-entry.html" class="btn btn-secondary">Καταχώρηση</a></td>
                 </tr>
             </tbody>
         </table>
@@ -251,14 +281,22 @@
         <h2>Audit Trail Εξαγωγών</h2>
         <table class="data-table" id="audit-table">
             <thead>
-                <tr><th>Ημ/νία</th><th>Χρήστης</th><th>Πλοίο</th><th>Μορφή</th><th>Έγγραφα</th><th>Λόγος</th></tr>
+                <tr>
+                    <th>Ημ/νία</th>
+                    <th>Χρήστης</th>
+                    <th>Πλοίο</th>
+                    <th>Μορφή</th>
+                    <th>DPA Verified</th>
+                    <th>Εξαιρέθηκαν</th>
+                    <th>Λόγος</th>
+                </tr>
             </thead>
             <tbody>
-                <tr><td>24/04/2026 11:30</td><td>M. Papadopoulos (DPA)</td><td>Cretan Island</td><td>ZIP</td><td>8</td><td>Vetting Inspection</td></tr>
-                <tr><td>22/04/2026 09:15</td><td>M. Papadopoulos (DPA)</td><td>New Island</td><td>PDF</td><td>8</td><td>Charterer Request</td></tr>
-                <tr><td>21/04/2026 14:40</td><td>K. Antoniou (Ops)</td><td>Pacific Island</td><td>ZIP</td><td>6</td><td>PSC Inspection</td></tr>
-                <tr><td>20/04/2026 10:05</td><td>M. Papadopoulos (DPA)</td><td>Aegean Island</td><td>PDF</td><td>7</td><td>Port State Control</td></tr>
-                <tr><td>18/04/2026 16:20</td><td>M. Papadopoulos (DPA)</td><td>Med Island</td><td>ZIP</td><td>7</td><td>Vetting Inspection</td></tr>
+                <tr><td>24/04/2026 11:30</td><td>M. Papadopoulos (DPA)</td><td>Cretan Island</td><td>ZIP</td><td>8</td><td>0</td><td>Vetting Inspection</td></tr>
+                <tr><td>22/04/2026 09:15</td><td>M. Papadopoulos (DPA)</td><td>New Island</td><td>PDF</td><td>8</td><td>0</td><td>Charterer Request</td></tr>
+                <tr><td>21/04/2026 14:40</td><td>K. Antoniou (Ops)</td><td>Pacific Island</td><td>ZIP</td><td>6</td><td>1 (pending)</td><td>PSC Inspection</td></tr>
+                <tr><td>20/04/2026 10:05</td><td>M. Papadopoulos (DPA)</td><td>Aegean Island</td><td>PDF</td><td>7</td><td>0</td><td>Port State Control</td></tr>
+                <tr><td>18/04/2026 16:20</td><td>M. Papadopoulos (DPA)</td><td>Med Island</td><td>ZIP</td><td>7</td><td>0</td><td>Vetting Inspection</td></tr>
             </tbody>
         </table>
     </div>
@@ -271,25 +309,84 @@
 <script>
 const certDB = {
     'new-island': [
-        { cert: 'Safety Management Certificate (SMC)', auth: "Lloyd's Register", exp: '15/09/2026', status: 'valid' },
-        { cert: 'ISPS — Ship Security Certificate', auth: "Lloyd's Register", exp: '15/09/2026', status: 'valid' },
-        { cert: 'IOPP Certificate', auth: "Lloyd's Register", exp: '20/07/2026', status: 'valid' },
-        { cert: 'Class Certificate', auth: "Lloyd's Register", exp: '12/08/2026', status: 'valid' },
-        { cert: 'Load Line Certificate', auth: "Lloyd's Register", exp: '05/10/2026', status: 'valid' },
-        { cert: 'Safe Manning Document', auth: 'HNMS', exp: '30/11/2026', status: 'valid' },
-        { cert: 'Crew List & Certificates', auth: 'HNMS', exp: '—', status: 'valid' },
-        { cert: 'P&I Insurance Certificate', auth: 'UK P&I Club', exp: '20/02/2027', status: 'valid' }
+        { cert: 'Safety Management Certificate (SMC)',     auth: "Lloyd's Register",  exp: '15/09/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '26/04/2026' },
+        { cert: 'ISPS — Ship Security Certificate (ISSC)', auth: "Lloyd's Register",  exp: '15/09/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '26/04/2026' },
+        { cert: 'IOPP Certificate (MARPOL)',               auth: "Lloyd's Register",  exp: '20/07/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '26/04/2026' },
+        { cert: 'Class Certificate',                       auth: "Lloyd's Register",  exp: '12/08/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '26/04/2026' },
+        { cert: 'Load Line Certificate (LL 66)',           auth: "Lloyd's Register",  exp: '05/10/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '26/04/2026' },
+        { cert: 'MLC 2006 Certificate',                    auth: 'HNMS',             exp: '30/11/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '26/04/2026' },
+        { cert: 'Safe Manning Document',                   auth: 'HNMS',             exp: '—',          status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '26/04/2026' },
+        { cert: 'P&I Insurance Certificate',               auth: 'UK P&I Club',      exp: '20/02/2027', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '26/04/2026' }
+    ],
+    'med-island': [
+        { cert: 'Safety Management Certificate (SMC)',     auth: 'Bureau Veritas',   exp: '15/08/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '25/04/2026' },
+        { cert: 'ISPS — Ship Security Certificate (ISSC)', auth: 'Bureau Veritas',   exp: '15/08/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '25/04/2026' },
+        { cert: 'IOPP Certificate (MARPOL)',               auth: 'Bureau Veritas',   exp: '10/06/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '25/04/2026' },
+        { cert: 'IOPP Certificate — Renewal (submitted)',  auth: 'Bureau Veritas',   exp: '10/06/2031', status: 'pending',  dpaVerified: false, verifiedBy: null, submittedDate: '28/04/2026' },
+        { cert: 'Class Certificate',                       auth: 'Bureau Veritas',   exp: '22/07/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '25/04/2026' },
+        { cert: 'Load Line Certificate (LL 66)',           auth: 'Bureau Veritas',   exp: '18/09/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '25/04/2026' },
+        { cert: 'MLC 2006 Certificate',                    auth: 'HNMS',             exp: '30/11/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '25/04/2026' },
+        { cert: 'RightShip GHG Inspection',               auth: 'RightShip Pty Ltd',exp: '12/02/2027', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '20/02/2026', rsScore: '4/5', rsGhg: 'B' },
+        { cert: 'P&I Insurance Certificate',               auth: 'UK P&I Club',      exp: '20/02/2027', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '25/04/2026' }
+    ],
+    'atlantic-island': [
+        { cert: 'Safety Management Certificate (SMC)',     auth: 'DNV GL',           exp: '30/07/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '22/04/2026' },
+        { cert: 'ISPS — Ship Security Certificate (ISSC)', auth: 'DNV GL',           exp: '30/07/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '22/04/2026' },
+        { cert: 'IOPP Certificate (MARPOL)',               auth: 'DNV GL',           exp: '15/09/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '22/04/2026' },
+        { cert: 'Class Certificate',                       auth: 'DNV GL',           exp: '18/05/2026', status: 'expiring', dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '22/04/2026' },
+        { cert: 'Load Line Certificate (LL 66)',           auth: 'DNV GL',           exp: '10/10/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '22/04/2026' },
+        { cert: 'MLC 2006 Certificate',                    auth: 'HNMS',             exp: '30/11/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '22/04/2026' },
+        { cert: 'RightShip GHG Inspection (submitted)',   auth: 'RightShip Pty Ltd',exp: '—',          status: 'pending',  dpaVerified: false, verifiedBy: null, submittedDate: '25/04/2026', rsScore: '4/5 (prov)', rsGhg: 'B (prov)' },
+        { cert: 'P&I Insurance Certificate',               auth: 'UK P&I Club',      exp: '20/02/2027', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '22/04/2026' }
+    ],
+    'aegean-island': [
+        { cert: 'Safety Management Certificate (SMC)',     auth: 'ABS',              exp: '22/05/2026', status: 'expiring', dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '23/04/2026' },
+        { cert: 'ISPS — Ship Security Certificate (ISSC)', auth: 'ABS',              exp: '12/08/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '23/04/2026' },
+        { cert: 'IOPP Certificate (MARPOL)',               auth: 'ABS',              exp: '05/09/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '23/04/2026' },
+        { cert: 'Class Certificate',                       auth: 'ABS',              exp: '18/10/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '23/04/2026' },
+        { cert: 'Load Line Certificate (LL 66)',           auth: 'ABS',              exp: '30/11/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '23/04/2026' },
+        { cert: 'MLC 2006 Certificate',                    auth: 'HNMS',             exp: '30/11/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '23/04/2026' },
+        { cert: 'RightShip GHG Inspection',               auth: 'RightShip Pty Ltd',exp: '15/03/2027', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '22/03/2026', rsScore: '4/5', rsGhg: 'B' },
+        { cert: 'P&I Insurance Certificate',               auth: 'UK P&I Club',      exp: '20/02/2027', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '23/04/2026' }
+    ],
+    'pacific-island': [
+        { cert: 'Safety Management Certificate (SMC)',     auth: 'ClassNK',          exp: '10/08/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '24/04/2026' },
+        { cert: 'ISPS — Ship Security Certificate (ISSC)', auth: 'ClassNK',          exp: '25/05/2026', status: 'expiring', dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '24/04/2026' },
+        { cert: 'ISSC — Renewal (submitted)',              auth: 'ClassNK',          exp: '25/05/2031', status: 'pending',  dpaVerified: false, verifiedBy: null, submittedDate: '28/04/2026' },
+        { cert: 'IOPP Certificate (MARPOL)',               auth: 'ClassNK',          exp: '22/09/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '24/04/2026' },
+        { cert: 'Class Certificate',                       auth: 'ClassNK',          exp: '14/11/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '24/04/2026' },
+        { cert: 'Load Line Certificate (LL 66)',           auth: 'ClassNK',          exp: '05/12/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '24/04/2026' },
+        { cert: 'MLC 2006 Certificate',                    auth: 'HNMS',             exp: '30/11/2026', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '24/04/2026' },
+        { cert: 'RightShip GHG Inspection',               auth: 'RightShip Pty Ltd',exp: '10/01/2027', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '18/01/2026', rsScore: '3/5', rsGhg: 'C' },
+        { cert: 'P&I Insurance Certificate',               auth: 'UK P&I Club',      exp: '20/02/2027', status: 'valid',    dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '24/04/2026' }
+    ],
+    'cretan-island': [
+        { cert: 'Safety Management Certificate (SMC)',     auth: "Lloyd's Register",  exp: '30/11/2026', status: 'valid',   dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '27/04/2026' },
+        { cert: 'ISPS — Ship Security Certificate (ISSC)', auth: "Lloyd's Register",  exp: '30/11/2026', status: 'valid',   dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '27/04/2026' },
+        { cert: 'IOPP Certificate (MARPOL)',               auth: "Lloyd's Register",  exp: '15/07/2026', status: 'valid',   dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '27/04/2026' },
+        { cert: 'Class Certificate',                       auth: "Lloyd's Register",  exp: '20/08/2026', status: 'valid',   dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '27/04/2026' },
+        { cert: 'Load Line Certificate (LL 66)',           auth: "Lloyd's Register",  exp: '10/09/2026', status: 'valid',   dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '27/04/2026' },
+        { cert: 'MLC 2006 Certificate',                    auth: 'HNMS',             exp: '30/11/2026', status: 'valid',   dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '27/04/2026' },
+        { cert: 'RightShip GHG Inspection',               auth: 'RightShip Pty Ltd',exp: '05/04/2027', status: 'valid',   dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '14/04/2026', rsScore: '4/5', rsGhg: 'B' },
+        { cert: 'P&I Insurance Certificate',               auth: 'UK P&I Club',      exp: '20/02/2027', status: 'valid',   dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '27/04/2026' }
     ],
     'ionian-island': [
-        { cert: 'Safety Management Certificate (SMC)', auth: 'RINA', exp: '22/08/2026', status: 'valid' },
-        { cert: 'ISPS — Ship Security Certificate', auth: 'RINA', exp: '22/08/2026', status: 'valid' },
-        { cert: 'IOPP Certificate', auth: 'RINA', exp: '10/09/2026', status: 'valid' },
-        { cert: 'Class Certificate', auth: 'RINA', exp: '15/07/2026', status: 'valid' },
-        { cert: 'Load Line Certificate', auth: 'RINA', exp: '10/04/2026', status: 'expired' },
-        { cert: 'Safe Manning Document', auth: 'HNMS', exp: '30/11/2026', status: 'valid' }
+        { cert: 'Safety Management Certificate (SMC)',     auth: 'RINA',             exp: '22/08/2026', status: 'valid',   dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '20/04/2026' },
+        { cert: 'ISPS — Ship Security Certificate (ISSC)', auth: 'RINA',             exp: '22/08/2026', status: 'valid',   dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '20/04/2026' },
+        { cert: 'IOPP Certificate (MARPOL)',               auth: 'RINA',             exp: '10/09/2026', status: 'valid',   dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '20/04/2026' },
+        { cert: 'Class Certificate',                       auth: 'RINA',             exp: '15/07/2026', status: 'valid',   dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '20/04/2026' },
+        { cert: 'Load Line Certificate (LL 66) — EXPIRED', auth: 'RINA',            exp: '10/04/2026', status: 'expired', dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '18/04/2021' },
+        { cert: 'Load Line Cert. — Renewal (submitted)',   auth: 'RINA',             exp: '10/04/2031', status: 'pending', dpaVerified: false, verifiedBy: null, submittedDate: '28/04/2026' },
+        { cert: 'MLC 2006 Certificate',                    auth: 'HNMS',             exp: '30/11/2026', status: 'valid',   dpaVerified: true,  verifiedBy: 'M. Papadopoulos', verifiedDate: '20/04/2026' }
+    ],
+    'adriatic-island': [
+        { cert: '— Δεν υπάρχουν καταχωρημένα πιστοποιητικά —', auth: '—', exp: '—', status: 'missing', dpaVerified: false, verifiedBy: null }
     ]
 };
 
+/* ═══════════════════════════════════════════════════════════════
+   loadCerts — Renders cert table with DPA filter status
+═══════════════════════════════════════════════════════════════ */
 function loadCerts() {
     var vessel = document.getElementById('exp-vessel').value;
     document.getElementById('export-btn').disabled = !vessel;
@@ -306,9 +403,32 @@ function loadCerts() {
         if (c.status === 'expired') {
             tbody.innerHTML += '<tr class="row-disabled"><td><input type="checkbox" disabled></td><td>' + c.cert + '</td><td>' + c.auth + '</td><td>' + c.exp + '</td><td><span class="badge expired">Expired — Αποκλείεται</span></td></tr>';
         } else {
-            tbody.innerHTML += '<tr><td><input type="checkbox" checked class="cert-chk"></td><td>' + c.cert + '</td><td>' + c.auth + '</td><td>' + c.exp + '</td><td><span class="badge valid">Valid</span></td></tr>';
+            /* DPA verified + valid/expiring → include */
+            var rsExtra = (c.rsScore)
+                ? '<span class="provenance-mini">RightShip Score ' + c.rsScore + ' · GHG ' + c.rsGhg + '</span>'
+                : '';
+            var provenance = '<span class="provenance-mini">✓ ' + c.verifiedBy + ' · ' + c.verifiedDate + '</span>';
+            row.innerHTML =
+                '<td><input type="checkbox" checked class="cert-chk"></td>' +
+                '<td>' + c.cert + rsExtra + '</td>' +
+                '<td>' + c.auth + '</td>' +
+                '<td>' + c.exp + '</td>' +
+                '<td><span class="badge dpa-ok">✓ DPA Verified</span>' + provenance + '</td>' +
+                '<td><span class="badge valid" style="font-size:11px;">✓ Συμπεριλαμβάνεται</span></td>';
         }
+        tbody.appendChild(row);
     });
+
+    /* Excluded summary bar */
+    var exclDiv = document.getElementById('excl-summary');
+    if (excludedItems.length > 0) {
+        exclDiv.style.display = '';
+        document.getElementById('excl-count-msg').textContent =
+            excludedItems.length + ' πιστοποιητικό(-ά): ' + excludedItems.join(' · ');
+    } else {
+        exclDiv.style.display = 'none';
+    }
+
     document.getElementById('cert-list').style.display = '';
     document.getElementById('ef1').className = 'workflow-step done';
     document.getElementById('ef2').className = 'workflow-step active';
@@ -323,16 +443,21 @@ function startExport() {
     if (!vessel) { alert('Επιλέξτε πλοίο.'); return; }
     var fmt = document.getElementById('exp-format').value;
     var checked = document.querySelectorAll('.cert-chk:checked').length;
-    if (checked === 0) { alert('Επιλέξτε τουλάχουν ένα πιστοποιητικό.'); return; }
+    if (checked === 0) { alert('Επιλέξτε τουλάχιστον ένα πιστοποιητικό.'); return; }
 
-    var vesselName = document.getElementById('exp-vessel').options[document.getElementById('exp-vessel').selectedIndex].text.split('(')[0].trim();
+    /* Count excluded */
+    var totalRows = document.querySelectorAll('#cert-tbody tr').length;
+    var includedRows = document.querySelectorAll('.cert-chk').length; /* total checkable */
+    var excludedCount = totalRows - includedRows;
+
+    var vesselName = document.getElementById('exp-vessel').options[
+        document.getElementById('exp-vessel').selectedIndex].text.split('(')[0].trim();
 
     ['ef1','ef2','ef3','ef4'].forEach(function(id) { document.getElementById(id).className = 'workflow-step done'; });
     document.getElementById('ef5').className = 'workflow-step active';
-
     document.getElementById('cert-list').style.display = 'none';
     document.getElementById('export-progress').style.display = '';
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
 
     setTimeout(function() {
         document.getElementById('ef5').className = 'workflow-step done';
@@ -342,22 +467,41 @@ function startExport() {
 
         var now = new Date();
         var ext = fmt === 'zip' ? '.zip' : '.pdf';
-        document.getElementById('dl-filename').textContent = 'VettingFolder_' + vesselName.replace(' ','') + '_' + now.toISOString().split('T')[0] + ext;
-        document.getElementById('dl-vessel').textContent = vesselName;
-        document.getElementById('dl-count').textContent = checked + ' πιστοποιητικά';
-        document.getElementById('dl-time').textContent = now.toLocaleString('el-GR') + ' · M. Papadopoulos (DPA)';
+        var fname = 'VettingFolder_' + vesselName.replace(/\s+/g,'') + '_' + now.toISOString().split('T')[0] + ext;
 
-        // Add to audit trail
-        var tbody = document.getElementById('audit-table').querySelector('tbody');
-        var row = tbody.insertRow(0);
-        row.innerHTML = '<td>' + now.toLocaleString('el-GR') + '</td><td>M. Papadopoulos (DPA)</td><td>' + vesselName + '</td><td>' + fmt.toUpperCase() + '</td><td>' + checked + '</td><td>Manual Export</td>';
+        document.getElementById('dl-filename').textContent = fname;
+        document.getElementById('dl-vessel').textContent = vesselName;
+        document.getElementById('dl-count').textContent = checked + ' DPA-επαληθευμένα πιστοποιητικά';
+        document.getElementById('dl-excl').textContent = excludedCount + ' αποκλείστηκαν (Expired / Pending DPA)';
+        document.getElementById('dl-time').textContent = now.toLocaleString('el-GR');
+        document.getElementById('dl-excl-detail').textContent =
+            excludedCount > 0
+                ? excludedCount + ' πιστοποιητικά εξαιρέθηκαν (Expired ή Pending DPA Verification)'
+                : 'Κανένα — Όλα τα πιστοποιητικά του πλοίου είναι DPA-επαληθευμένα';
+
+        /* Add to audit trail */
+        var auditBody = document.getElementById('audit-table').querySelector('tbody');
+        var row = auditBody.insertRow(0);
+        row.innerHTML =
+            '<td>' + now.toLocaleString('el-GR') + '</td>' +
+            '<td>M. Papadopoulos (DPA)</td>' +
+            '<td>' + vesselName + '</td>' +
+            '<td>' + fmt.toUpperCase() + '</td>' +
+            '<td>' + checked + '</td>' +
+            '<td>' + excludedCount + '</td>' +
+            '<td>Manual Export</td>';
 
         document.getElementById('download-ready').style.display = '';
     }, 1800);
 }
 
 function quickExport(name) {
-    alert('Γρήγορη εξαγωγή Vetting Folder για ' + name + '...\n\nΤο αρχείο δημιουργήθηκε και η εξαγωγή καταγράφηκε στο Audit Trail.');
+    alert(
+        'Γρήγορη εξαγωγή Vetting Folder για ' + name + '\n\n' +
+        '✓ Φίλτρο: Μόνο DPA-επαληθευμένα, ισχύοντα πιστοποιητικά.\n' +
+        '⏳ Pending DPA και Expired αποκλείστηκαν αυτόματα.\n\n' +
+        'Η εξαγωγή καταγράφηκε στο Audit Trail.'
+    );
 }
 
 function emailExport() {

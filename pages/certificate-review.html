@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Επαλήθευση Πιστοποιητικών (DPA) — HIND Maritime IS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="../index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · DPA / HSEQ Console</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../index.html">Αρχική</a></li>
+                <li><a href="fleet-status.html">Fleet Status</a></li>
+                <li><a href="voyage-dashboard.html">Voyages</a></li>
+                <li><a href="noon-report.html">Noon Report</a></li>
+                <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><a href="profitability-report.html">Profitability</a></li>
+                <li><a href="invoicing.html">Invoicing</a></li>
+                <li><a href="voyage-instructions.html">Instructions</a></li>
+                <li><a href="maintenance-queue.html">Maintenance</a></li>
+                <li><a href="request-new.html">New Request</a></li>
+                <li><a href="compliance-export.html">Compliance</a></li>
+                <li><a href="certificate-entry.html">Cert. Entry</a></li>
+                <li><a href="certificate-review.html" class="active">Cert. Review</a></li>
+                <li><span class="user-chip">DPA · M. Papadopoulos</span></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Επαλήθευση Πιστοποιητικών — Ουρά DPA/HSEQ</h1>
+    <p class="page-subtitle">
+        Έλεγχος &amp; έγκριση υποβολών από Τμήμα Πιστοποιήσεων ·
+        Η κατάσταση στο Fleet Status ενημερώνεται <strong>αυτόματα</strong> μόνο μετά από έγκριση ·
+        Πλήρης Audit Trail κάθε απόφασης
+    </p>
+
+    <!-- WORKFLOW TRACKER -->
+    <div class="workflow-steps">
+        <div class="workflow-step done"><span class="step-num">&#10003;</span>Λήψη Υποβολής</div>
+        <div class="workflow-step active"><span class="step-num">2</span>Έλεγχος Στοιχείων</div>
+        <div class="workflow-step"><span class="step-num">3</span>Έλεγχος Εγγράφου</div>
+        <div class="workflow-step"><span class="step-num">4</span>Απόφαση</div>
+        <div class="workflow-step"><span class="step-num">5</span>Ειδοποίηση</div>
+        <div class="workflow-step"><span class="step-num">6</span>Audit Trail</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi warning">
+            <div class="kpi-label">Εκκρεμείς Ελέγχου</div>
+            <div class="kpi-value">4</div>
+            <div class="kpi-trend">Αναμένουν απόφαση DPA</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Εγκρίθηκαν (Απρ 2026)</div>
+            <div class="kpi-value">11</div>
+            <div class="kpi-trend up">Μέσος χρόνος: 2.3 ώρες</div>
+        </div>
+        <div class="kpi alert">
+            <div class="kpi-label">Απορρίφθηκαν</div>
+            <div class="kpi-value">2</div>
+            <div class="kpi-trend down">Επιστράφηκαν για διόρθωση</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Fleet Status Ενημερώσεις</div>
+            <div class="kpi-value">11</div>
+            <div class="kpi-trend up">Αυτόματα μετά από έγκριση</div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION BANNER -->
+    <div class="notif-banner" id="review-notif">
+        <div class="notif-dot"></div>
+        <div>
+            <strong>4 Νέες Υποβολές</strong>
+            Ionian Island (Load Line), Atlantic Island (RightShip), Pacific Island (ISSC), Med Island (IOPP)
+            — αναμένουν επαλήθευση
+        </div>
+        <button class="notif-dismiss" onclick="this.parentElement.style.display='none'">&#10005;</button>
+    </div>
+
+    <!-- SPLIT VIEW -->
+    <div class="split-view">
+
+        <!-- LIST PANEL -->
+        <div class="list-panel">
+            <div class="list-item" onclick="showDetail('ionian-ll')" id="item-ionian-ll">
+                <div class="ticket">#CERT-2026-0034 · 27/04 15:40</div>
+                <div class="title">Load Line Certificate</div>
+                <div class="meta">Ionian Island (11 έτη) · LR · <span class="badge urgent">Expired → Ανανέωση</span></div>
+            </div>
+            <div class="list-item selected" onclick="showDetail('atlantic-rs')" id="item-atlantic-rs">
+                <div class="ticket">#CERT-2026-0035 · 28/04 08:50</div>
+                <div class="title">RightShip GHG Rating</div>
+                <div class="meta">Atlantic Island (21 έτη) · RightShip Ltd · <span class="badge warning">Εκκρεμεί</span></div>
+            </div>
+            <div class="list-item" onclick="showDetail('pacific-issc')" id="item-pacific-issc">
+                <div class="ticket">#CERT-2026-0036 · 28/04 09:20</div>
+                <div class="title">ISSC (ISPS)</div>
+                <div class="meta">Pacific Island (23 έτη) · Flag State (MI) · <span class="badge warning">Εκκρεμεί</span></div>
+            </div>
+            <div class="list-item" onclick="showDetail('med-iopp')" id="item-med-iopp">
+                <div class="ticket">#CERT-2026-0037 · 28/04 10:05</div>
+                <div class="title">IOPP (MARPOL)</div>
+                <div class="meta">Med Island (14 έτη) · DNV GL · <span class="badge warning">Εκκρεμεί</span></div>
+            </div>
+
+            <div style="padding: 10px 16px; border-top: 2px solid var(--border); background: #f9fafb;">
+                <p class="muted" style="font-size:12px; margin-bottom:6px;">Εγκρίθηκαν πρόσφατα</p>
+            </div>
+            <div class="list-item" style="opacity:0.6;">
+                <div class="ticket">#CERT-2026-0031 · 25/04 14:10</div>
+                <div class="title">SMC (ISM)</div>
+                <div class="meta">Cretan Island · <span class="badge valid">Εγκρίθηκε</span></div>
+            </div>
+            <div class="list-item" style="opacity:0.6;">
+                <div class="ticket">#CERT-2026-0032 · 26/04 09:30</div>
+                <div class="title">Class Certificate</div>
+                <div class="meta">New Island · <span class="badge valid">Εγκρίθηκε</span></div>
+            </div>
+        </div>
+
+        <!-- DETAIL PANEL -->
+        <div class="detail-panel" id="detail-panel">
+
+            <!-- DEFAULT VIEW: Atlantic Island RightShip -->
+            <div id="detail-atlantic-rs">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <h2 style="margin:0; color:var(--navy);">Αίτημα #CERT-2026-0035</h2>
+                    <span class="badge warning">Εκκρεμεί Επαλήθευση</span>
+                </div>
+
+                <div class="alert-box warning" style="margin-bottom:14px;">
+                    <strong>⚠ RightShip — Κρίσιμη Επαλήθευση</strong>
+                    Το Atlantic Island (21 ετών) υπάγεται στο Phase 2 του RightShip (Απρ 2026).
+                    Χωρίς έγκυρη εγγραφή, Safety Score = 2/5 → αδυναμία χαρτεραρίσματος από BHP, Vale, Cargill, Rio Tinto.
+                </div>
+
+                <div class="detail-row">
+                    <div class="label">Πλοίο</div>
+                    <div><strong>M/V Atlantic Island</strong> · IMO 8956123 · 21 έτη</div>
+                </div>
+                <div class="detail-row">
+                    <div class="label">Τύπος</div>
+                    <div>RightShip GHG Rating &amp; Inspection</div>
+                </div>
+                <div class="detail-row">
+                    <div class="label">Αρ. Πιστοποιητικού</div>
+                    <div><strong>RS-2026-ATL-GHG-003</strong></div>
+                </div>
+                <div class="detail-row">
+                    <div class="label">Εκδούσα Αρχή</div>
+                    <div>RightShip Pty Ltd</div>
+                </div>
+                <div class="detail-row">
+                    <div class="label">Ημ. Επιθεώρησης</div>
+                    <div>20/04/2026 · Λιμάνι: Rotterdam (NLRTM)</div>
+                </div>
+                <div class="detail-row">
+                    <div class="label">Ημ. Λήξης</div>
+                    <div>18/04/2027 <span class="muted">(355 ημέρες)</span></div>
+                </div>
+                <div class="detail-row">
+                    <div class="label">RightShip Score</div>
+                    <div>
+                        <span style="font-size:18px; color: var(--green);">⭐⭐⭐⭐</span>
+                        <strong style="color:var(--green);"> 4 / 5</strong>
+                        <span class="muted"> — Πολύ Καλό · Αποδεκτό από όλους τους μεγάλους charterers</span>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <div class="label">Επιθεωρητής</div>
+                    <div>Capt. J. Morrison (RS-INS-4821)</div>
+                </div>
+                <div class="detail-row">
+                    <div class="label">Έγγραφο</div>
+                    <div>
+                        <a href="#" class="btn btn-secondary" style="font-size:12px; padding:5px 12px;">
+                            📄 RS-2026-ATL-GHG-003.pdf (1.2 MB)
+                        </a>
+                        <span class="muted" style="margin-left:8px; font-size:12px;">Μεταφορτώθηκε: 28/04/2026 08:50</span>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <div class="label">Υποβλήθηκε από</div>
+                    <div>N. Vasileiou · Τμήμα Πιστοποιήσεων · 28/04/2026 08:50</div>
+                </div>
+                <div class="detail-row">
+                    <div class="label">Σχόλια Καταχωρητή</div>
+                    <div class="muted">Επιθεώρηση πραγματοποιήθηκε κατά την παραμονή στο Rotterdam. Score βελτιώθηκε από 3 σε 4 μετά από τεχνικές βελτιώσεις μηχανοστασίου.</div>
+                </div>
+
+                <!-- CHECKLIST FOR DPA -->
+                <div class="card" style="margin-top:18px; background: #f8fafc;">
+                    <h2>Έλεγχος DPA — Checklist</h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Σημείο Ελέγχου</th><th>Αποτέλεσμα</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ο αριθμός πιστοποιητικού ταυτίζεται με το έγγραφο</td>
+                                <td><span class="badge valid">✓ Επιβεβαιώθηκε</span></td>
+                            </tr>
+                            <tr>
+                                <td>Η εκδούσα αρχή είναι αναγνωρισμένη (RightShip Pty Ltd)</td>
+                                <td><span class="badge valid">✓ Αναγνωρισμένη</span></td>
+                            </tr>
+                            <tr>
+                                <td>Ημερομηνία επιθεώρησης εντός ισχύος</td>
+                                <td><span class="badge valid">✓ 20/04/2026</span></td>
+                            </tr>
+                            <tr>
+                                <td>Score ≥ 3 (αποδεκτό από charterers)</td>
+                                <td><span class="badge valid">✓ Score: 4/5</span></td>
+                            </tr>
+                            <tr>
+                                <td>Πλοίο ≥ 12 ετών — Phase 2 trigger εφαρμόζεται</td>
+                                <td><span class="badge warning">⚠ Ναι (21 έτη) — RightShip απαιτείται</span></td>
+                            </tr>
+                            <tr>
+                                <td>Αρχείο PDF αναγνώσιμο &amp; πλήρες</td>
+                                <td id="doc-check"><span class="badge info">⏳ Εκκρεμεί έλεγχος εγγράφου</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn-row" style="margin-top:8px;">
+                        <button class="btn btn-secondary" onclick="markDocChecked()">✓ Επιβεβαίωσα το έγγραφο PDF</button>
+                    </div>
+                </div>
+
+                <!-- DECISION -->
+                <fieldset style="margin-top:18px;">
+                    <legend>Απόφαση DPA</legend>
+                    <div class="form-group full" style="margin-bottom:14px;">
+                        <label for="dpa-comment">Σχόλιο DPA <span class="muted">(προαιρετικό)</span></label>
+                        <textarea id="dpa-comment" rows="3"
+                            placeholder="π.χ. Εγκρίνεται. Score 4/5 — αποδεκτό. Επόμενη επιθεώρηση RightShip: Απρίλιος 2027."></textarea>
+                    </div>
+                    <div class="btn-row">
+                        <button type="button" class="btn btn-success" onclick="approveEntry()">
+                            ✓ Έγκριση — Ενημέρωση Fleet Status
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="rejectEntry()">
+                            ✕ Απόρριψη — Επιστροφή για Διόρθωση
+                        </button>
+                        <button type="button" class="btn btn-secondary">
+                            ⏸ Αναβολή — Ζητώ Διευκρινίσεις
+                        </button>
+                    </div>
+                    <p class="muted mt-1" style="font-size:12px;">
+                        Η απόφαση καταγράφεται αυτόματα με χρονοσήμανση και όνομα DPA στο Audit Trail.
+                        Σε περίπτωση <strong>Έγκρισης</strong>: το Fleet Status ενημερώνεται άμεσα και
+                        το πιστοποιητικό προστίθεται στον ψηφιακό φάκελο Vetting του πλοίου.
+                        Σε περίπτωση <strong>Απόρριψης</strong>: το Τμήμα Πιστοποιήσεων λαμβάνει
+                        in-app ειδοποίηση με τον λόγο απόρριψης.
+                    </p>
+                </fieldset>
+
+                <!-- AUDIT TRAIL -->
+                <div style="margin-top:20px;">
+                    <h2 style="color:var(--navy); font-size:15px; margin-bottom:10px;">
+                        Audit Trail — #CERT-2026-0035
+                    </h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Ώρα</th><th>Ενέργεια</th><th>Χρήστης</th><th>Σύστημα</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>28/04 08:50</td>
+                                <td>Υποβολή πιστοποιητικού</td>
+                                <td>N. Vasileiou (Certification)</td>
+                                <td><span class="status-dot green"></span>OK</td>
+                            </tr>
+                            <tr>
+                                <td>28/04 08:50</td>
+                                <td>Auto-routing → DPA Review Queue</td>
+                                <td>Σύστημα</td>
+                                <td><span class="status-dot green"></span>OK</td>
+                            </tr>
+                            <tr>
+                                <td>28/04 08:51</td>
+                                <td>In-app ειδοποίηση DPA</td>
+                                <td>Σύστημα → M. Papadopoulos</td>
+                                <td><span class="status-dot green"></span>Delivered</td>
+                            </tr>
+                            <tr>
+                                <td>28/04 10:02</td>
+                                <td>Άνοιγμα αιτήματος από DPA</td>
+                                <td>M. Papadopoulos (DPA)</td>
+                                <td><span class="status-dot green"></span>OK</td>
+                            </tr>
+                            <tr id="audit-decision-row" style="display:none;">
+                                <td id="audit-time">—</td>
+                                <td id="audit-action">—</td>
+                                <td>M. Papadopoulos (DPA)</td>
+                                <td><span class="status-dot green"></span>OK</td>
+                            </tr>
+                            <tr>
+                                <td>—</td>
+                                <td style="color:var(--text-light);">Αναμένει απόφαση DPA</td>
+                                <td>—</td>
+                                <td><span class="status-dot orange"></span>Pending</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PLACEHOLDER for other items (shown via JS) -->
+            <div id="detail-placeholder" style="display:none; text-align:center; padding:40px; color:var(--text-light);">
+                <div style="font-size:48px; margin-bottom:12px;">📋</div>
+                <p>Επιλέξτε υποβολή από την αριστερή λίστα για να δείτε τις λεπτομέρειες.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- IMPACT BANNER: what happens after approval -->
+    <div class="card" style="border-left: 4px solid var(--green);">
+        <h2>Τι Συμβαίνει Μετά την Έγκριση</h2>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-top:10px;">
+            <div style="text-align:center; padding:12px;">
+                <div style="font-size:28px;">🛡️</div>
+                <strong style="color:var(--navy); display:block; margin:6px 0;">Fleet Status</strong>
+                <p class="muted">Η κατάσταση του πλοίου αλλάζει αυτόματα σε "Valid" με provenance data (ποιος, πότε, ποιο έγγραφο)</p>
+            </div>
+            <div style="text-align:center; padding:12px;">
+                <div style="font-size:28px;">📁</div>
+                <strong style="color:var(--navy); display:block; margin:6px 0;">Vetting Folder</strong>
+                <p class="muted">Το έγγραφο εισάγεται αυτόματα στον ψηφιακό φάκελο Vetting — διαθέσιμο για export σε 1 κλικ</p>
+            </div>
+            <div style="text-align:center; padding:12px;">
+                <div style="font-size:28px;">🔔</div>
+                <strong style="color:var(--navy); display:block; margin:6px 0;">Ειδοποίηση</strong>
+                <p class="muted">In-app notification στο Τμήμα Πιστοποιήσεων και email στο chartering@hind.gr (αν σχετίζεται με Vetting)</p>
+            </div>
+            <div style="text-align:center; padding:12px;">
+                <div style="font-size:28px;">⏰</div>
+                <strong style="color:var(--navy); display:block; margin:6px 0;">Αυτόματο Alert</strong>
+                <p class="muted">Το σύστημα προγραμματίζει alerts 90/60/30 ημέρες πριν τη λήξη — χωρίς χειροκίνητη παρακολούθηση</p>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+</footer>
+
+<!-- APPROVAL MODAL -->
+<div class="modal-overlay" id="approval-modal" style="display:none;">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeModal()">&#10005;</button>
+        <h2 id="modal-title">✓ Πιστοποιητικό Εγκρίθηκε</h2>
+        <p id="modal-body" style="margin-bottom:16px; color:var(--text-light); font-size:14px;"></p>
+        <div class="alert-box success" id="modal-alert">
+            <strong>Fleet Status Ενημερώθηκε</strong>
+            Atlantic Island → RightShip GHG Rating: <strong>Valid</strong> · Score: ⭐⭐⭐⭐ 4/5 · Λήξη: 18/04/2027
+        </div>
+        <div class="btn-row" style="margin-top:14px;">
+            <a href="fleet-status.html" class="btn btn-primary">Προβολή Fleet Status →</a>
+            <button class="btn btn-secondary" onclick="closeModal()">Επιστροφή στη Λίστα</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function showDetail(id) {
+    document.getElementById('detail-atlantic-rs').style.display = 'none';
+    document.getElementById('detail-placeholder').style.display = 'block';
+
+    // Remove selected class from all items
+    document.querySelectorAll('.list-item').forEach(el => el.classList.remove('selected'));
+
+    if (id === 'atlantic-rs') {
+        document.getElementById('detail-atlantic-rs').style.display = 'block';
+        document.getElementById('detail-placeholder').style.display = 'none';
+        document.getElementById('item-atlantic-rs').classList.add('selected');
+    } else {
+        const itemEl = document.getElementById('item-' + id);
+        if (itemEl) itemEl.classList.add('selected');
+        document.getElementById('detail-placeholder').style.display = 'block';
+    }
+}
+
+function markDocChecked() {
+    document.getElementById('doc-check').innerHTML =
+        '<span class="badge valid">✓ Έγγραφο Επαληθεύτηκε από DPA</span>';
+}
+
+function approveEntry() {
+    const now = '28/04/2026 ' + new Date().getHours().toString().padStart(2,'0') +
+                ':' + new Date().getMinutes().toString().padStart(2,'0');
+    // Update audit trail
+    document.getElementById('audit-decision-row').style.display = '';
+    document.getElementById('audit-time').textContent = now;
+    document.getElementById('audit-action').innerHTML =
+        '<strong style="color:var(--green);">✓ Έγκριση — Fleet Status Ενημερώθηκε</strong>';
+
+    // Show modal
+    document.getElementById('modal-title').textContent = '✓ Πιστοποιητικό Εγκρίθηκε';
+    document.getElementById('modal-body').textContent =
+        'RS-2026-ATL-GHG-003 · Atlantic Island · RightShip GHG Rating — ' + now;
+    document.getElementById('modal-alert').className = 'alert-box success';
+    document.getElementById('approval-modal').style.display = 'flex';
+}
+
+function rejectEntry() {
+    const now = '28/04/2026 ' + new Date().getHours().toString().padStart(2,'0') +
+                ':' + new Date().getMinutes().toString().padStart(2,'0');
+    document.getElementById('audit-decision-row').style.display = '';
+    document.getElementById('audit-time').textContent = now;
+    document.getElementById('audit-action').innerHTML =
+        '<strong style="color:var(--red);">✕ Απόρριψη — Επιστράφηκε στο Τμήμα Πιστοποιήσεων</strong>';
+
+    document.getElementById('modal-title').textContent = '✕ Υποβολή Απορρίφθηκε';
+    document.getElementById('modal-body').textContent =
+        'Το Τμήμα Πιστοποιήσεων λαμβάνει in-app ειδοποίηση με τον λόγο απόρριψης. Η κατάσταση στο Fleet Status δεν αλλάζει.';
+    document.getElementById('modal-alert').className = 'alert-box danger';
+    document.getElementById('modal-alert').innerHTML =
+        '<strong>Fleet Status — Αμετάβλητο</strong>' +
+        ' Το πιστοποιητικό δεν εγγράφεται. Ο καταχωρητής καλείται να επανυποβάλει με διορθωμένα στοιχεία.';
+    document.getElementById('approval-modal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('approval-modal').style.display = 'none';
+}
+</script>
+
+</body>
+</html>

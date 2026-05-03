@@ -127,7 +127,6 @@
                     <th>Πλοίο</th>
                     <th>Voyage ID</th>
                     <th>Route</th>
-                    <!-- <th>Flag</th> removed — took up too much space on smaller screens -->
                     <th>Θέση / Ταχύτητα</th>
                     <th>Καύσιμα</th>
                     <th>ETA</th>
@@ -140,6 +139,7 @@
                     <td><strong>New Island</strong></td>
                     <td>V-2026-041</td>
                     <td>Piraeus → Algiers</td>
+                    <td>Cement — 52,000 MT</td>
                     <td>36.5°N 18.2°E<br><span class="muted">12.3 kn</span></td>
                     <td>27.1 t/d</td>
                     <td>30/04 16:00</td>
@@ -150,6 +150,7 @@
                     <td><strong>Med Island</strong></td>
                     <td>V-2026-038</td>
                     <td>Alexandria → Varna</td>
+                    <td>Wheat — 48,500 MT</td>
                     <td>34.8°N 28.1°E<br><span class="muted">11.8 kn</span></td>
                     <td>28.9 t/d</td>
                     <td>02/05 09:00</td>
@@ -160,6 +161,7 @@
                     <td><strong>Atlantic Island</strong></td>
                     <td>V-2026-035</td>
                     <td>Rotterdam → Casablanca</td>
+                    <td>Fertilizers (Urea) — 45,200 MT</td>
                     <td>43.1°N -8.5°W<br><span class="muted">10.2 kn</span></td>
                     <td>30.5 t/d</td>
                     <td><span style="color:var(--red);">04/05 22:00 (+18h)</span></td>
@@ -170,6 +172,7 @@
                     <td><strong>Aegean Island</strong></td>
                     <td>V-2026-042</td>
                     <td>Constanza → Barcelona</td>
+                    <td>Corn — 50,800 MT</td>
                     <td>40.2°N 14.7°E<br><span class="muted">12.8 kn</span></td>
                     <td>26.4 t/d</td>
                     <td>01/05 06:00</td>
@@ -180,6 +183,7 @@
                     <td><strong>Pacific Island</strong></td>
                     <td>V-2026-040</td>
                     <td>Suez → Port Said</td>
+                    <td>Bauxite — 56,300 MT</td>
                     <td>30.5°N 32.3°E<br><span class="muted">9.5 kn</span></td>
                     <td>25.8 t/d</td>
                     <td>28/04 18:00</td>
@@ -190,6 +194,7 @@
                     <td><strong>Cretan Island</strong></td>
                     <td>V-2026-043</td>
                     <td>Heraklion → Genoa</td>
+                    <td>Coal — 54,100 MT</td>
                     <td>38.8°N 19.4°E<br><span class="muted">13.1 kn</span></td>
                     <td>27.6 t/d</td>
                     <td>29/04 22:00</td>
@@ -228,6 +233,7 @@
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;">
                 <div><span class="label">Θέση</span><span id="vm-pos"></span></div>
                 <div><span class="label">Ταχύτητα</span><span id="vm-speed"></span></div>
+                <div><span class="label">Φορτίο</span><span id="vm-cargo"></span></div>
                 <div><span class="label">Καύσιμα 24h</span><span id="vm-bunker"></span></div>
                 <div><span class="label">ETA</span><span id="vm-eta"></span></div>
                 <div><span class="label">P&amp;L (Est.)</span><span id="vm-pl"></span></div>
@@ -262,6 +268,7 @@ function openVoyModal(key) {
     document.getElementById('vm-voyage').textContent = d.voyage;
     document.getElementById('vm-pos').textContent = d.pos;
     document.getElementById('vm-speed').textContent = d.speed;
+    document.getElementById('vm-cargo').textContent = d.cargo;
     document.getElementById('vm-bunker').textContent = d.bunker;
     document.getElementById('vm-eta').textContent = d.eta;
     document.getElementById('vm-pl').textContent = d.pl;

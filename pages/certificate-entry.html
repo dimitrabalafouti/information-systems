@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Καταχώρηση Πιστοποιητικού — HIND Maritime IS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+        <a class="brand" href="../index.html">
+            <div class="brand-logo">H</div>
+            <div class="brand-text">
+                <h1>HIND Maritime Enterprises S.A.</h1>
+                <small>Strategic Shield · Certification Console</small>
+            </div>
+        </a>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="../index.html">Αρχική</a></li>
+                <li><a href="fleet-status.html">Fleet Status</a></li>
+                <li><a href="voyage-dashboard.html">Voyages</a></li>
+                <li><a href="noon-report.html">Noon Report</a></li>
+                <li><a href="approve-procurement.html">Approvals</a></li>
+                <li><a href="profitability-report.html">Profitability</a></li>
+                <li><a href="invoicing.html">Invoicing</a></li>
+                <li><a href="voyage-instructions.html">Instructions</a></li>
+                <li><a href="maintenance-queue.html">Maintenance</a></li>
+                <li><a href="request-new.html">New Request</a></li>
+                <li><a href="compliance-export.html">Compliance</a></li>
+                <li><a href="certificate-entry.html" class="active">Cert. Entry</a></li>
+                <li><a href="certificate-review.html">Cert. Review</a></li>
+                <li><span class="user-chip">Certification · N. Vasileiou</span></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1 class="page-title">Καταχώρηση / Ανανέωση Πιστοποιητικού</h1>
+    <p class="page-subtitle">
+        Υποβολή νέου ή ανανεωμένου πιστοποιητικού για επαλήθευση από DPA ·
+        Η κατάσταση στο Fleet Status ενημερώνεται <strong>μόνο μετά</strong> από έγκριση DPA
+    </p>
+
+    <!-- WORKFLOW TRACKER -->
+    <div class="workflow-steps">
+        <div class="workflow-step active"><span class="step-num">1</span>Επιλογή Πλοίου</div>
+        <div class="workflow-step"><span class="step-num">2</span>Στοιχεία</div>
+        <div class="workflow-step"><span class="step-num">3</span>Μεταφόρτωση</div>
+        <div class="workflow-step"><span class="step-num">4</span>Υποβολή</div>
+        <div class="workflow-step"><span class="step-num">5</span>Επαλήθευση DPA</div>
+        <div class="workflow-step"><span class="step-num">6</span>Audit Trail</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+        <div class="kpi warning">
+            <div class="kpi-label">Εκκρεμείς Υποβολές</div>
+            <div class="kpi-value">4</div>
+            <div class="kpi-trend">Αναμένουν επαλήθευση DPA</div>
+        </div>
+        <div class="kpi ok">
+            <div class="kpi-label">Εγκρίθηκαν (Απρ 2026)</div>
+            <div class="kpi-value">11</div>
+            <div class="kpi-trend up">Μέσος χρόνος: 2.3 ώρες</div>
+        </div>
+        <div class="kpi alert">
+            <div class="kpi-label">Απορρίφθηκαν</div>
+            <div class="kpi-value">2</div>
+            <div class="kpi-trend down">Λανθασμένα στοιχεία</div>
+        </div>
+        <div class="kpi warning">
+            <div class="kpi-label">Λήγουν &lt; 60 ημέρες</div>
+            <div class="kpi-value">5</div>
+            <div class="kpi-trend">Απαιτείται ανανέωση</div>
+        </div>
+    </div>
+
+    <!-- ALERT: pending rejections -->
+    <div class="alert-box warning">
+        <strong>⚠ 2 Υποβολές Απορρίφθηκαν — Απαιτείται Διόρθωση</strong>
+        Ionian Island · Load Line: Εσφαλμένος αριθμός πιστοποιητικού ·
+        <a href="certificate-review.html" style="color: inherit; font-weight:700;">Προβολή λεπτομερειών →</a>
+    </div>
+
+    <!-- ENTRY FORM -->
+    <div id="form-panel">
+        <form id="cert-form" action="certificate-review.html" method="get" novalidate>
+
+            <!-- SECTION 1: VESSEL & TYPE -->
+            <fieldset>
+                <legend>1. Πλοίο &amp; Τύπος Πιστοποιητικού</legend>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="vessel">Πλοίο <span class="req">*</span></label>
+                        <select id="vessel" name="vessel" required onchange="updateVesselInfo()">
+                            <option value="">— Επιλογή πλοίου —</option>
+                            <option value="new-island" data-age="8" data-imo="9456789">New Island (8 έτη)</option>
+                            <option value="med-island" data-age="14" data-imo="9234567">Med Island (14 έτη)</option>
+                            <option value="atlantic-island" data-age="21" data-imo="8956123">Atlantic Island (21 έτη)</option>
+                            <option value="aegean-island" data-age="17" data-imo="9123456">Aegean Island (17 έτη)</option>
+                            <option value="pacific-island" data-age="23" data-imo="8745632">Pacific Island (23 έτη)</option>
+                            <option value="ionian-island" data-age="11" data-imo="9356741">Ionian Island (11 έτη)</option>
+                            <option value="cretan-island" data-age="18" data-imo="9087654">Cretan Island (18 έτη)</option>
+                            <option value="adriatic-island" data-age="9" data-imo="9412385">Adriatic Island (9 έτη)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cert-type">Τύπος Πιστοποιητικού <span class="req">*</span></label>
+                        <select id="cert-type" name="cert-type" required onchange="toggleRightship()">
+                            <option value="">— Επιλογή τύπου —</option>
+                            <option value="smc">SMC — Safety Management Certificate (ISM)</option>
+                            <option value="issc">ISSC — International Ship Security Certificate (ISPS)</option>
+                            <option value="iopp">IOPP — International Oil Pollution Prevention (MARPOL)</option>
+                            <option value="class">Class Certificate (Κλάση Πλοίου)</option>
+                            <option value="loadline">Load Line Certificate</option>
+                            <option value="mlc">MLC — Maritime Labour Convention Certificate</option>
+                            <option value="rightship">RightShip GHG Rating &amp; Inspection</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Vessel info banner (shown after selection) -->
+                <div id="vessel-info" style="display:none; margin-top:12px;">
+                    <div class="alert-box info" id="vessel-info-box">
+                        <!-- populated by JS -->
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- SECTION 2: CERTIFICATE DETAILS -->
+            <fieldset>
+                <legend>2. Στοιχεία Πιστοποιητικού</legend>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="cert-number">Αριθμός Πιστοποιητικού <span class="req">*</span></label>
+                        <input type="text" id="cert-number" name="cert-number"
+                               placeholder="π.χ. GR-SMC-2026-00412" required>
+                        <span class="form-hint">Ακριβώς όπως αναγράφεται στο έγγραφο</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="issuing-authority">Εκδούσα Αρχή <span class="req">*</span></label>
+                        <select id="issuing-authority" name="issuing-authority" required>
+                            <option value="">— Επιλογή —</option>
+                            <option>Lloyd's Register (LR)</option>
+                            <option>Bureau Veritas (BV)</option>
+                            <option>DNV GL</option>
+                            <option>American Bureau of Shipping (ABS)</option>
+                            <option>ClassNK</option>
+                            <option>RINA</option>
+                            <option>Hellenic Register of Shipping (HRS)</option>
+                            <option>Flag State Administration (Marshall Islands)</option>
+                            <option>Flag State Administration (Liberia)</option>
+                            <option>Flag State Administration (Panama)</option>
+                            <option>RightShip Pty Ltd</option>
+                            <option>Άλλη αρχή</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="issue-date">Ημερομηνία Έκδοσης <span class="req">*</span></label>
+                        <input type="date" id="issue-date" name="issue-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expiry-date">Ημερομηνία Λήξης <span class="req">*</span></label>
+                        <input type="date" id="expiry-date" name="expiry-date" required onchange="checkExpiry()">
+                        <span class="form-hint" id="expiry-hint"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="survey-date">Επόμενη Ενδιάμεση Επιθεώρηση</label>
+                        <input type="date" id="survey-date" name="survey-date">
+                        <span class="form-hint">Προαιρετικό · Κυρίως για Class Certificate</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="port-issued">Λιμάνι Έκδοσης</label>
+                        <input type="text" id="port-issued" name="port-issued"
+                               placeholder="π.χ. Piraeus, GR">
+                    </div>
+                </div>
+
+                <!-- RightShip-specific fields (hidden by default) -->
+                <div id="rightship-fields" style="display:none; margin-top:12px;">
+                    <div class="alert-box info">
+                        <strong>RightShip — Επιπλέον Στοιχεία</strong>
+                        Από 01/04/2026 (Phase 2), πλοία ≥12 ετών απαιτούν έγκυρη επιθεώρηση RightShip.
+                        Χωρίς εγγραφή, το Safety Score υποβαθμίζεται αυτόματα σε 2/5.
+                    </div>
+                    <div class="form-grid" style="margin-top:12px;">
+                        <div class="form-group">
+                            <label for="rs-score">RightShip Safety Score <span class="req">*</span></label>
+                            <select id="rs-score" name="rs-score">
+                                <option value="">— Επιλογή —</option>
+                                <option value="5">⭐⭐⭐⭐⭐ — 5 / Εξαιρετικό</option>
+                                <option value="4">⭐⭐⭐⭐ — 4 / Πολύ Καλό</option>
+                                <option value="3">⭐⭐⭐ — 3 / Αποδεκτό</option>
+                                <option value="2">⭐⭐ — 2 / Υπό Παρακολούθηση</option>
+                                <option value="1">⭐ — 1 / Μη Αποδεκτό</option>
+                            </select>
+                            <span class="form-hint">Score &lt; 3 εμποδίζει χαρτεράρισμα από BHP, Vale, Cargill, Rio Tinto</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="rs-inspector">Επιθεωρητής RightShip</label>
+                            <input type="text" id="rs-inspector" name="rs-inspector"
+                                   placeholder="π.χ. Capt. J. Morrison (RS-INS-4821)">
+                        </div>
+                        <div class="form-group">
+                            <label for="rs-inspection-date">Ημερομηνία Επιθεώρησης</label>
+                            <input type="date" id="rs-inspection-date" name="rs-inspection-date">
+                        </div>
+                        <div class="form-group">
+                            <label for="rs-inspection-port">Λιμάνι Επιθεώρησης</label>
+                            <input type="text" id="rs-inspection-port" name="rs-inspection-port"
+                                   placeholder="π.χ. Algiers (DZALG)">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- SECTION 3: DOCUMENT UPLOAD -->
+            <fieldset>
+                <legend>3. Μεταφόρτωση Εγγράφου</legend>
+                <div class="form-grid">
+                    <div class="form-group full">
+                        <label for="doc-upload">Αρχείο Πιστοποιητικού (PDF) <span class="req">*</span></label>
+                        <input type="file" id="doc-upload" name="doc-upload"
+                               accept=".pdf,.jpg,.png" required>
+                        <span class="form-hint">
+                            Αποδεκτά: PDF, JPG, PNG · Μέγιστο 10MB ·
+                            Το έγγραφο αποθηκεύεται κρυπτογραφημένο και ενημερώνει τον ψηφιακό φάκελο Vetting.
+                        </span>
+                    </div>
+                    <div class="form-group full">
+                        <label for="cert-notes">Σχόλια Καταχωρητή</label>
+                        <textarea id="cert-notes" name="cert-notes" rows="3"
+                            placeholder="π.χ. Ανανέωση μετά από ετήσια επιθεώρηση, αλλαγή εκδούσας αρχής από BV σε DNV GL.">
+                        </textarea>
+                        <span class="form-hint">Προαιρετικό · Εμφανίζεται στο DPA Review και στο Audit Trail</span>
+                    </div>
+                </div>
+
+                <div class="alert-box info" style="margin-top:12px;">
+                    <strong>ℹ Μετά την υποβολή</strong>
+                    Το αίτημα οδηγείται αυτόματα στην ουρά επαλήθευσης του DPA/HSEQ Manager.
+                    Η κατάσταση του πλοίου στο Fleet Status <strong>παραμένει αμετάβλητη</strong> μέχρι
+                    να εγκριθεί το πιστοποιητικό. Θα λάβετε in-app ειδοποίηση για την απόφαση.
+                </div>
+            </fieldset>
+
+            <!-- SUBMIT -->
+            <div class="card" style="background: var(--bg);">
+                <p class="muted mb-1">
+                    <strong>Υποβάλλει:</strong> N. Vasileiou · Τμήμα Πιστοποιήσεων ·
+                    Auto-stamp: 28/04/2026 10:15 UTC
+                </p>
+                <div class="btn-row">
+                    <button type="submit" class="btn btn-primary">Υποβολή για Επαλήθευση DPA →</button>
+                    <button type="button" class="btn btn-secondary">Αποθήκευση Πρόχειρου</button>
+                    <a href="fleet-status.html" class="btn btn-secondary">Ακύρωση</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- RECENT SUBMISSION HISTORY -->
+    <div class="card">
+        <h2>Ιστορικό Πρόσφατων Υποβολών</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Ticket</th>
+                    <th>Πλοίο</th>
+                    <th>Τύπος</th>
+                    <th>Αρ. Πιστοποιητικού</th>
+                    <th>Λήξη</th>
+                    <th>Υποβλήθηκε</th>
+                    <th>Κατάσταση</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="muted">#CERT-2026-0031</span></td>
+                    <td><strong>Cretan Island</strong></td>
+                    <td>SMC (ISM)</td>
+                    <td>GR-SMC-2026-00408</td>
+                    <td>30/11/2026</td>
+                    <td>25/04/2026 14:10</td>
+                    <td><span class="badge valid">Εγκρίθηκε</span></td>
+                </tr>
+                <tr>
+                    <td><span class="muted">#CERT-2026-0032</span></td>
+                    <td><strong>New Island</strong></td>
+                    <td>Class Certificate</td>
+                    <td>LR-CLASS-2026-7821</td>
+                    <td>15/09/2026</td>
+                    <td>26/04/2026 09:30</td>
+                    <td><span class="badge valid">Εγκρίθηκε</span></td>
+                </tr>
+                <tr>
+                    <td><span class="muted">#CERT-2026-0033</span></td>
+                    <td><strong>Ionian Island</strong></td>
+                    <td>Load Line</td>
+                    <td>GR-LL-2026-00119</td>
+                    <td>10/04/2027</td>
+                    <td>27/04/2026 11:00</td>
+                    <td><span class="badge expired">Απορρίφθηκε</span></td>
+                </tr>
+                <tr>
+                    <td><span class="muted">#CERT-2026-0034</span></td>
+                    <td><strong>Ionian Island</strong></td>
+                    <td>Load Line</td>
+                    <td>LR-LL-2026-00119-A</td>
+                    <td>10/04/2027</td>
+                    <td>27/04/2026 15:40</td>
+                    <td><span class="badge warning">Εκκρεμεί DPA</span></td>
+                </tr>
+                <tr>
+                    <td><span class="muted">#CERT-2026-0035</span></td>
+                    <td><strong>Atlantic Island</strong></td>
+                    <td>RightShip GHG Rating</td>
+                    <td>RS-2026-ATL-GHG-003</td>
+                    <td>18/04/2027</td>
+                    <td>28/04/2026 08:50</td>
+                    <td><span class="badge warning">Εκκρεμεί DPA</span></td>
+                </tr>
+                <tr>
+                    <td><span class="muted">#CERT-2026-0036</span></td>
+                    <td><strong>Pacific Island</strong></td>
+                    <td>ISSC (ISPS)</td>
+                    <td>MI-ISSC-2026-04471</td>
+                    <td>25/05/2027</td>
+                    <td>28/04/2026 09:20</td>
+                    <td><span class="badge warning">Εκκρεμεί DPA</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="btn-row" style="margin-top: 10px;">
+            <a href="certificate-review.html" class="btn btn-secondary">Προβολή Ουράς DPA →</a>
+        </div>
+    </div>
+
+</main>
+
+<footer class="site-footer">
+    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+</footer>
+
+<script>
+function updateVesselInfo() {
+    const sel = document.getElementById('vessel');
+    const opt = sel.options[sel.selectedIndex];
+    const box = document.getElementById('vessel-info');
+    const infoBox = document.getElementById('vessel-info-box');
+    if (!sel.value) { box.style.display = 'none'; return; }
+
+    const age = parseInt(opt.dataset.age);
+    const imo = opt.dataset.imo;
+    let html = `<strong>IMO: ${imo}</strong> · Ηλικία: <strong>${age} έτη</strong>`;
+
+    if (age >= 12) {
+        html += ` · <span style="color:#c62828; font-weight:700;">⚠ RightShip απαιτείται (≥12 έτη, Phase 2 Απρ 2026)</span>`;
+    }
+    if (age >= 20) {
+        html += ` · <span style="color:#ed6c02; font-weight:600;">Αυξημένοι έλεγχοι Vetting λόγω ηλικίας</span>`;
+    }
+
+    infoBox.innerHTML = html;
+    box.style.display = 'block';
+}
+
+function toggleRightship() {
+    const type = document.getElementById('cert-type').value;
+    const rsFields = document.getElementById('rightship-fields');
+    rsFields.style.display = (type === 'rightship') ? 'block' : 'none';
+
+    // Make RightShip score required only when RightShip type selected
+    document.getElementById('rs-score').required = (type === 'rightship');
+}
+
+function checkExpiry() {
+    const expiry = document.getElementById('expiry-date').value;
+    const hint = document.getElementById('expiry-hint');
+    if (!expiry) { hint.textContent = ''; return; }
+
+    const today = new Date('2026-04-28');
+    const exp = new Date(expiry);
+    const diffDays = Math.round((exp - today) / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 0) {
+        hint.textContent = '⛔ Ημερομηνία στο παρελθόν — βεβαιωθείτε για τη σωστή ημερομηνία.';
+        hint.style.color = 'var(--red)';
+    } else if (diffDays <= 30) {
+        hint.textContent = `⚠ Λήγει σε ${diffDays} ημέρες — επείγουσα ανανέωση.`;
+        hint.style.color = 'var(--orange)';
+    } else if (diffDays <= 90) {
+        hint.textContent = `Λήγει σε ${diffDays} ημέρες — σχεδιάστε ανανέωση.`;
+        hint.style.color = 'var(--text-light)';
+    } else {
+        hint.textContent = `✓ Λήγει σε ${diffDays} ημέρες.`;
+        hint.style.color = 'var(--green)';
+    }
+}
+</script>
+
+</body>
+</html>

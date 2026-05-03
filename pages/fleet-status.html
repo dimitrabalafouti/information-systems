@@ -5,6 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fleet Status &amp; Compliance — HIND Maritime IS</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .provenance-text {
+            display: block;
+            font-size: 11px;
+            color: #5a6a7a;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+        .provenance-text a { color: var(--accent); text-decoration: none; }
+        .provenance-text a:hover { text-decoration: underline; }
+        .rs-row td {
+            background: #f2f9f5;
+            border-top: none;
+        }
+        .rs-row td:first-child {
+            border-left: 4px solid #1a7f5a;
+            padding-left: 22px;
+        }
+        .rs-indent {
+            font-size: 11px;
+            color: #1a7f5a;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+        .badge.rightship {
+            background: #d4eddf;
+            color: #1a7f5a;
+            border: 1px solid #1a7f5a;
+            font-weight: 700;
+        }
+        .badge.pending {
+            background: #fff3cd;
+            color: #7d5a00;
+            border: 1px solid #e0a800;
+        }
+        .modal-label { color: #64748b; font-size: 13px; min-width: 150px; }
+        #m-rs-rows .detail-row { border-top: 1px dashed #d0e8d8; }
+        #m-rs-rows { border: 1px solid #1a7f5a; border-radius: 6px; padding: 8px 0; margin: 10px 0; background: #f2f9f5; }
+        #m-rs-rows .detail-row { margin: 0; padding: 8px 16px; }
+        #m-rs-label { font-size: 12px; font-weight: 700; color: #1a7f5a; padding: 4px 16px 0; letter-spacing: 0.05em; }
+        .m-section-divider { border: none; border-top: 1px solid #e2e8f0; margin: 10px 0; }
+        .m-provenance-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; margin: 10px 0; font-size: 13px; }
+        .m-provenance-box .prov-row { display: flex; gap: 8px; margin-bottom: 4px; align-items: flex-start; }
+        .m-provenance-box .prov-label { color: #64748b; min-width: 130px; font-size: 12px; }
+        .m-provenance-box .prov-val { font-weight: 600; color: #1e293b; }
+    </style>
 </head>
 <body>
 
@@ -30,6 +76,8 @@
                 <li><a href="maintenance-queue.html">Maintenance</a></li>
                 <li><a href="request-new.html">New Request</a></li>
                 <li><a href="compliance-export.html">Compliance</a></li>
+                <li><a href="certificate-entry.html">Cert. Entry</a></li>
+                <li><a href="certificate-review.html">Cert. Review</a></li>
                 <li><span class="user-chip">DPA · M. Papadopoulos</span></li>
             </ul>
         </nav>
@@ -47,6 +95,7 @@
     <div class="alert-box warning">
         <strong>⚠ 3 Πιστοποιητικά λήγουν εντός 30 ημερών</strong>
         Το σύστημα έχει αποστείλει αυτόματες ειδοποιήσεις στους Certification Executives.
+        Για ανανέωση: <a href="certificate-entry.html" style="color:inherit; font-weight:700;">Καταχώρηση Νέου Πιστοποιητικού →</a>
     </div>
 
     <!-- kpi cards -->
@@ -67,9 +116,9 @@
             <div class="kpi-trend">Απαιτείται ενέργεια</div>
         </div>
         <div class="kpi alert">
-            <div class="kpi-label">Expired Certificates</div>
-            <div class="kpi-value">1</div>
-            <div class="kpi-trend down">Off-hire risk</div>
+            <div class="kpi-label">Expired / Pending</div>
+            <div class="kpi-value">1 / 4</div>
+            <div class="kpi-trend down">Off-hire / DPA κίνδυνος</div>
         </div>
     </div>
 
@@ -82,6 +131,11 @@
                 <option>New Island</option>
                 <option>Med Island</option>
                 <option>Atlantic Island</option>
+                <option>Aegean Island</option>
+                <option>Pacific Island</option>
+                <option>Ionian Island</option>
+                <option>Cretan Island</option>
+                <option>Adriatic Island</option>
             </select>
         </div>
         <div class="form-group">
@@ -93,6 +147,7 @@
                 <option>IOPP</option>
                 <option>Class Certificate</option>
                 <option>Load Line</option>
+                <option>RightShip Inspection</option>
             </select>
         </div>
         <div class="form-group">
@@ -102,6 +157,7 @@
                 <option>Valid</option>
                 <option>Expiring</option>
                 <option>Expired</option>
+                <option>Pending DPA</option>
                 <option>Missing Data</option>
             </select>
         </div>
@@ -112,7 +168,11 @@
 
     <!-- fleet cert table -->
     <div class="card">
-        <h2>Κατάσταση Στόλου — Πιστοποιητικά</h2>
+        <h2>Κατάσταση Στόλου — Πιστοποιητικά &amp; RightShip</h2>
+        <p class="muted" style="font-size:13px;margin-bottom:10px;">
+            Τα πλοία ηλικίας ≥12 ετών εμφανίζουν επιπλέον γραμμή RightShip Inspection (Phase 2, Απρ 2026).
+            Κλικ στη γραμμή κατάστασης ή <strong>Λεπτομέρειες</strong> για πλήρες αρχείο πιστοποιητικού.
+        </p>
         <table class="data-table">
             <thead>
                 <tr>
@@ -125,6 +185,8 @@
                 </tr>
             </thead>
             <tbody>
+
+                <!-- NEW ISLAND — 8 years, no RightShip needed -->
                 <tr>
                     <td><strong>New Island</strong><br><span class="muted">IMO 9456789</span></td>
                     <td>Bulk Carrier</td>
@@ -133,9 +195,11 @@
                     <td><span class="badge valid clickable cert-badge" onclick="openCertModal('new-island')" title="Κλικ για λεπτομέρειες">&#9679; Valid</span></td>
                     <td>
                         <button class="btn btn-secondary" onclick="openCertModal('new-island')">Λεπτομέρειες</button>
-                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder...')">Export Vetting</button>
+                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder — New Island...')">Export Vetting</button>
                     </td>
                 </tr>
+
+                <!-- MED ISLAND — 14 years, RightShip required -->
                 <tr>
                     <td><strong>Med Island</strong><br><span class="muted">IMO 9234567</span></td>
                     <td>Bulk Carrier</td>
@@ -144,20 +208,48 @@
                     <td><span class="badge valid clickable cert-badge" onclick="openCertModal('med-island')" title="Κλικ για λεπτομέρειες">&#9679; Valid</span></td>
                     <td>
                         <button class="btn btn-secondary" onclick="openCertModal('med-island')">Λεπτομέρειες</button>
-                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder...')">Export Vetting</button>
+                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder — Med Island...')">Export Vetting</button>
                     </td>
                 </tr>
+                <!-- Med Island RightShip row -->
+                <tr class="rs-row">
+                    <td><span class="rs-indent">↳ RightShip</span><br><span class="muted" style="font-size:11px;">Med Island · GHG Inspection</span></td>
+                    <td><span class="badge rightship" style="font-size:11px;">RightShip GHG</span></td>
+                    <td>14 έτη</td>
+                    <td>12/02/2027</td>
+                    <td>
+                        <span class="badge valid cert-badge" style="cursor:pointer;font-size:12px;" onclick="openCertModal('med-island-rs')" title="Κλικ για λεπτομέρειες">⭐ Score 4/5 · GHG B</span>
+                        <small class="provenance-text">✓ Verified: M. Papadopoulos (DPA) · 20/02/2026<br>📄 <a href="#" onclick="alert('Λήψη: RightShip_MedIsland_2026.pdf')">RightShip_MedIsland_2026.pdf</a></small>
+                    </td>
+                    <td><button class="btn btn-secondary" onclick="openCertModal('med-island-rs')">Λεπτομέρειες</button></td>
+                </tr>
+
+                <!-- ATLANTIC ISLAND — 21 years, RightShip required (PENDING) -->
                 <tr>
                     <td><strong>Atlantic Island</strong><br><span class="muted">IMO 8956123</span></td>
                     <td>Bulk Carrier</td>
-                    <td>21 έτος</td>
+                    <td>21 έτη</td>
                     <td>18/05/2026 <span class="muted">(Class)</span></td>
                     <td><span class="badge warning clickable cert-badge" onclick="openCertModal('atlantic-island')" title="Κλικ για λεπτομέρειες">&#9679; Λήγει σε 21 ημέρες</span></td>
                     <td>
                         <button class="btn btn-secondary" onclick="openCertModal('atlantic-island')">Λεπτομέρειες</button>
-                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder...')">Export Vetting</button>
+                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder — Atlantic Island...')">Export Vetting</button>
                     </td>
                 </tr>
+                <!-- Atlantic Island RightShip row — PENDING DPA -->
+                <tr class="rs-row">
+                    <td><span class="rs-indent">↳ RightShip</span><br><span class="muted" style="font-size:11px;">Atlantic Island · GHG Inspection</span></td>
+                    <td><span class="badge rightship" style="font-size:11px;">RightShip GHG</span></td>
+                    <td>21 έτη</td>
+                    <td>— (pending)</td>
+                    <td>
+                        <span class="badge pending cert-badge" style="cursor:pointer;font-size:12px;" onclick="openCertModal('atlantic-island-rs')" title="Κλικ για λεπτομέρειες">⏳ Pending DPA Review</span>
+                        <small class="provenance-text" style="color:#7d5a00;">Υποβολή: 25/04/2026 · Ticket: CERT-2026-0035<br><a href="certificate-review.html" style="color:#7d5a00;font-weight:700;">→ Προς Ουρά DPA</a></small>
+                    </td>
+                    <td><button class="btn btn-secondary" onclick="openCertModal('atlantic-island-rs')">Λεπτομέρειες</button></td>
+                </tr>
+
+                <!-- AEGEAN ISLAND — 17 years, RightShip required -->
                 <tr>
                     <td><strong>Aegean Island</strong><br><span class="muted">IMO 9123456</span></td>
                     <td>Bulk Carrier</td>
@@ -166,9 +258,23 @@
                     <td><span class="badge warning clickable cert-badge" onclick="openCertModal('aegean-island')" title="Κλικ για λεπτομέρειες">&#9679; Λήγει σε 25 ημέρες</span></td>
                     <td>
                         <button class="btn btn-secondary" onclick="openCertModal('aegean-island')">Λεπτομέρειες</button>
-                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder...')">Export Vetting</button>
+                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder — Aegean Island...')">Export Vetting</button>
                     </td>
                 </tr>
+                <!-- Aegean Island RightShip row -->
+                <tr class="rs-row">
+                    <td><span class="rs-indent">↳ RightShip</span><br><span class="muted" style="font-size:11px;">Aegean Island · GHG Inspection</span></td>
+                    <td><span class="badge rightship" style="font-size:11px;">RightShip GHG</span></td>
+                    <td>17 έτη</td>
+                    <td>15/03/2027</td>
+                    <td>
+                        <span class="badge valid cert-badge" style="cursor:pointer;font-size:12px;" onclick="openCertModal('aegean-island-rs')" title="Κλικ για λεπτομέρειες">⭐ Score 4/5 · GHG B</span>
+                        <small class="provenance-text">✓ Verified: M. Papadopoulos (DPA) · 22/03/2026<br>📄 <a href="#" onclick="alert('Λήψη: RightShip_AegeanIsland_2026.pdf')">RightShip_AegeanIsland_2026.pdf</a></small>
+                    </td>
+                    <td><button class="btn btn-secondary" onclick="openCertModal('aegean-island-rs')">Λεπτομέρειες</button></td>
+                </tr>
+
+                <!-- PACIFIC ISLAND — 23 years, RightShip required -->
                 <tr>
                     <td><strong>Pacific Island</strong><br><span class="muted">IMO 8745632</span></td>
                     <td>Bulk Carrier</td>
@@ -177,9 +283,23 @@
                     <td><span class="badge warning clickable cert-badge" onclick="openCertModal('pacific-island')" title="Κλικ για λεπτομέρειες">&#9679; Λήγει σε 28 ημέρες</span></td>
                     <td>
                         <button class="btn btn-secondary" onclick="openCertModal('pacific-island')">Λεπτομέρειες</button>
-                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder...')">Export Vetting</button>
+                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder — Pacific Island...')">Export Vetting</button>
                     </td>
                 </tr>
+                <!-- Pacific Island RightShip row -->
+                <tr class="rs-row">
+                    <td><span class="rs-indent">↳ RightShip</span><br><span class="muted" style="font-size:11px;">Pacific Island · GHG Inspection</span></td>
+                    <td><span class="badge rightship" style="font-size:11px;">RightShip GHG</span></td>
+                    <td>23 έτη</td>
+                    <td>10/01/2027</td>
+                    <td>
+                        <span class="badge valid cert-badge" style="cursor:pointer;font-size:12px;" onclick="openCertModal('pacific-island-rs')" title="Κλικ για λεπτομέρειες">⭐ Score 3/5 · GHG C</span>
+                        <small class="provenance-text">✓ Verified: M. Papadopoulos (DPA) · 18/01/2026<br>📄 <a href="#" onclick="alert('Λήψη: RightShip_PacificIsland_2026.pdf')">RightShip_PacificIsland_2026.pdf</a></small>
+                    </td>
+                    <td><button class="btn btn-secondary" onclick="openCertModal('pacific-island-rs')">Λεπτομέρειες</button></td>
+                </tr>
+
+                <!-- IONIAN ISLAND — 11 years, no RightShip (< 12yr) -->
                 <tr>
                     <td><strong>Ionian Island</strong><br><span class="muted">IMO 9356741</span></td>
                     <td>Bulk Carrier</td>
@@ -188,9 +308,11 @@
                     <td><span class="badge expired clickable cert-badge" onclick="openCertModal('ionian-island')" title="Κλικ για λεπτομέρειες">&#9679; Expired</span></td>
                     <td>
                         <button class="btn btn-secondary" onclick="openCertModal('ionian-island')">Λεπτομέρειες</button>
-                        <button class="btn btn-danger" onclick="alert('Ειδοποίηση Επείγουσας Ανανέωσης...')">Επείγον</button>
+                        <a href="certificate-entry.html" class="btn btn-danger">Καταχώρηση Ανανέωσης</a>
                     </td>
                 </tr>
+
+                <!-- CRETAN ISLAND — 18 years, RightShip required -->
                 <tr>
                     <td><strong>Cretan Island</strong><br><span class="muted">IMO 9087654</span></td>
                     <td>Bulk Carrier</td>
@@ -199,9 +321,23 @@
                     <td><span class="badge valid clickable cert-badge" onclick="openCertModal('cretan-island')" title="Κλικ για λεπτομέρειες">&#9679; Valid</span></td>
                     <td>
                         <button class="btn btn-secondary" onclick="openCertModal('cretan-island')">Λεπτομέρειες</button>
-                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder...')">Export Vetting</button>
+                        <button class="btn btn-primary" onclick="alert('Εξαγωγή Vetting Folder — Cretan Island...')">Export Vetting</button>
                     </td>
                 </tr>
+                <!-- Cretan Island RightShip row -->
+                <tr class="rs-row">
+                    <td><span class="rs-indent">↳ RightShip</span><br><span class="muted" style="font-size:11px;">Cretan Island · GHG Inspection</span></td>
+                    <td><span class="badge rightship" style="font-size:11px;">RightShip GHG</span></td>
+                    <td>18 έτη</td>
+                    <td>05/04/2027</td>
+                    <td>
+                        <span class="badge valid cert-badge" style="cursor:pointer;font-size:12px;" onclick="openCertModal('cretan-island-rs')" title="Κλικ για λεπτομέρειες">⭐ Score 4/5 · GHG B</span>
+                        <small class="provenance-text">✓ Verified: M. Papadopoulos (DPA) · 14/04/2026<br>📄 <a href="#" onclick="alert('Λήψη: RightShip_CretanIsland_2026.pdf')">RightShip_CretanIsland_2026.pdf</a></small>
+                    </td>
+                    <td><button class="btn btn-secondary" onclick="openCertModal('cretan-island-rs')">Λεπτομέρειες</button></td>
+                </tr>
+
+                <!-- ADRIATIC ISLAND — 9 years, Missing Data -->
                 <tr>
                     <td><strong>Adriatic Island</strong><br><span class="muted">IMO 9412385</span></td>
                     <td>Bulk Carrier</td>
@@ -210,11 +346,16 @@
                     <td><span class="badge missing clickable cert-badge" onclick="openCertModal('adriatic-island')" title="Κλικ για λεπτομέρειες">&#9679; Missing Data</span></td>
                     <td>
                         <button class="btn btn-secondary" onclick="openCertModal('adriatic-island')">Λεπτομέρειες</button>
-                        <button class="btn btn-secondary" onclick="alert('Φόρμα καταχώρησης πιστοποιητικού...')">Καταχώρηση</button>
+                        <a href="certificate-entry.html" class="btn btn-primary">Καταχώρηση →</a>
                     </td>
                 </tr>
+
             </tbody>
         </table>
+        <p class="muted" style="font-size:12px;margin-top:10px;padding:6px 0;border-top:1px solid #e8edf2;">
+            <strong>RightShip Phase 2 (01/04/2026):</strong> Πλοία ≥12 ετών χωρίς ισχύουσα RightShip επιθεώρηση δεν γίνονται αποδεκτά από BHP, Vale, Cargill, Rio Tinto.
+            Safety Score &lt;3/5 = blockage από major charterers.
+        </p>
     </div>
 
     <!-- notification history -->
@@ -233,25 +374,33 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>27/04/2026 09:00</td>
+                    <td>30/04/2026 09:00</td>
                     <td>Atlantic Island</td>
                     <td>Class Certificate</td>
-                    <td><span class="badge warning">30 ημέρες</span></td>
+                    <td><span class="badge warning">18 ημέρες</span></td>
+                    <td>certifications@hind.gr · dpa@hind.gr</td>
+                    <td><span class="status-dot green"></span>Sent</td>
+                </tr>
+                <tr>
+                    <td>30/04/2026 09:00</td>
+                    <td>Aegean Island</td>
+                    <td>SMC — ISM Code</td>
+                    <td><span class="badge warning">22 ημέρες</span></td>
                     <td>certifications@hind.gr</td>
                     <td><span class="status-dot green"></span>Sent</td>
                 </tr>
                 <tr>
-                    <td>15/04/2026 09:00</td>
-                    <td>Atlantic Island</td>
-                    <td>Class Certificate</td>
-                    <td><span class="badge info">60 ημέρες</span></td>
+                    <td>28/04/2026 09:00</td>
+                    <td>Pacific Island</td>
+                    <td>ISSC — ISPS Code</td>
+                    <td><span class="badge warning">27 ημέρες</span></td>
                     <td>certifications@hind.gr</td>
                     <td><span class="status-dot green"></span>Sent</td>
                 </tr>
                 <tr>
                     <td>10/04/2026 09:00</td>
                     <td>Ionian Island</td>
-                    <td>Load Line</td>
+                    <td>Load Line Certificate</td>
                     <td><span class="badge urgent">EXPIRED</span></td>
                     <td>dpa@hind.gr · ceo@hind.gr</td>
                     <td><span class="status-dot green"></span>Sent</td>
@@ -267,15 +416,19 @@
 
 <!-- cert modal -->
 <div id="cert-modal" class="modal-overlay" style="display:none;" onclick="if(event.target===this)closeCertModal()">
-    <div class="modal-box">
+    <div class="modal-box" style="max-width:560px;">
         <button class="modal-close" onclick="closeCertModal()" aria-label="Κλείσιμο">&#10005;</button>
         <h2 id="m-title">Λεπτομέρειες Πιστοποιητικού</h2>
-        <div id="m-status-banner" class="alert-box info" style="margin:10px 0 16px;"></div>
-        <div class="detail-row"><span class="label">Πλοίο</span><span id="m-vessel"></span></div>
+
+        <div id="m-status-banner" class="alert-box info" style="margin:10px 0 14px;"></div>
+
+        <!-- Standard cert fields -->
+        <div class="detail-row"><span class="label" id="m-vessel-label">Πλοίο</span><span id="m-vessel"></span></div>
         <div class="detail-row"><span class="label">IMO Number</span><span id="m-imo"></span></div>
-        <div class="detail-row"><span class="label">Τύπος Πιστοποιητικού</span><span id="m-cert-type"></span></div>
-        <div class="detail-row"><span class="label">Αρχή Έκδοσης</span><span id="m-authority"></span></div>
-        <div class="detail-row"><span class="label">Ημ. Έκδοσης</span><span id="m-issued"></span></div>
+        <div class="detail-row"><span class="label" id="m-cert-type-label">Τύπος Πιστοποιητικού</span><span id="m-cert-type"></span></div>
+        <div class="detail-row"><span class="label">Αρ. Πιστοποιητικού</span><span id="m-cert-number"></span></div>
+        <div class="detail-row"><span class="label" id="m-authority-label">Αρχή Έκδοσης</span><span id="m-authority"></span></div>
+        <div class="detail-row"><span class="label" id="m-issued-label">Ημ. Έκδοσης</span><span id="m-issued"></span></div>
         <div class="detail-row"><span class="label">Ημ. Λήξης</span><span id="m-expires"></span></div>
         <div class="detail-row"><span class="label">Κατάσταση</span><span id="m-status-cell"></span></div>
         <div class="btn-row mt-lg">
@@ -290,64 +443,185 @@ const certData = {
     'new-island': {
         vessel: 'New Island', imo: 'IMO 9456789',
         certType: 'Safety Management Certificate (SMC / ISM Code)',
+        certNumber: 'SMC-2021-LR-4892',
         authority: "Lloyd's Register",
         issued: '15/09/2021', expires: '15/09/2026',
-        status: 'valid', statusLabel: 'Valid — Λήξη σε 140 ημέρες'
+        status: 'valid', statusLabel: 'Valid — Λήξη σε 138 ημέρες',
+        verifiedBy: 'M. Papadopoulos (DPA)',
+        verifiedDate: '26/04/2026',
+        docFile: 'SMC_NewIsland_LR2021.pdf'
     },
     'med-island': {
         vessel: 'Med Island', imo: 'IMO 9234567',
-        certType: 'International Oil Pollution Prevention Certificate (IOPP)',
+        certType: 'Int. Oil Pollution Prevention Certificate (IOPP / MARPOL)',
+        certNumber: 'IOPP-2021-BV-3341',
         authority: 'Bureau Veritas',
         issued: '10/06/2021', expires: '10/06/2026',
-        status: 'valid', statusLabel: 'Valid — Λήξη σε 43 ημέρες'
+        status: 'valid', statusLabel: 'Valid — Λήξη σε 41 ημέρες',
+        verifiedBy: 'M. Papadopoulos (DPA)',
+        verifiedDate: '25/04/2026',
+        docFile: 'IOPP_MedIsland_BV2021.pdf'
     },
     'atlantic-island': {
         vessel: 'Atlantic Island', imo: 'IMO 8956123',
-        certType: 'Class Certificate (DNV)',
-        authority: 'DNV',
+        certType: 'Class Certificate (ISM / DNV)',
+        certNumber: 'CLASS-2021-DNV-7745',
+        authority: 'DNV GL',
         issued: '18/05/2021', expires: '18/05/2026',
-        status: 'warning', statusLabel: '⚠ Λήγει σε 21 ημέρες — Απαιτείται ανανέωση'
+        status: 'warning', statusLabel: '⚠ Λήγει σε 18 ημέρες — Απαιτείται ανανέωση',
+        verifiedBy: 'M. Papadopoulos (DPA)',
+        verifiedDate: '22/04/2026',
+        docFile: 'ClassCert_AtlanticIsland_DNV2021.pdf'
     },
     'aegean-island': {
         vessel: 'Aegean Island', imo: 'IMO 9123456',
         certType: 'Safety Management Certificate (SMC / ISM Code)',
+        certNumber: 'SMC-2021-ABS-2287',
         authority: 'American Bureau of Shipping (ABS)',
         issued: '22/05/2021', expires: '22/05/2026',
-        status: 'warning', statusLabel: '⚠ Λήγει σε 25 ημέρες — Απαιτείται ανανέωση'
+        status: 'warning', statusLabel: '⚠ Λήγει σε 22 ημέρες — Απαιτείται ανανέωση',
+        verifiedBy: 'M. Papadopoulos (DPA)',
+        verifiedDate: '23/04/2026',
+        docFile: 'SMC_AegeanIsland_ABS2021.pdf'
     },
     'pacific-island': {
         vessel: 'Pacific Island', imo: 'IMO 8745632',
-        certType: 'International Ship Security Certificate (ISSC / ISPS Code)',
+        certType: 'Int. Ship Security Certificate (ISSC / ISPS Code)',
+        certNumber: 'ISSC-2021-NK-5512',
         authority: 'ClassNK',
         issued: '25/05/2021', expires: '25/05/2026',
-        status: 'warning', statusLabel: '⚠ Λήγει σε 28 ημέρες — Απαιτείται ανανέωση'
+        status: 'warning', statusLabel: '⚠ Λήγει σε 25 ημέρες — Απαιτείται ανανέωση',
+        verifiedBy: 'M. Papadopoulos (DPA)',
+        verifiedDate: '24/04/2026',
+        docFile: 'ISSC_PacificIsland_NK2021.pdf'
     },
     'ionian-island': {
         vessel: 'Ionian Island', imo: 'IMO 9356741',
-        certType: 'Load Line Certificate (LL 66)',
+        certType: 'Load Line Certificate (LL 66 / Int. Convention)',
+        certNumber: 'LL-2021-RINA-1089',
         authority: 'RINA — Registro Italiano Navale',
         issued: '10/04/2021', expires: '10/04/2026',
-        status: 'expired', statusLabel: 'EXPIRED — Ληγμένο από 18/04/2026 · Off-hire κίνδυνος'
+        status: 'expired', statusLabel: 'EXPIRED — Ληγμένο από 10/04/2026 · Off-hire κίνδυνος',
+        verifiedBy: 'M. Papadopoulos (DPA)',
+        verifiedDate: '18/04/2021',
+        docFile: 'LoadLine_IonianIsland_RINA2021.pdf'
     },
     'cretan-island': {
         vessel: 'Cretan Island', imo: 'IMO 9087654',
         certType: 'Safety Management Certificate (SMC / ISM Code)',
+        certNumber: 'SMC-2021-LR-5628',
         authority: "Lloyd's Register",
         issued: '30/11/2021', expires: '30/11/2026',
-        status: 'valid', statusLabel: 'Valid — Λήξη σε 216 ημέρες'
+        status: 'valid', statusLabel: 'Valid — Λήξη σε 214 ημέρες',
+        verifiedBy: 'M. Papadopoulos (DPA)',
+        verifiedDate: '27/04/2026',
+        docFile: 'SMC_CretanIsland_LR2021.pdf'
     },
     'adriatic-island': {
         vessel: 'Adriatic Island', imo: 'IMO 9412385',
-        certType: '— (Missing Data)',
+        certType: '— (Δεν υπάρχουν δεδομένα)',
+        certNumber: '—',
         authority: '—',
         issued: '—', expires: '—',
-        status: 'missing', statusLabel: 'Missing Data — Απαιτείται καταχώρηση στοιχείων'
+        status: 'missing', statusLabel: 'Missing Data — Απαιτείται καταχώρηση στοιχείων',
+        verifiedBy: '— (Δεν έχει καταχωρηθεί)',
+        verifiedDate: '—',
+        docFile: null
+    },
+
+    /* ── RightShip Inspection Entries (vessels ≥ 12 years) ── */
+    'med-island-rs': {
+        vessel: 'Med Island', imo: 'IMO 9234567',
+        type: 'rightship',
+        certType: 'RightShip GHG Rating Inspection',
+        certNumber: 'RS-2026-MI-8834',
+        authority: 'RightShip Pty Ltd',
+        issued: '12/02/2026', expires: '12/02/2027',
+        status: 'valid', statusLabel: 'Valid — Safety Score 4/5 · GHG Rating B',
+        rsScore: '4 / 5  ⭐⭐⭐⭐',
+        rsGhg: 'B  (Καλή Απόδοση)',
+        verifiedBy: 'M. Papadopoulos (DPA)',
+        verifiedDate: '20/02/2026',
+        docFile: 'RightShip_MedIsland_2026.pdf'
+    },
+    'atlantic-island-rs': {
+        vessel: 'Atlantic Island', imo: 'IMO 8956123',
+        type: 'rightship',
+        certType: 'RightShip GHG Rating Inspection',
+        certNumber: 'CERT-2026-0035',
+        authority: 'RightShip Pty Ltd',
+        issued: '25/04/2026', expires: '— (αναμένεται επαλήθευση)',
+        status: 'pending', statusLabel: '⏳ Pending DPA Verification — Υποβολή: 25/04/2026',
+        rsScore: '4 / 5  ⭐⭐⭐⭐  (provisional)',
+        rsGhg: 'B  (provisional)',
+        verifiedBy: '— (Υπό Επαλήθευση DPA)',
+        verifiedDate: '—',
+        docFile: 'RightShip_AtlanticIsland_2026.pdf'
+    },
+    'aegean-island-rs': {
+        vessel: 'Aegean Island', imo: 'IMO 9123456',
+        type: 'rightship',
+        certType: 'RightShip GHG Rating Inspection',
+        certNumber: 'RS-2026-AI-7721',
+        authority: 'RightShip Pty Ltd',
+        issued: '15/03/2026', expires: '15/03/2027',
+        status: 'valid', statusLabel: 'Valid — Safety Score 4/5 · GHG Rating B',
+        rsScore: '4 / 5  ⭐⭐⭐⭐',
+        rsGhg: 'B  (Καλή Απόδοση)',
+        verifiedBy: 'M. Papadopoulos (DPA)',
+        verifiedDate: '22/03/2026',
+        docFile: 'RightShip_AegeanIsland_2026.pdf'
+    },
+    'pacific-island-rs': {
+        vessel: 'Pacific Island', imo: 'IMO 8745632',
+        type: 'rightship',
+        certType: 'RightShip GHG Rating Inspection',
+        certNumber: 'RS-2026-PI-6643',
+        authority: 'RightShip Pty Ltd',
+        issued: '10/01/2026', expires: '10/01/2027',
+        status: 'valid', statusLabel: 'Valid — Safety Score 3/5 · GHG Rating C',
+        rsScore: '3 / 5  ⭐⭐⭐  (Αποδεκτό)',
+        rsGhg: 'C  (Μέτρια Απόδοση — Παρακολούθηση)',
+        verifiedBy: 'M. Papadopoulos (DPA)',
+        verifiedDate: '18/01/2026',
+        docFile: 'RightShip_PacificIsland_2026.pdf'
+    },
+    'cretan-island-rs': {
+        vessel: 'Cretan Island', imo: 'IMO 9087654',
+        type: 'rightship',
+        certType: 'RightShip GHG Rating Inspection',
+        certNumber: 'RS-2026-CI-9915',
+        authority: 'RightShip Pty Ltd',
+        issued: '05/04/2026', expires: '05/04/2027',
+        status: 'valid', statusLabel: 'Valid — Safety Score 4/5 · GHG Rating B',
+        rsScore: '4 / 5  ⭐⭐⭐⭐',
+        rsGhg: 'B  (Καλή Απόδοση)',
+        verifiedBy: 'M. Papadopoulos (DPA)',
+        verifiedDate: '14/04/2026',
+        docFile: 'RightShip_CretanIsland_2026.pdf'
     }
 };
 
-var bannerClass = { valid: 'success', warning: 'warning', expired: 'danger', missing: 'info' };
-var badgeClass  = { valid: 'valid',   warning: 'warning', expired: 'expired', missing: 'missing' };
+/* Badge and banner style maps */
+var bannerClass = {
+    valid:   'success',
+    warning: 'warning',
+    expired: 'danger',
+    missing: 'info',
+    pending: 'warning'
+};
+var badgeClass = {
+    valid:   'valid',
+    warning: 'warning',
+    expired: 'expired',
+    missing: 'missing',
+    pending: 'pending'
+};
 
+/* ═══════════════════════════════════════════════════════════════
+   openCertModal — Populates and opens the detail modal.
+   Handles both standard certs and RightShip inspections.
+═══════════════════════════════════════════════════════════════ */
 function openCertModal(key) {
     var d = certData[key];
     if (!d) return;
@@ -355,15 +629,62 @@ function openCertModal(key) {
     document.getElementById('m-title').textContent = 'Πιστοποιητικό — ' + d.vessel;
     document.getElementById('m-vessel').textContent = d.vessel;
     document.getElementById('m-imo').textContent = d.imo;
+    document.getElementById('m-cert-type-label').textContent =
+        isRS ? 'Τύπος Επιθεώρησης' : 'Τύπος Πιστοποιητικού';
     document.getElementById('m-cert-type').textContent = d.certType;
+    document.getElementById('m-cert-number').textContent = d.certNumber || '—';
+    document.getElementById('m-authority-label').textContent =
+        isRS ? 'Φορέας Επιθεώρησης' : 'Αρχή Έκδοσης';
     document.getElementById('m-authority').textContent = d.authority;
+    document.getElementById('m-issued-label').textContent =
+        isRS ? 'Ημ. Επιθεώρησης' : 'Ημ. Έκδοσης';
     document.getElementById('m-issued').textContent = d.issued;
     document.getElementById('m-expires').textContent = d.expires;
+
+    /* Status */
     document.getElementById('m-status-cell').innerHTML =
         '<span class="badge ' + (badgeClass[d.status] || '') + '">' + d.statusLabel + '</span>';
     var banner = document.getElementById('m-status-banner');
     banner.className = 'alert-box ' + (bannerClass[d.status] || 'info');
     banner.textContent = d.statusLabel;
+
+    /* RightShip-specific rows */
+    var rsRows = document.getElementById('m-rs-rows');
+    rsRows.style.display = isRS ? '' : 'none';
+    if (isRS) {
+        document.getElementById('m-rs-score').textContent = d.rsScore || '—';
+        document.getElementById('m-ghg').textContent = d.rsGhg || '—';
+    }
+
+    /* Provenance box */
+    var pendingNote = (d.status === 'pending') ? ' · ⏳ Αναμένεται επαλήθευση DPA' : '';
+    var expiredNote = (d.status === 'expired') ? ' · (Πιστοποιητικό έχει λήξει)' : '';
+    document.getElementById('m-verified-by').textContent = (d.verifiedBy || '—') + pendingNote;
+    document.getElementById('m-verified-date').textContent = (d.verifiedDate || '—') + expiredNote;
+
+    if (d.docFile && d.status !== 'missing') {
+        document.getElementById('m-doc-file').innerHTML =
+            '<a href="#" onclick="alert(\'Λήψη: ' + d.docFile + '\')" style="color:var(--accent);">📄 ' + d.docFile + '</a>';
+    } else {
+        document.getElementById('m-doc-file').textContent = '—';
+    }
+
+    /* Download button */
+    var dlBtn = document.getElementById('m-download-btn');
+    dlBtn.onclick = function() {
+        if (d.status === 'missing') {
+            alert('Δεν υπάρχει διαθέσιμο αρχείο — Απαιτείται καταχώρηση.');
+        } else if (d.status === 'pending') {
+            alert('Το αρχείο εκκρεμεί — Αναμένεται επαλήθευση DPA πριν τη λήψη.');
+        } else {
+            alert('Λήψη ψηφιακού αντιγράφου:\n' + d.docFile);
+        }
+    };
+
+    /* Renewal button (only for expired or pending) */
+    var renewBtn = document.getElementById('m-renew-btn');
+    renewBtn.style.display = (d.status === 'expired' || d.status === 'missing') ? '' : 'none';
+
     document.getElementById('cert-modal').style.display = 'flex';
 }
 
