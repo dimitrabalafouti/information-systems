@@ -14,16 +14,16 @@
             <div class="brand-logo">H</div>
             <div class="brand-text">
                 <h1>HIND Maritime Enterprises S.A.</h1>
-                <small>Strategic Shield · Management Console</small>
+                <small>Strategic Shield / Management Console</small>
             </div>
         </a>
-        <nav class="main-nav">
+        <nav class="main-nav" aria-label="πλοήγηση">
             <ul>
                 <li><a href="../index.html">Αρχική</a></li>
                 <li><a href="fleet-status.html">Fleet Status</a></li>
                 <li><a href="voyage-dashboard.html">Voyages</a></li>
                 <li><a href="noon-report.html">Noon Report</a></li>
-                <li><a href="approve-procurement.html" class="active">Approvals</a></li>
+                <li><a href="approve-procurement.html" class="active" aria-current="page">Approvals</a></li>
                 <li><a href="profitability-report.html">Profitability</a></li>
                 <li><a href="invoicing.html">Invoicing</a></li>
                 <li><a href="voyage-instructions.html">Instructions</a></li>
@@ -39,20 +39,20 @@
 <main>
     <h1 class="page-title">Έγκριση Αιτημάτων Προμήθειας</h1>
     <p class="page-subtitle">
-        Ψηφιακή Ροή Εγκρίσεων · Πλήρης Audit Trail · Αντικαθιστά τη χειρόγραφη υπογραφή σε φυσικά έγγραφα
+        Ψηφιακή ροή εγκρίσεων με πλήρες Audit Trail. Δεν χρειάζεται πλέον χειρόγραφη υπογραφή σε φυσικά έγγραφα.
     </p>
 
-    <!-- NOTIFICATION BANNER -->
+    <!-- notification banner -->
     <div class="notif-banner" id="pr-notif">
         <div class="notif-dot"></div>
         <div>
             <strong>In-App Notification:</strong>
-            7 εκκρεμή αιτήματα προμήθειας αναμένουν έγκριση — 2 URGENT · Επιλέξτε αίτημα από την λίστα για επεξεργασία
+            7 εκκρεμή αιτήματα προμήθειας αναμένουν έγκριση (2 URGENT). Επιλέξτε αίτημα από την λίστα.
         </div>
         <button class="notif-dismiss" onclick="this.parentElement.style.display='none'">&#10005;</button>
     </div>
 
-    <!-- USE CASE FLOW -->
+    <!-- workflow steps -->
     <div class="workflow-steps">
         <div class="workflow-step done"><span class="step-num">&#10003;</span>Notification</div>
         <div class="workflow-step active"><span class="step-num">2</span>Άνοιγμα Αιτήματος</div>
@@ -86,10 +86,10 @@
         </div>
     </div>
 
-    <!-- SPLIT VIEW: list + detail -->
+    <!-- split: list + detail panel -->
     <div class="split-view">
 
-        <!-- LIST -->
+        <!-- list panel -->
         <div class="list-panel">
             <div class="list-item">
                 <div class="ticket">#PR-2026-0418 · 27/04 09:15</div>
@@ -128,16 +128,16 @@
             </div>
         </div>
 
-        <!-- DETAIL -->
+        <!-- detail panel -->
         <div class="detail-panel">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                <h2 style="margin:0; color:var(--navy);">Αίτημα #PR-2026-0421</h2>
+            <div class="panel-header-bar">
+                <h2 class="h2-bare">Αίτημα #PR-2026-0421</h2>
                 <span class="badge warning">Εκκρεμεί Έγκριση</span>
             </div>
 
             <div class="detail-row">
                 <div class="label">Πλοίο</div>
-                <div><strong>M/V Med Island</strong> · IMO 9234567 · Voyage V-2026-038</div>
+                <div><strong>M/V Med Island</strong> (IMO 9234567), Voyage V-2026-038</div>
             </div>
             <div class="detail-row">
                 <div class="label">Τύπος</div>
@@ -145,11 +145,11 @@
             </div>
             <div class="detail-row">
                 <div class="label">Υπεβλήθη από</div>
-                <div>Capt. M. Ioannou (Master) · 27/04/2026 11:32</div>
+                <div>Capt. M. Ioannou (Master), 27/04/2026 11:32</div>
             </div>
             <div class="detail-row">
                 <div class="label">Επόμενο Λιμάνι</div>
-                <div>Varna (BGVAR) · ETA 02/05/2026 09:00</div>
+                <div>Varna (BGVAR), ETA 02/05/2026 09:00</div>
             </div>
             <div class="detail-row">
                 <div class="label">Περιγραφή</div>
@@ -182,7 +182,7 @@
                                 <td>BG Ship Services</td>
                                 <td>€10,150</td>
                                 <td>02/05 09:00</td>
-                                <td>—</td>
+                                <td>&#8212;</td>
                             </tr>
                         </tbody>
                     </table>
@@ -194,42 +194,42 @@
             </div>
             <div class="detail-row">
                 <div class="label">Budget Status</div>
-                <div><span class="badge valid">Εντός Προϋπολογισμού</span> · 14% του μηνιαίου budget Provisions</div>
+                <div><span class="badge valid">Εντός Προϋπολογισμού</span>, 14% του μηνιαίου budget Provisions</div>
             </div>
 
-            <!-- DECISION -->
-            <fieldset style="margin-top:20px;">
+            <!-- decision form -->
+            <fieldset class="mt-xl">
                 <legend>Απόφαση Διοίκησης</legend>
-                <div class="form-group full" style="margin-bottom:14px;">
+                <div class="form-group full mb-form">
                     <label for="comment">Σχόλιο (προαιρετικό)</label>
                     <textarea id="comment" name="comment" rows="3"
                       placeholder="Π.χ. Έγκριση με προσφορά Black Sea Provisions λόγω χρονικής καταλληλότητας."></textarea>
                 </div>
                 <div class="btn-row">
-                    <button type="button" class="btn btn-success" onclick="decisionPR('approve')">&#10003; Έγκριση</button>
-                    <button type="button" class="btn btn-danger" onclick="decisionPR('reject')">&#10005; Απόρριψη</button>
+                    <button type="button" class="btn btn-success" data-action="approve" onclick="decisionPR('approve')">&#10003; Έγκριση</button>
+                    <button type="button" class="btn btn-danger" data-action="reject" onclick="decisionPR('reject')">&#10005; Απόρριψη</button>
                     <button type="button" class="btn btn-secondary" onclick="alert('Παραπομπή σε Ανώτερο...')"> Παραπομπή σε Ανώτερο</button>
                     <a href="../index.html" class="btn btn-secondary">Επιστροφή</a>
                 </div>
-                <p class="muted mt-1" style="font-size:12px;">
+                <p class="muted mt-1 text-xs">
                     Η απόφαση καταγράφεται αυτόματα με χρονοσήμανση και όνομα στελέχους στο Audit Trail.
                     Αυτόματη ειδοποίηση στο Τμήμα Προμηθειών εντός 1 λεπτού.
                 </p>
             </fieldset>
 
-            <!-- AUDIT TRAIL -->
-            <div style="margin-top:20px;">
-                <h2 style="color:var(--navy); font-size:15px; margin-bottom:10px;">Audit Trail Αιτήματος</h2>
+            <!-- audit trail for this request -->
+            <div class="mt-xl">
+                <h2 class="h2-section">Audit Trail Αιτήματος</h2>
                 <table class="data-table">
                     <thead>
                         <tr><th>Ώρα</th><th>Ενέργεια</th><th>Χρήστης</th></tr>
                     </thead>
                     <tbody>
                         <tr><td>27/04 11:32</td><td>Υποβολή αιτήματος</td><td>Capt. M. Ioannou</td></tr>
-                        <tr><td>27/04 11:33</td><td>Auto-routing → Τμήμα Προμηθειών</td><td>Σύστημα</td></tr>
+                        <tr><td>27/04 11:33</td><td>Auto-routing στο Τμήμα Προμηθειών</td><td>Σύστημα</td></tr>
                         <tr><td>27/04 12:15</td><td>Συγκέντρωση 3 προσφορών</td><td>N. Vasileiou (Purchasing)</td></tr>
                         <tr><td>27/04 12:48</td><td>Παραπομπή για έγκριση Διοίκησης</td><td>N. Vasileiou (Purchasing)</td></tr>
-                        <tr><td>—</td><td>Αναμονή απόφασης Διοίκησης</td><td>—</td></tr>
+                        <tr><td>&#8212;</td><td>Αναμονή απόφασης Διοίκησης</td><td>&#8212;</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -239,14 +239,16 @@
 </main>
 
 <footer class="site-footer">
-    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+    © 2026 HIND Maritime Enterprises S.A., Strategic Shield IS, Πληροφοριακά Συστήματα Ομάδα 69
 </footer>
 
 <script>
 function decisionPR(action) {
-    var comment = document.getElementById('comment').value.trim();
-    var now = new Date();
+    const comment = document.getElementById('comment').value.trim();
+    console.log('decision:', action);
+    const now = new Date();
     var time = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+    // was: document.getElementsByClassName('data-table')[1].tBodies[0] — switched to querySelector
     var tbody = document.querySelector('#audit-tbody') || document.querySelectorAll('.data-table tbody')[1];
     if (action === 'approve') {
         // update badge
@@ -256,15 +258,15 @@ function decisionPR(action) {
             var r1 = tbody.insertRow(); r1.innerHTML = '<td>'+time+'</td><td><strong>Έγκριση</strong> από CEO A. Konstantinou'+(comment?' — '+comment:'')+'</td><td>CEO · A. Konstantinou</td>';
             var r2 = tbody.insertRow(); r2.innerHTML = '<td>'+time+'</td><td>Ειδοποίηση απεστάλη στο Τμήμα Προμηθειών (εντός 1 λεπτού)</td><td>Σύστημα</td>';
         }
-        ['pr-step3','pr-step4','pr-step5','pr-step6'].forEach(function(id){ var el=document.getElementById(id); if(el) el.className='workflow-step done'; });
-        alert('✓ Αίτημα #PR-2026-0421 Εγκρίθηκε.\nΕιδοποίηση απεστάλη αυτόματα στο Τμήμα Προμηθειών.');
+        ['pr-step3','pr-step4','pr-step5','pr-step6'].forEach(function(id){ let el=document.getElementById(id); if(el) el.className='workflow-step done'; });
+        alert('\u2713 Αίτημα #PR-2026-0421 Εγκρίθηκε.\nΕιδοποίηση απεστάλη αυτόματα στο Τμήμα Προμηθειών.');
     } else {
         if (tbody) {
             var r = tbody.insertRow(); r.innerHTML = '<td>'+time+'</td><td><strong>Απόρριψη</strong> από CEO A. Konstantinou'+(comment?' — '+comment:'')+'</td><td>CEO · A. Konstantinou</td>';
             var r2 = tbody.insertRow(); r2.innerHTML = '<td>'+time+'</td><td>Ειδοποίηση απόρριψης απεστάλη</td><td>Σύστημα</td>';
         }
-        ['pr-step3','pr-step4','pr-step5','pr-step6'].forEach(function(id){ var el=document.getElementById(id); if(el) el.className='workflow-step done'; });
-        alert('✕ Αίτημα #PR-2026-0421 Απορρίφθηκε.\nΕιδοποίηση απορρίψης απεστάλη αυτόματα.');
+        ['pr-step3','pr-step4','pr-step5','pr-step6'].forEach(function(id){ let el=document.getElementById(id); if(el) el.className='workflow-step done'; });
+        alert('\u2715 Αίτημα #PR-2026-0421 Απορρίφθηκε.\nΕιδοποίηση απορρίψης απεστάλη αυτόματα.');
     }
 }
 </script>

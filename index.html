@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HIND Maritime Enterprises S.A. — Strategic Shield</title>
+    <title>HIND Maritime Enterprises S.A. - Strategic Shield</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -14,12 +14,12 @@
             <div class="brand-logo">H</div>
             <div class="brand-text">
                 <h1>HIND Maritime Enterprises S.A.</h1>
-                <small>Strategic Shield · Integrated IS</small>
+                <small>Strategic Shield / Integrated IS</small>
             </div>
         </a>
-        <nav class="main-nav">
+        <nav class="main-nav" aria-label="Κύρια πλοήγηση">
             <ul>
-                <li><a href="index.html" class="active">Αρχική</a></li>
+                <li><a href="index.html" class="active" aria-current="page">Αρχική</a></li>
                 <li><a href="pages/fleet-status.html">Fleet Status</a></li>
                 <li><a href="pages/voyage-dashboard.html">Voyages</a></li>
                 <li><a href="pages/noon-report.html">Noon Report</a></li>
@@ -40,9 +40,8 @@
         <h1>Your Real-Time Digital Shield in Dry Cargo Brokerage</h1>
         <p class="motto">"One automated source of truth, a world of trust."</p>
         <p class="subtitle">
-            Ενοποιημένο Πληροφοριακό Σύστημα για τη διαχείριση στόλου, ταξιδιών,
-            πιστοποιητικών και οικονομικών ροών — με Real-Time δεδομένα,
-            ψηφιακές εγκρίσεις και πλήρη Audit Trail.
+            Ένα ΠΣ για στόλο, ταξίδια, πιστοποιητικά και οικονομικά.
+            Real-time δεδομένα, ψηφιακές εγκρίσεις και Audit Trail σε ένα μέρος.
         </p>
     </div>
 </section>
@@ -50,19 +49,19 @@
 <section class="login-section">
     <div class="login-grid">
 
-        <!-- LOGIN CARD -->
+        <!-- login card -->
         <div class="card">
             <h2>Σύνδεση Χρήστη</h2>
             <form action="pages/fleet-status.html" method="get" novalidate>
-                <div class="form-group" style="margin-bottom:14px;">
+                <div class="form-group mb-form">
                     <label for="username">Όνομα Χρήστη <span class="req">*</span></label>
-                    <input type="text" id="username" name="username" placeholder="π.χ. d.balafouti" required>
+                    <input type="text" id="username" name="username" placeholder="π.χ. d.balafouti" autocomplete="username" required>
                 </div>
-                <div class="form-group" style="margin-bottom:14px;">
+                <div class="form-group mb-form">
                     <label for="password">Κωδικός <span class="req">*</span></label>
-                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
                 </div>
-                <div class="form-group" style="margin-bottom:14px;">
+                <div class="form-group mb-form">
                     <label for="role">Ρόλος</label>
                     <select id="role" name="role">
                         <option value="ops">Operations Officer</option>
@@ -75,12 +74,12 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Είσοδος στο Σύστημα</button>
                 <p class="muted center mt-1">
-                    <a href="#" style="color:var(--accent); text-decoration:none;">Ξέχασα τον κωδικό μου</a>
+                    <a href="#" class="link-accent">Ξέχασα τον κωδικό μου</a>
                 </p>
             </form>
         </div>
 
-        <!-- MODULES NAVIGATION -->
+        <!-- modules / quick nav -->
         <div>
             <div class="card">
                 <h2>Λειτουργικές Μονάδες Συστήματος</h2>
@@ -111,6 +110,15 @@
                         <p>Ψηφιακή έγκριση/απόρριψη αιτημάτων προμήθειας από τη Διοίκηση με χρονοσήμανση.</p>
                     </a>
 
+                    <!--
+                    <a href="pages/invoicing.html" class="module-card">
+                        <div class="module-icon">IV</div>
+                        <h3>Invoicing</h3>
+                        <p>Έκδοση τιμολογίων και freight invoices.</p>
+                    </a>
+                    removed from homepage grid — accessible via nav
+                    -->
+
                 </div>
             </div>
 
@@ -125,9 +133,18 @@
 </section>
 
 <footer class="site-footer">
-    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69 ·
+    © 2026 HIND Maritime Enterprises S.A., Strategic Shield IS, Πληροφοριακά Συστήματα Ομάδα 69 |
     <a href="https://github.com/dimitrabalafouti/information-systems">GitHub Repository</a>
 </footer>
+
+<script>
+// auto-focus the username field on load
+document.addEventListener('DOMContentLoaded', function() {
+    var usernameField = document.getElementById('username');
+    if (usernameField) usernameField.focus();
+    // console.log('login ready');
+});
+</script>
 
 </body>
 </html>

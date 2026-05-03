@@ -14,10 +14,10 @@
             <div class="brand-logo">H</div>
             <div class="brand-text">
                 <h1>HIND Maritime Enterprises S.A.</h1>
-                <small>Strategic Shield · Vessel Interface</small>
+                <small>Strategic Shield / Vessel Interface</small>
             </div>
         </a>
-        <nav class="main-nav">
+        <nav class="main-nav" aria-label="πλοήγηση">
             <ul>
                 <li><a href="../index.html">Αρχική</a></li>
                 <li><a href="fleet-status.html">Fleet Status</a></li>
@@ -28,9 +28,9 @@
                 <li><a href="invoicing.html">Invoicing</a></li>
                 <li><a href="voyage-instructions.html">Instructions</a></li>
                 <li><a href="maintenance-queue.html">Maintenance</a></li>
-                <li><a href="request-new.html" class="active">New Request</a></li>
+                <li><a href="request-new.html" class="active" aria-current="page">New Request</a></li>
                 <li><a href="compliance-export.html">Compliance</a></li>
-                <li><span class="user-chip">Master · Capt. G. Petrou</span></li>
+                <li><span class="user-chip">Master, Capt. G. Petrou</span></li>
             </ul>
         </nav>
     </div>
@@ -39,11 +39,11 @@
 <main>
     <h1 class="page-title">Νέο Αίτημα Προμήθειας / Βλάβης</h1>
     <p class="page-subtitle">
-        Πλοίο: <strong>M/V New Island</strong> · IMO 9456789 · Voyage V-2026-041 ·
-        Αυτόματη δρομολόγηση ανά τύπο αιτήματος
+        Πλοίο: <strong>M/V New Island</strong> (IMO 9456789), Voyage V-2026-041.
+        Αίτημα βλάβης πηγαίνει στο Τεχνικό, αίτημα προμήθειας στις Προμήθειες.
     </p>
 
-    <!-- WORKFLOW STEPS -->
+    <!-- workflow steps tracker -->
     <div class="workflow-steps" id="flow-steps">
         <div class="workflow-step active" id="step1"><span class="step-num">1</span>Συμπλήρωση</div>
         <div class="workflow-step" id="step2"><span class="step-num">2</span>Υποβολή</div>
@@ -53,11 +53,11 @@
         <div class="workflow-step" id="step6"><span class="step-num">6</span>Ειδοποίηση</div>
     </div>
 
-    <!-- FORM PANEL -->
+    <!-- form panel -->
     <div id="form-panel">
         <div class="alert-box info" style="margin-bottom:16px;">
             <strong>Αυτόματη Δρομολόγηση</strong>
-            Αίτημα βλάβης → Τεχνικό Τμήμα · Αίτημα προμήθειας → Τμήμα Προμηθειών.
+            Αίτημα βλάβης: Τεχνικό Τμήμα. Αίτημα προμήθειας: Τμήμα Προμηθειών.
             Το αρμόδιο τμήμα λαμβάνει in-app notification εντός 1 λεπτού.
         </div>
 
@@ -68,7 +68,7 @@
                     <div class="form-group">
                         <label for="req-type">Τύπος Αιτήματος <span class="req">*</span></label>
                         <select id="req-type" required onchange="updateTypeHint()">
-                            <option value="">— Επιλογή —</option>
+                            <option value="">Επιλέξτε τύπο...</option>
                             <option value="procurement">Προμήθεια (Spare Parts / Provisions / Supplies)</option>
                             <option value="fault">Βλάβη / Επισκευή</option>
                             <option value="pms">Προγραμματισμένη Συντήρηση (PMS)</option>
@@ -78,8 +78,7 @@
                     <div class="form-group">
                         <label for="req-priority">Προτεραιότητα <span class="req">*</span></label>
                         <select id="req-priority" required>
-                            <option value="">— Επιλογή —</option>
-                            <option value="urgent">URGENT — Επείγον (απαιτείται άμεση ενέργεια)</option>
+                            <option value="">Επιλέξτε...</option>
                             <option value="high">Υψηλή (εντός 24 ωρών)</option>
                             <option value="medium">Μεσαία (εντός 3 ημερών)</option>
                             <option value="low">Χαμηλή (επόμενη προγραμματισμένη)</option>
@@ -91,7 +90,7 @@
                     </div>
                     <div class="form-group full">
                         <label for="req-desc">Αναλυτική Περιγραφή <span class="req">*</span></label>
-                        <textarea id="req-desc" rows="4" required
+                        <textarea id="req-desc" rows="5" required spellcheck="false"
                             placeholder="Περιγράψτε λεπτομερώς: τι συνέβη, πού εντοπίστηκε, ποιες ενέργειες έγιναν μέχρι στιγμής..."></textarea>
                     </div>
                     <div class="form-group">
@@ -118,7 +117,7 @@
                     </div>
                 </div>
 
-                <div class="btn-row" style="margin-top:18px;">
+                <div class="btn-row mt-lg">
                     <button type="submit" class="btn btn-primary" onclick="submitRequest(event)">&#9654; Υποβολή Αιτήματος</button>
                     <button type="reset" class="btn btn-secondary">Καθαρισμός</button>
                     <a href="../index.html" class="btn btn-secondary">Ακύρωση</a>
@@ -127,7 +126,7 @@
         </div>
     </div>
 
-    <!-- CONFIRMATION PANEL (hidden until submit) -->
+    <!-- confirmation panel - shown after submit -->
     <div id="confirm-panel" style="display:none;">
         <div class="alert-box success">
             <strong>&#10003; Αίτημα Υποβλήθηκε Επιτυχώς</strong>
@@ -136,7 +135,7 @@
 
         <div class="card">
             <h2>Επιβεβαίωση Αιτήματος</h2>
-            <div class="detail-row"><span class="label">Ticket ID</span><span id="conf-ticket" style="font-size:18px;font-weight:800;color:var(--navy);"></span></div>
+            <div class="detail-row"><span class="label">Ticket ID</span><span id="conf-ticket" class="id-display"></span></div>
             <div class="detail-row"><span class="label">Τύπος</span><span id="conf-type"></span></div>
             <div class="detail-row"><span class="label">Πλοίο</span><span>M/V New Island (IMO 9456789)</span></div>
             <div class="detail-row"><span class="label">Υποβλήθηκε</span><span id="conf-time"></span></div>
@@ -157,9 +156,9 @@
         </div>
     </div>
 
-    <!-- RECENT REQUESTS -->
+    <!-- recent requests table -->
     <div class="card" id="recent-panel">
-        <h2>Πρόσφατα Αιτήματά Μου — M/V New Island</h2>
+        <h2>Πρόσφατα Αιτήματά Μου, M/V New Island</h2>
         <table class="data-table">
             <thead>
                 <tr><th>Ticket ID</th><th>Τύπος</th><th>Τίτλος</th><th>Υποβλήθηκε</th><th>Κατάσταση</th></tr>
@@ -193,7 +192,7 @@
 </main>
 
 <footer class="site-footer">
-    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+    © 2026 HIND Maritime Enterprises S.A., Strategic Shield IS, Πληροφοριακά Συστήματα Ομάδα 69
 </footer>
 
 <script>
@@ -208,14 +207,15 @@ function updateTypeHint() {
 
 function submitRequest(e) {
     e.preventDefault();
-    var type = document.getElementById('req-type').value;
-    var title = document.getElementById('req-title').value.trim();
-    var desc = document.getElementById('req-desc').value.trim();
+    const type = document.getElementById('req-type').value;
+    const title = document.getElementById('req-title').value.trim();
+    const desc = document.getElementById('req-desc').value.trim();
     if (!type || !title || !desc) {
         alert('Συμπληρώστε όλα τα υποχρεωτικά πεδία (*).');
         return;
     }
 
+    // PR = procurement, MQ = maintenance/fault — used as ticket prefix
     var prefix = type === 'procurement' ? 'PR' : 'MQ';
     var num = Math.floor(Math.random() * 10) + 56;
     var ticketId = prefix + '-2026-00' + num;
@@ -232,9 +232,10 @@ function submitRequest(e) {
     document.getElementById('conf-ticket').textContent = ticketId;
     document.getElementById('conf-ticket2').textContent = ticketId;
     document.getElementById('conf-type').textContent = document.getElementById('req-type').options[document.getElementById('req-type').selectedIndex].text;
-    document.getElementById('conf-time').textContent = timeStr + ' · Capt. G. Petrou';
+    document.getElementById('conf-time').textContent = timeStr + ', Capt. G. Petrou';
     document.getElementById('conf-dept').textContent = dept;
     document.getElementById('conf-action').textContent = action;
+    console.log('submitting:', ticketId);
 
     document.getElementById('form-panel').style.display = 'none';
     document.getElementById('confirm-panel').style.display = '';

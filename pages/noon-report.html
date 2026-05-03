@@ -7,22 +7,22 @@
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-
+<!-- TODO: extract shared header/nav to a template include -->
 <header class="site-header">
     <div class="header-inner">
         <a class="brand" href="../index.html">
             <div class="brand-logo">H</div>
             <div class="brand-text">
                 <h1>HIND Maritime Enterprises S.A.</h1>
-                <small>Strategic Shield · Vessel Interface</small>
+                <small>Strategic Shield / Vessel Interface</small>
             </div>
         </a>
-        <nav class="main-nav">
+        <nav class="main-nav" aria-label="πλοήγηση">
             <ul>
                 <li><a href="../index.html">Αρχική</a></li>
                 <li><a href="fleet-status.html">Fleet Status</a></li>
                 <li><a href="voyage-dashboard.html">Voyages</a></li>
-                <li><a href="noon-report.html" class="active">Noon Report</a></li>
+                <li><a href="noon-report.html" class="active" aria-current="page">Noon Report</a></li>
                 <li><a href="approve-procurement.html">Approvals</a></li>
                 <li><a href="profitability-report.html">Profitability</a></li>
                 <li><a href="invoicing.html">Invoicing</a></li>
@@ -39,11 +39,11 @@
 <main>
     <h1 class="page-title">Υποβολή Ημερήσιας Αναφοράς (Noon Report)</h1>
     <p class="page-subtitle">
-        Πλοίο: <strong>M/V New Island</strong> · IMO 9456789 · Voyage V-2026-041 ·
+        Πλοίο: <strong>M/V New Island</strong> (IMO 9456789), Voyage V-2026-041.
         Ημερομηνία: <strong>27/04/2026 12:00 LT</strong>
     </p>
 
-    <!-- USE CASE FLOW -->
+    <!-- workflow -->
     <div class="workflow-steps">
         <div class="workflow-step done"><span class="step-num">&#10003;</span>Σύνδεση</div>
         <div class="workflow-step active"><span class="step-num">2</span>Φόρμα</div>
@@ -60,14 +60,14 @@
         και αποστέλλεται αυτόματα μόλις αποκατασταθεί η επικοινωνία.
     </div>
 
-    <!-- CONFIRMATION PANEL (hidden until submit) -->
+    <!-- confirmation block - hidden until form submit -->
     <div id="nr-confirm" style="display:none;">
         <div class="alert-box success">
             <strong>&#10003; Noon Report Υποβλήθηκε Επιτυχώς</strong>
         </div>
         <div class="card">
             <h2>Επιβεβαίωση Συστήματος</h2>
-            <div class="detail-row"><span class="label">Αρ. Αναφοράς</span><span id="nr-id" style="font-weight:800;color:var(--navy);"></span></div>
+            <div class="detail-row"><span class="label">Αρ. Αναφοράς</span><span id="nr-id" class="id-display"></span></div>
             <div class="detail-row"><span class="label">Χρονοσήμανση</span><span id="nr-ts"></span></div>
             <div class="detail-row"><span class="label">Κατάσταση</span><span id="nr-status"></span></div>
             <div class="alert-box info" style="margin:10px 0;">
@@ -102,7 +102,7 @@
                 </div>
                 <div class="form-group">
                     <label for="speed">Ταχύτητα (knots) <span class="req">*</span></label>
-                    <input type="number" id="speed" name="speed" step="0.1" value="12.3" required>
+                    <input type="number" id="speed" name="speed" step="0.1" value="12.3" inputmode="decimal" required>
                 </div>
             </div>
         </fieldset>
@@ -121,7 +121,7 @@
                 </div>
                 <div class="form-group">
                     <label for="cons24">Κατανάλωση 24h (MT) <span class="req">*</span></label>
-                    <input type="number" id="cons24" name="cons24" step="0.1" value="27.1" required>
+                    <input type="number" id="cons24" name="cons24" step="0.1" value="27.1" inputmode="decimal" required>
                 </div>
                 <div class="form-group">
                     <label for="distance">Απόσταση 24h (NM)</label>
@@ -205,8 +205,8 @@
             </div>
         </fieldset>
 
-        <!-- SUBMIT -->
-        <div class="card" style="background: var(--bg);">
+        <!-- submit area -->
+        <div class="card card-bg">
             <p class="muted mb-1">
                 <strong>Ψηφιακή υπογραφή:</strong> Capt. G. Petrou · Master M/V New Island ·
                 Auto-stamp: 27/04/2026 12:00 UTC
@@ -219,7 +219,7 @@
         </div>
     </form>
 
-    <!-- HISTORY -->
+    <!-- recent submissions table -->
     <div class="card">
         <h2>Ιστορικό Πρόσφατων Υποβολών</h2>
         <table class="data-table">
@@ -237,7 +237,7 @@
                 <tr>
                     <td>26/04/2026 12:00</td>
                     <td>V-2026-041</td>
-                    <td>37° 12' N · 19° 45' E</td>
+                    <td>37° 12' N, 19° 45' E</td>
                     <td>12.5 kn</td>
                     <td>27.4 MT</td>
                     <td><span class="badge valid">Καταχωρήθηκε</span></td>
@@ -245,7 +245,7 @@
                 <tr>
                     <td>25/04/2026 12:00</td>
                     <td>V-2026-041</td>
-                    <td>37° 58' N · 21° 18' E</td>
+                    <td>37° 58' N, 21° 18' E</td>
                     <td>12.1 kn</td>
                     <td>26.8 MT</td>
                     <td><span class="badge valid">Καταχωρήθηκε</span></td>
@@ -253,7 +253,7 @@
                 <tr>
                     <td>24/04/2026 12:00</td>
                     <td>V-2026-041</td>
-                    <td>38° 35' N · 22° 50' E</td>
+                    <td>38° 35' N, 22° 50' E</td>
                     <td>11.8 kn</td>
                     <td>26.2 MT</td>
                     <td><span class="badge valid">Καταχωρήθηκε</span></td>
@@ -264,22 +264,23 @@
 </main>
 
 <footer class="site-footer">
-    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+    © 2026 HIND Maritime Enterprises S.A., Strategic Shield IS, Πληροφοριακά Συστήματα Ομάδα 69
 </footer>
 
 <script>
 function submitNoon(e) {
     e.preventDefault();
-    var speed = document.getElementById('speed').value;
-    var cons = document.getElementById('cons24').value;
+    let speed = document.getElementById('speed').value;
+    let cons = document.getElementById('cons24').value;
     if (!speed || !cons) { alert('Συμπληρώστε όλα τα υποχρεωτικά πεδία (*).'); return; }
-    var now = new Date();
+    console.log('noon submit:', speed, cons);
+    const now = new Date();
     var ts = now.toLocaleString('el-GR') + ' UTC';
     var id = 'NR-' + now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0') + '-' + String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0');
     document.getElementById('nr-id').textContent = id;
     document.getElementById('nr-ts').textContent = ts + ' · Capt. G. Petrou (Ψηφιακή Υπογραφή)';
     document.getElementById('nr-status').textContent = 'Αποθηκεύτηκε στην κεντρική βάση — Data Parsing σε εξέλιξη';
-    // advance workflow steps
+    // switched from alert() to confirm panel after feedback — cleaner on mobile
     ['nr-step3','nr-step4','nr-step5','nr-step6'].forEach(function(id){ document.getElementById(id).className='workflow-step done'; });
     document.getElementById('nr-form').style.display = 'none';
     document.getElementById('nr-confirm').style.display = '';

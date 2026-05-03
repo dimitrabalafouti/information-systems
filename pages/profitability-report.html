@@ -14,17 +14,17 @@
             <div class="brand-logo">H</div>
             <div class="brand-text">
                 <h1>HIND Maritime Enterprises S.A.</h1>
-                <small>Strategic Shield · Management Console</small>
+                <small>Strategic Shield / Management Console</small>
             </div>
         </a>
-        <nav class="main-nav">
+        <nav class="main-nav" aria-label="πλοήγηση">
             <ul>
                 <li><a href="../index.html">Αρχική</a></li>
                 <li><a href="fleet-status.html">Fleet Status</a></li>
                 <li><a href="voyage-dashboard.html">Voyages</a></li>
                 <li><a href="noon-report.html">Noon Report</a></li>
                 <li><a href="approve-procurement.html">Approvals</a></li>
-                <li><a href="profitability-report.html" class="active">Profitability</a></li>
+                <li><a href="profitability-report.html" class="active" aria-current="page">Profitability</a></li>
                 <li><a href="invoicing.html">Invoicing</a></li>
                 <li><a href="voyage-instructions.html">Instructions</a></li>
                 <li><a href="maintenance-queue.html">Maintenance</a></li>
@@ -39,12 +39,12 @@
 <main>
     <h1 class="page-title">Αναφορές Κερδοφορίας</h1>
     <p class="page-subtitle">
-        Ανάλυση P&amp;L ανά ταξίδι, πλοίο ή χρονική περίοδο ·
-        Δεδομένα από κεντρική βάση χωρίς χειροκίνητη συγκέντρωση ·
+        P&amp;L ανά ταξίδι, πλοίο ή χρονική περίοδο.
+        Τα δεδομένα έρχονται απευθείας από τη βάση, χωρίς χειροκίνητη συγκέντρωση.
         Τελευταία ενημέρωση: <strong>28/04/2026 08:00</strong>
     </p>
 
-    <!-- USE CASE FLOW -->
+    <!-- workflow -->
     <div class="workflow-steps">
         <div class="workflow-step done"><span class="step-num">&#10003;</span>Σύνδεση</div>
         <div class="workflow-step active"><span class="step-num">2</span>Παράμετροι</div>
@@ -78,7 +78,7 @@
         </div>
     </div>
 
-    <!-- FILTERS -->
+    <!-- filter bar -->
     <div class="filters">
         <div class="form-group">
             <label for="f-groupby">Ανάλυση κατά</label>
@@ -117,17 +117,17 @@
             <label for="f-to">Έως</label>
             <input type="date" id="f-to" value="2026-04-28">
         </div>
-        <div style="display:flex;gap:8px;align-items:flex-end;">
+        <div class="flex-end-bottom">
             <button class="btn btn-primary" onclick="generateReport()">Δημιουργία Αναφοράς</button>
             <button class="btn btn-danger" onclick="alert('Εξαγωγή PDF...')">&#11015; PDF</button>
             <button class="btn btn-secondary" onclick="alert('Εξαγωγή Excel (.xlsx)...')">&#11015; Excel</button>
         </div>
     </div>
 
-    <!-- REPORT GENERATION BANNER (shown after Δημιουργία Αναφοράς) -->
+    <!-- report generation status -->
     <div id="report-banner" class="alert-box success" style="display:none;margin-bottom:12px;"></div>
 
-    <!-- P&L PER VOYAGE TABLE -->
+    <!-- p&l per voyage -->
     <div class="card">
         <h2>Κερδοφορία ανά Ταξίδι — YTD 2026</h2>
         <table class="data-table">
@@ -237,7 +237,7 @@
         </table>
     </div>
 
-    <!-- SUMMARY BY VESSEL -->
+    <!-- summary by vessel -->
     <div class="card">
         <h2>Σύνοψη ανά Πλοίο — YTD 2026</h2>
         <table class="data-table">
@@ -292,7 +292,7 @@
                     <td class="num profit">$204,600</td>
                     <td><span class="badge valid">22.4%</span></td>
                 </tr>
-                <tr style="font-weight:700; background:#f0f7ff;">
+                <tr class="total-row">
                     <td><strong>Σύνολο Στόλου</strong></td>
                     <td class="num"><strong>34</strong></td>
                     <td class="num"><strong>$4,238,900</strong></td>
@@ -311,18 +311,22 @@
 </main>
 
 <footer class="site-footer">
-    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+    © 2026 HIND Maritime Enterprises S.A., Strategic Shield IS, Πληροφοριακά Συστήματα Ομάδα 69
 </footer>
 
 <script>
 function generateReport() {
-    var groupby = document.getElementById('f-groupby').value;
-    var vessel = document.getElementById('f-vessel').value;
-    var period = document.getElementById('f-period').value;
+    const groupby = document.getElementById('f-groupby').value;
+    const vessel = document.getElementById('f-vessel').value;
+    const period = document.getElementById('f-period').value;
+    console.log(groupby, period);
     ['pr2-step3','pr2-step4'].forEach(function(id){ var el=document.getElementById(id); if(el) el.className='workflow-step done'; });
     var el5 = document.getElementById('pr2-step5'); if(el5) el5.className='workflow-step active';
     var banner = document.getElementById('report-banner');
-    if (banner) { banner.style.display=''; banner.innerHTML = '<strong>&#10003; Αναφορά Δημιουργήθηκε</strong> — Ομάδοποίηση κατά: <strong>' + groupby + '</strong> · Πλοίο: <strong>' + vessel + '</strong> · Περίοδος: <strong>' + period + '</strong>. Χρήση ↓ Export για λήψη αρχείου.'; }
+    if (banner) {
+        banner.style.display = '';
+        banner.innerHTML = `<strong>&#10003; \u0391\u03bd\u03b1\u03c6\u03bf\u03c1\u03ac \u0394\u03b7\u03bc\u03b9\u03bf\u03c5\u03c1\u03b3\u03ae\u03b8\u03b7\u03ba\u03b5</strong> \u2014 \u039f\u03bc\u03ac\u03b4\u03bf\u03c0\u03bf\u03af\u03b7\u03c3\u03b7 \u03ba\u03b1\u03c4\u03ac: <strong>${groupby}</strong> \u00b7 \u03a0\u03bb\u03bf\u03af\u03bf: <strong>${vessel}</strong> \u00b7 \u03a0\u03b5\u03c1\u03af\u03bf\u03b4\u03bf\u03c2: <strong>${period}</strong>. \u03a7\u03c1\u03ae\u03c3\u03b7 \u2193 Export \u03b3\u03b9\u03b1 \u03bb\u03ae\u03c8\u03b7 \u03b1\u03c1\u03c7\u03b5\u03af\u03bf\u03c5.`;
+    }
     alert('Δημιουργία Αναφοράς P&L\nΟμάδοποίηση: ' + groupby + '\nΠλοίο: ' + vessel + '\nΠερίοδος: ' + period + '\n\nΗ αναφορά δημιουργήθηκε. व Export PDF/Excel για λήψη αρχείου.');
 }
 </script>

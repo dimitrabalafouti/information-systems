@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-
+<!-- TODO: extract shared header/nav to a template include -->
 <header class="site-header">
     <div class="header-inner">
         <a class="brand" href="../index.html">
             <div class="brand-logo">H</div>
             <div class="brand-text">
                 <h1>HIND Maritime Enterprises S.A.</h1>
-                <small>Strategic Shield · Technical Department</small>
+                <small>Strategic Shield / Technical Department</small>
             </div>
         </a>
-        <nav class="main-nav">
+        <nav class="main-nav" aria-label="πλοήγηση">
             <ul>
                 <li><a href="../index.html">Αρχική</a></li>
                 <li><a href="fleet-status.html">Fleet Status</a></li>
@@ -27,7 +27,7 @@
                 <li><a href="profitability-report.html">Profitability</a></li>
                 <li><a href="invoicing.html">Invoicing</a></li>
                 <li><a href="voyage-instructions.html">Instructions</a></li>
-                <li><a href="maintenance-queue.html" class="active">Maintenance</a></li>
+                <li><a href="maintenance-queue.html" class="active" aria-current="page">Maintenance</a></li>
                 <li><a href="request-new.html">New Request</a></li>
                 <li><a href="compliance-export.html">Compliance</a></li>
                 <li><span class="user-chip">Technical · S. Nikolaou</span></li>
@@ -39,21 +39,21 @@
 <main>
     <h1 class="page-title">Ουρά Συντήρησης &amp; Βλαβών</h1>
     <p class="page-subtitle">
-        Αυτόματη ανάθεση αιτημάτων συντήρησης · In-app ειδοποιήσεις ·
+        Τα αιτήματα ανατίθενται αυτόματα στον υπεύθυνο τεχνικό. In-app ειδοποίηση εντός λεπτού.
         Ενημέρωση: <strong>28/04/2026 09:30</strong>
     </p>
 
-    <!-- NOTIFICATION BANNER -->
+    <!-- notification banner -->
     <div class="notif-banner" id="maint-notif">
         <div class="notif-dot"></div>
         <div>
             <strong>Νέο Αίτημα #MQ-2026-0055</strong>
-            M/V Atlantic Island · Βλάβη Κυρίου Μηχανήματος · Επείγον — ανατέθηκε αυτόματα σε Ανδρέα Γεωργίου
+            M/V Atlantic Island, Βλάβη Κυρίου Μηχανήματος. Επείγον, ανατέθηκε αυτόματα σε Ανδρέα Γεωργίου.
         </div>
         <button class="notif-dismiss" onclick="this.parentElement.style.display='none'">&#10005;</button>
     </div>
 
-    <!-- USE CASE FLOW -->
+    <!-- workflow -->
     <div class="workflow-steps">
         <div class="workflow-step done"><span class="step-num">1</span>Λήψη Αιτήματος</div>
         <div class="workflow-step done"><span class="step-num">2</span>Αυτόματη Ανάθεση</div>
@@ -87,12 +87,12 @@
         </div>
     </div>
 
-    <!-- SPLIT VIEW -->
+    <!-- split: list + detail -->
     <div class="split-view">
 
-        <!-- LIST -->
+        <!-- list panel -->
         <div class="list-panel">
-            <div style="padding:12px 16px;background:var(--navy);color:#fff;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">
+            <div class="list-panel-header">
                 Αιτήματα Συντήρησης
             </div>
 
@@ -138,13 +138,13 @@
             </div>
         </div>
 
-        <!-- DETAIL PANEL -->
+        <!-- detail panel -->
         <div id="detail-view">
-            <div class="detail-panel" style="margin-bottom:16px;">
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;padding-bottom:10px;border-bottom:2px solid var(--accent);">
+            <div class="detail-panel mb-md">
+                <div class="panel-header-sep">
                     <div>
-                        <h2 style="color:var(--navy);font-size:18px;margin:0;">#MQ-2026-0055</h2>
-                        <p class="muted" style="margin-top:4px;">Βλάβη Κυρίου Μηχανήματος · M/V Atlantic Island</p>
+                        <h2 class="h2-bare">#MQ-2026-0055</h2>
+                        <p class="muted mt-xs">Βλάβη Κυρίου Μηχανήματος, M/V Atlantic Island</p>
                     </div>
                     <span class="badge urgent">URGENT</span>
                 </div>
@@ -161,10 +161,10 @@
 
                 <div class="detail-row"><span class="label">Πλοίο</span><span>M/V Atlantic Island (IMO 8956123)</span></div>
                 <div class="detail-row"><span class="label">Τύπος</span><span>Βλάβη — Κύριο Μηχάνημα (Main Engine)</span></div>
-                <div class="detail-row"><span class="label">Υπεβλήθη από</span><span>Capt. P. Alexiou (Master) · 28/04/2026 09:15</span></div>
+                <div class="detail-row"><span class="label">Υπεβλήθη από</span><span>Capt. P. Alexiou (Master), 28/04/2026 09:15</span></div>
                 <div class="detail-row"><span class="label">Πηγή</span><span>Χειροκίνητη αναφορά Πλοιάρχου</span></div>
                 <div class="detail-row"><span class="label">Περιγραφή</span><span>Ανώμαλη δόνηση και ανύψωση θερμοκρασίας κυρίου μηχανήματος. Πιθανή βλάβη τριβέα εξάτμισης (exhaust bearing). Χαμηλώσαμε RPM σε 60%.</span></div>
-                <div class="detail-row"><span class="label">Ανατέθηκε σε</span><span><strong>Α. Γεωργίου</strong> (Chief Engineer — αυτόματη ανάθεση) · 28/04/2026 09:15</span></div>
+                <div class="detail-row"><span class="label">Ανατέθηκε σε</span><span><strong>Α. Γεωργίου</strong> (Chief Engineer, αυτόματη ανάθεση), 28/04/2026 09:15</span></div>
                 <div class="detail-row"><span class="label">Τρέχουσα Κατάσταση</span><span><span class="badge warning">Ειδοποίηση Απεστάλη — Αναμονή Τεχνικού</span></span></div>
                 <div class="detail-row"><span class="label">Εκτιμ. Αποκατάσταση</span><span>4–8 ώρες (ανάλογα αξιολόγησης επί τόπου)</span></div>
 
@@ -174,9 +174,9 @@
                     Technical Superintendent εντός 1 λεπτού. Ειδοποίηση εστάλη στις 09:16.
                 </div>
 
-                <!-- ACTIONS -->
-                <div style="margin-bottom:18px;">
-                    <h2 style="font-size:15px;margin-bottom:10px;">Ενέργεια Τεχνικού</h2>
+                <!-- tech actions form -->
+                <div class="mb-md">
+                    <h2 class="h2-section">Ενέργεια Τεχνικού</h2>
                     <div class="form-group" style="margin-bottom:12px;">
                         <label for="tech-action">Κατάσταση</label>
                         <select id="tech-action">
@@ -189,7 +189,7 @@
                     </div>
                     <div class="form-group" style="margin-bottom:12px;">
                         <label for="tech-notes">Καταχώρηση Ενεργειών</label>
-                        <textarea id="tech-notes" rows="3" placeholder="Περιγράψτε τι έγινε, εργαλεία/ανταλλακτικά που χρησιμοποιήθηκαν..."></textarea>
+                        <textarea id="tech-notes" rows="3" maxlength="400" placeholder="Περιγράψτε τι έγινε, εργαλεία/ανταλλακτικά που χρησιμοποιήθηκαν..."></textarea>
                     </div>
                     <div class="btn-row">
                         <button class="btn btn-primary" onclick="updateStatus()">Ενημέρωση Κατάστασης</button>
@@ -197,9 +197,9 @@
                     </div>
                 </div>
 
-                <!-- AUDIT TRAIL -->
+                <!-- audit trail -->
                 <div>
-                    <h2 style="font-size:15px;margin-bottom:10px;">Audit Trail</h2>
+                    <h2 class="h2-section">Audit Trail</h2>
                     <table class="data-table">
                         <thead>
                             <tr><th>Ώρα</th><th>Ενέργεια</th><th>Χρήστης</th></tr>
@@ -220,16 +220,18 @@
 </main>
 
 <footer class="site-footer">
-    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+    © 2026 HIND Maritime Enterprises S.A., Strategic Shield IS, Πληροφοριακά Συστήματα Ομάδα 69
 </footer>
 
 <script>
 function updateStatus() {
-    var sel = document.getElementById('tech-action').value;
-    var notes = document.getElementById('tech-notes').value;
+    const sel = document.getElementById('tech-action').value;
+    const notes = document.getElementById('tech-notes').value;
     if (!notes.trim()) { alert('Καταχωρήστε σημείωση ενέργειας.'); return; }
-    var now = new Date();
+    console.log('updateStatus:', sel);
+    const now = new Date();
     var time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+    // getElementById — tried querySelector('#audit-tbody tr') first but it only grabbed first row
     var tbody = document.getElementById('audit-tbody');
     var row = tbody.insertRow();
     row.innerHTML = '<td>' + time + '</td><td>Κατάσταση → "' + sel + '" — ' + notes + '</td><td>S. Nikolaou (Technical)</td>';
