@@ -7,17 +7,17 @@
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-
+<!-- TODO: extract shared header/nav to a template include -->
 <header class="site-header">
     <div class="header-inner">
         <a class="brand" href="../index.html">
             <div class="brand-logo">H</div>
             <div class="brand-text">
                 <h1>HIND Maritime Enterprises S.A.</h1>
-                <small>Strategic Shield · Certification Console</small>
+                <small>Strategic Shield / Certification Console</small>
             </div>
         </a>
-        <nav class="main-nav">
+        <nav class="main-nav" aria-label="πλοήγηση">
             <ul>
                 <li><a href="../index.html">Αρχική</a></li>
                 <li><a href="fleet-status.html">Fleet Status</a></li>
@@ -30,9 +30,9 @@
                 <li><a href="maintenance-queue.html">Maintenance</a></li>
                 <li><a href="request-new.html">New Request</a></li>
                 <li><a href="compliance-export.html">Compliance</a></li>
-                <li><a href="certificate-entry.html" class="active">Cert. Entry</a></li>
+                <li><a href="certificate-entry.html" class="active" aria-current="page">Cert. Entry</a></li>
                 <li><a href="certificate-review.html">Cert. Review</a></li>
-                <li><span class="user-chip">Certification · N. Vasileiou</span></li>
+                <li><span class="user-chip">Certification / N. Vasileiou</span></li>
             </ul>
         </nav>
     </div>
@@ -41,11 +41,11 @@
 <main>
     <h1 class="page-title">Καταχώρηση / Ανανέωση Πιστοποιητικού</h1>
     <p class="page-subtitle">
-        Υποβολή νέου ή ανανεωμένου πιστοποιητικού για επαλήθευση από DPA ·
-        Η κατάσταση στο Fleet Status ενημερώνεται <strong>μόνο μετά</strong> από έγκριση DPA
+        Υποβολή νέου ή ανανεωμένου πιστοποιητικού για επαλήθευση από DPA.
+        Η κατάσταση στο Fleet Status ενημερώνεται <strong>μόνο μετά</strong> από έγκριση DPA.
     </p>
 
-    <!-- WORKFLOW TRACKER -->
+    <!-- workflow -->
     <div class="workflow-steps">
         <div class="workflow-step active"><span class="step-num">1</span>Επιλογή Πλοίου</div>
         <div class="workflow-step"><span class="step-num">2</span>Στοιχεία</div>
@@ -79,18 +79,18 @@
         </div>
     </div>
 
-    <!-- ALERT: pending rejections -->
+    <!-- pending rejections alert -->
     <div class="alert-box warning">
         <strong>⚠ 2 Υποβολές Απορρίφθηκαν — Απαιτείται Διόρθωση</strong>
-        Ionian Island · Load Line: Εσφαλμένος αριθμός πιστοποιητικού ·
-        <a href="certificate-review.html" style="color: inherit; font-weight:700;">Προβολή λεπτομερειών →</a>
+        Ionian Island, Load Line: Εσφαλμένος αριθμός πιστοποιητικού.
+        <a href="certificate-review.html" class="value-bold" style="color: inherit;">Προβολή λεπτομερειών →</a>
     </div>
 
-    <!-- ENTRY FORM -->
+    <!-- entry form -->
     <div id="form-panel">
         <form id="cert-form" action="certificate-review.html" method="get" novalidate>
 
-            <!-- SECTION 1: VESSEL & TYPE -->
+            <!-- section 1: vessel + type -->
             <fieldset>
                 <legend>1. Πλοίο &amp; Τύπος Πιστοποιητικού</legend>
                 <div class="form-grid">
@@ -123,15 +123,15 @@
                     </div>
                 </div>
 
-                <!-- Vessel info banner (shown after selection) -->
-                <div id="vessel-info" style="display:none; margin-top:12px;">
+                <!-- vessel info banner - filled in by updateVesselInfo() -->
+                <div id="vessel-info" class="mt-md" style="display:none;">
                     <div class="alert-box info" id="vessel-info-box">
                         <!-- populated by JS -->
                     </div>
                 </div>
             </fieldset>
 
-            <!-- SECTION 2: CERTIFICATE DETAILS -->
+            <!-- section 2: cert details -->
             <fieldset>
                 <legend>2. Στοιχεία Πιστοποιητικού</legend>
                 <div class="form-grid">
@@ -171,7 +171,7 @@
                     <div class="form-group">
                         <label for="survey-date">Επόμενη Ενδιάμεση Επιθεώρηση</label>
                         <input type="date" id="survey-date" name="survey-date">
-                        <span class="form-hint">Προαιρετικό · Κυρίως για Class Certificate</span>
+                        <span class="form-hint">Προαιρετικό, κυρίως για Class Certificate</span>
                     </div>
                     <div class="form-group">
                         <label for="port-issued">Λιμάνι Έκδοσης</label>
@@ -180,14 +180,14 @@
                     </div>
                 </div>
 
-                <!-- RightShip-specific fields (hidden by default) -->
-                <div id="rightship-fields" style="display:none; margin-top:12px;">
+                <!-- rightship-only fields, toggled by toggleRightship() -->
+                <div id="rightship-fields" class="mt-md" style="display:none;">
                     <div class="alert-box info">
                         <strong>RightShip — Επιπλέον Στοιχεία</strong>
                         Από 01/04/2026 (Phase 2), πλοία ≥12 ετών απαιτούν έγκυρη επιθεώρηση RightShip.
                         Χωρίς εγγραφή, το Safety Score υποβαθμίζεται αυτόματα σε 2/5.
                     </div>
-                    <div class="form-grid" style="margin-top:12px;">
+                    <div class="form-grid mt-md">
                         <div class="form-group">
                             <label for="rs-score">RightShip Safety Score <span class="req">*</span></label>
                             <select id="rs-score" name="rs-score">
@@ -218,7 +218,7 @@
                 </div>
             </fieldset>
 
-            <!-- SECTION 3: DOCUMENT UPLOAD -->
+            <!-- section 3: doc upload -->
             <fieldset>
                 <legend>3. Μεταφόρτωση Εγγράφου</legend>
                 <div class="form-grid">
@@ -227,7 +227,7 @@
                         <input type="file" id="doc-upload" name="doc-upload"
                                accept=".pdf,.jpg,.png" required>
                         <span class="form-hint">
-                            Αποδεκτά: PDF, JPG, PNG · Μέγιστο 10MB ·
+                            Αποδεκτά: PDF, JPG, PNG (max 10MB).
                             Το έγγραφο αποθηκεύεται κρυπτογραφημένο και ενημερώνει τον ψηφιακό φάκελο Vetting.
                         </span>
                     </div>
@@ -236,11 +236,11 @@
                         <textarea id="cert-notes" name="cert-notes" rows="3"
                             placeholder="π.χ. Ανανέωση μετά από ετήσια επιθεώρηση, αλλαγή εκδούσας αρχής από BV σε DNV GL.">
                         </textarea>
-                        <span class="form-hint">Προαιρετικό · Εμφανίζεται στο DPA Review και στο Audit Trail</span>
+                        <span class="form-hint">Προαιρετικό, εμφανίζεται στο DPA Review και στο Audit Trail.</span>
                     </div>
                 </div>
 
-                <div class="alert-box info" style="margin-top:12px;">
+                <div class="alert-box info mt-md">
                     <strong>ℹ Μετά την υποβολή</strong>
                     Το αίτημα οδηγείται αυτόματα στην ουρά επαλήθευσης του DPA/HSEQ Manager.
                     Η κατάσταση του πλοίου στο Fleet Status <strong>παραμένει αμετάβλητη</strong> μέχρι
@@ -248,10 +248,10 @@
                 </div>
             </fieldset>
 
-            <!-- SUBMIT -->
-            <div class="card" style="background: var(--bg);">
+            <!-- submit area -->
+            <div class="card card-bg">
                 <p class="muted mb-1">
-                    <strong>Υποβάλλει:</strong> N. Vasileiou · Τμήμα Πιστοποιήσεων ·
+                    <strong>Υποβάλλει:</strong> N. Vasileiou, Τμήμα Πιστοποιήσεων.
                     Auto-stamp: 28/04/2026 10:15 UTC
                 </p>
                 <div class="btn-row">
@@ -264,7 +264,7 @@
         </form>
     </div>
 
-    <!-- RECENT SUBMISSION HISTORY -->
+    <!-- recent submissions table -->
     <div class="card">
         <h2>Ιστορικό Πρόσφατων Υποβολών</h2>
         <table class="data-table">
@@ -336,7 +336,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="btn-row" style="margin-top: 10px;">
+        <div class="btn-row mt-md">
             <a href="certificate-review.html" class="btn btn-secondary">Προβολή Ουράς DPA →</a>
         </div>
     </div>
@@ -344,26 +344,27 @@
 </main>
 
 <footer class="site-footer">
-    © 2026 HIND Maritime Enterprises S.A. · Strategic Shield IS · Πληροφοριακά Συστήματα — Ομάδα 69
+    © 2026 HIND Maritime Enterprises S.A., Strategic Shield IS, Πληροφοριακά Συστήματα Ομάδα 69
 </footer>
 
 <script>
 function updateVesselInfo() {
-    const sel = document.getElementById('vessel');
-    const opt = sel.options[sel.selectedIndex];
-    const box = document.getElementById('vessel-info');
-    const infoBox = document.getElementById('vessel-info-box');
+    let sel = document.getElementById('vessel');
+    let opt = sel.options[sel.selectedIndex];
+    let box = document.getElementById('vessel-info');
+    let infoBox = document.getElementById('vessel-info-box');
     if (!sel.value) { box.style.display = 'none'; return; }
 
     const age = parseInt(opt.dataset.age);
     const imo = opt.dataset.imo;
-    let html = `<strong>IMO: ${imo}</strong> · Ηλικία: <strong>${age} έτη</strong>`;
+    let html = `<strong>IMO: ${imo}</strong>, Ηλικία: <strong>${age} έτη</strong>`;
 
+    // age thresholds — confirmed with N. Vasileiou (Cert. team)
     if (age >= 12) {
-        html += ` · <span style="color:#c62828; font-weight:700;">⚠ RightShip απαιτείται (≥12 έτη, Phase 2 Απρ 2026)</span>`;
+        html += ` <span style="color:#c62828; font-weight:700;">⚠ RightShip απαιτείται (≥12 έτη, Phase 2 Απρ 2026)</span>`;
     }
     if (age >= 20) {
-        html += ` · <span style="color:#ed6c02; font-weight:600;">Αυξημένοι έλεγχοι Vetting λόγω ηλικίας</span>`;
+        html += ` <span style="color:#ed6c02; font-weight:600;">Αυξημένοι έλεγχοι Vetting λόγω ηλικίας</span>`;
     }
 
     infoBox.innerHTML = html;
@@ -371,11 +372,10 @@ function updateVesselInfo() {
 }
 
 function toggleRightship() {
-    const type = document.getElementById('cert-type').value;
-    const rsFields = document.getElementById('rightship-fields');
+    var type = document.getElementById('cert-type').value;
+    var rsFields = document.getElementById('rightship-fields');
     rsFields.style.display = (type === 'rightship') ? 'block' : 'none';
-
-    // Make RightShip score required only when RightShip type selected
+    // only require the score when RightShip is the chosen cert type
     document.getElementById('rs-score').required = (type === 'rightship');
 }
 
@@ -384,9 +384,11 @@ function checkExpiry() {
     const hint = document.getElementById('expiry-hint');
     if (!expiry) { hint.textContent = ''; return; }
 
+    // hardcoded "today" for demo so the form behaves the same during the presentation
     const today = new Date('2026-04-28');
     const exp = new Date(expiry);
     const diffDays = Math.round((exp - today) / (1000 * 60 * 60 * 24));
+    // console.log('expiry diff days:', diffDays);
 
     if (diffDays < 0) {
         hint.textContent = '⛔ Ημερομηνία στο παρελθόν — βεβαιωθείτε για τη σωστή ημερομηνία.';
